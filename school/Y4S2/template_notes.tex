@@ -175,16 +175,17 @@
 %        \begin{question}   for auto-increment
 % Counter resets each section.
 % ==========================================
-% ==========================================
-% --- Question Environment ---
-% ==========================================
 \newcounter{question}[section]
 
-\newenvironment{questionbox}{%
+\NewDocumentEnvironment{question}{o}{%
+  \IfNoValueTF{#1}%
+    {\refstepcounter{question}}%
+    {\setcounter{question}{#1}}%
   \begin{tcolorbox}[
     notestyle,
     borderline west={3pt}{0pt}{qcolor},
-    colback=qbg, colframe=qbg,
+    colback=qbg,
+    colframe=qbg,
     fonttitle=\bfseries,
     title=Question~\thequestion,
     attach boxed title to top left={yshift=-2pt},
@@ -193,13 +194,9 @@
       sharp corners, left=4pt, right=4pt
     }
   ]%
-}{\end{tcolorbox}}
-
-\NewDocumentEnvironment{question}{o}{
-  \IfNoValueTF{#1}{\refstepcounter{question}}{\setcounter{question}{#1}}%
-  
-  \begin{questionbox} \end{questionbox}}
-
+}{%
+  \end{tcolorbox}%
+}
 
 % ==========================================
 % --- Document Information ---
@@ -218,31 +215,25 @@
 \newpage
 
 
-\section{Introduction to Curves}
+\section{Chapter 1:}
 
 
 \pagebreak
 
-\section{Introduction to Surfaces}
+\section{Chapter 2:}
 
 
 \pagebreak
 
-\section{Gauss' Curvature and Second Fundamental Form}
+\section{Chapter 3:}
 
 
 \pagebreak
 
-\section{Isometries}
+\section{Chapter 4:}
 
 
 \pagebreak
-
-\section{Vector Fields \& Geodesics}
-
-\pagebreak
-
-\section{Gauss-Bonnet Theorem}
 
 
 % ==========================================
