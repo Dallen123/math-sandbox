@@ -204,7 +204,7 @@
 % ==========================================
 % --- Document Information ---
 % ==========================================
-\title{\textbf{Course Name}\\[0.5em]\large Course Code} % <-- SET TITLE HERE
+\title{\textbf{\coursename \\ Differential Geometry of Curves and Surfaces}} % <-- SET TITLE HERE
 \author{Dallen Lee}
 \date{\today}
 
@@ -221,6 +221,7 @@
 \section{Introduction to Curves}
 
 
+
 \pagebreak
 
 \section{Introduction to Surfaces}
@@ -230,15 +231,763 @@
 
 \section{Gauss' Curvature and Second Fundamental Form}
 
+\subsection{Curvature of Surfaces}
+
+In Chapter 1, we defined curvature as $\kappa = |\alpha''(s)|$ --- curvature \textbf{at a point.}
+In this chapter, we try to find a definition for curvature of a \textbf{surface} \emph{at a point.}
+
+Gauss had this idea: given a point $p \in S$ on a regular surface $S$, along the normal vector
+$\mathbf{N}$ perpendicular to the surface at $\mathbf{p}$, we take a knife and cut the surface
+downward along the tangent direction $\mathbf{v}$. The curvature of the resulting cross-sectional
+curve gives us information about the curvature of the surface at $\mathbf{p}$.
+
+\subsection{Linear Algebra Review}
+
+First, we define a \emph{self-adjoint} linear transformation.
+
+\begin{definition}[Self-adjoint map]
+  Let $V$ be an inner product space, and $T: V \to V$ a linear transformation. Then $T$ is
+  \textbf{self-adjoint} if
+  \[
+    \langle T(\mathbf{v}), \mathbf{w} \rangle = \langle \mathbf{v}, T(\mathbf{w}) \rangle
+    \quad \text{for all } \mathbf{v}, \mathbf{w} \in V.
+  \]
+\end{definition}
+
+\begin{lemma}[Self-adjoint via basis]
+  Suppose we have a basis $\mathcal{B} = \{\mathbf{x}_1, \mathbf{x}_2\}$ of $V$. Then it
+  suffices to check
+  \[
+    \langle T(\mathbf{x}_1), \mathbf{x}_2 \rangle = \langle \mathbf{x}_1, T(\mathbf{x}_2) \rangle.
+  \]
+\end{lemma}
+
+The usefulness of this lemma is that if we \emph{do} have a basis, we only need to check
+self-adjointness on the basis vectors rather than all $\mathbf{v}, \mathbf{w} \in V$.
+
+\begin{definition}[Matrix representation of a linear transformation]
+  Let $\mathcal{B} = \{\mathbf{x}_1, \mathbf{x}_2\}$ be a basis of $V$, and $T: V \to V$ a
+  linear transformation. Suppose
+  \[
+    T(\mathbf{x}_1) = a\mathbf{x}_1 + b\mathbf{x}_2, \qquad
+    T(\mathbf{x}_2) = c\mathbf{x}_1 + d\mathbf{x}_2.
+  \]
+  Then the matrix representation of $T$ with respect to $\mathcal{B}$ is
+  \[
+    [T]_{\mathcal{B},\mathcal{B}} = \begin{pmatrix} a & b \\ c & d \end{pmatrix}.
+  \]
+\end{definition}
+
+\begin{lemma}[Self-adjointness via matrix representation]
+  Let $\mathcal{B} = \{\mathbf{x}_1, \mathbf{x}_2\}$ be an \emph{orthonormal} basis of $V$.
+  Then $T: V \to V$ is self-adjoint if and only if
+  \[
+    [T]_{\mathcal{B},\mathcal{B}} = \begin{pmatrix} a & b \\ c & d \end{pmatrix}
+  \]
+  is symmetric, i.e.\ $b = c$.
+
+\begin{proof}
+  Let $[T]_{\mathcal{B},\mathcal{B}} = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$. Then
+  \[
+    \langle T(\mathbf{x}_1), \mathbf{x}_2 \rangle
+    = \langle a\mathbf{x}_1 + b\mathbf{x}_2, \mathbf{x}_2 \rangle = b,
+    \qquad
+    \langle \mathbf{x}_1, T(\mathbf{x}_2) \rangle
+    = \langle \mathbf{x}_1, c\mathbf{x}_1 + d\mathbf{x}_2 \rangle = c.
+  \]
+  Hence $\langle T(\mathbf{x}_1), \mathbf{x}_2 \rangle = \langle \mathbf{x}_1, T(\mathbf{x}_2) \rangle
+  \iff b = c$, which proves both directions.
+\end{proof}
+\end{lemma}
+
+
+
+\begin{lemma}[Existence of eigenvalue pairs]
+  Let $A = \begin{pmatrix} a & b \\ b & d \end{pmatrix}$ be a real $2 \times 2$ symmetric matrix.
+  The characteristic polynomial of $A$ is
+  \[
+    p(\lambda) = \det(\lambda I - A) = \lambda^2 - (a+d)\lambda + (ad - b^2),
+  \]
+  with real eigenvalues
+  \[
+    \lambda_1, \lambda_2 = \frac{a+d}{2} \pm \sqrt{\left(\frac{a-d}{2}\right)^2 + b^2} \in \R.
+  \]
+  The corresponding eigenvectors are found via
+  \[
+    E_{\lambda_i} = \operatorname{Null}(\lambda_i I_2 - A)
+    = \{\mathbf{v} \in \mathbb{R}^2 \mid (\lambda_i I_2 - A)\mathbf{v} = \mathbf{0}\}.
+  \]
+  Let $\mathbf{v}_1$ be the unit eigenvector for $\lambda_1$, and let $\mathbf{v}_2$ be the unit
+  vector perpendicular to $\mathbf{v}_1$. Then $\mathbf{v}_2$ is an eigenvector of $A$ with
+  eigenvalue $\lambda_2$.
+
+  \begin{proof}
+  Since $A = A^\top$,
+  \[
+    (A\mathbf{v}_2) \cdot \mathbf{v}_1
+    = \mathbf{v}_2^\top A^\top \mathbf{v}_1
+    = \mathbf{v}_2^\top (A\mathbf{v}_1)
+    = \lambda_1 \mathbf{v}_2^\top \mathbf{v}_1 = 0.
+  \]
+  Hence $A\mathbf{v}_2 \perp \mathbf{v}_1$, so $A\mathbf{v}_2$ is parallel to $\mathbf{v}_2$,
+  i.e.\ $A\mathbf{v}_2 = \lambda_2 \mathbf{v}_2$.
+\end{proof}
+
+\end{lemma}
+
+
+\begin{corollary}[Self-adjoint maps admit an orthonormal eigenbasis]
+  Given a real symmetric $2 \times 2$ matrix, there exists an orthonormal basis of real
+  eigenvectors
+  \[
+    \left\{
+      \begin{pmatrix} p_{11} \\ p_{21} \end{pmatrix},\
+      \begin{pmatrix} p_{12} \\ p_{22} \end{pmatrix}
+    \right\}
+  \]
+  such that $P = \begin{pmatrix} p_{11} & p_{12} \\ p_{21} & p_{22} \end{pmatrix}$
+  is an orthogonal matrix, i.e.\ $P^\top = P^{-1}$.
+\end{corollary}
+
+\begin{theorem}[Main theorem on self-adjoint matrices]
+  Given a real symmetric matrix $A$, we can diagonalise
+  \[
+    A = PDP^{-1}
+    = \begin{pmatrix} p_{11} & p_{12} \\ p_{21} & p_{22} \end{pmatrix}
+      \begin{pmatrix} \lambda_1 & 0 \\ 0 & \lambda_2 \end{pmatrix}
+      \begin{pmatrix} p_{11} & p_{12} \\ p_{21} & p_{22} \end{pmatrix}^{-1}.
+  \]
+\end{theorem}
+
+\subsection{The Gauss Map}
+
+Consider a regular surface $S$ and a point $\mathbf{q} \in S$. We can choose a unit vector
+$N(\mathbf{q})$ perpendicular to the tangent plane $T_{\mathbf{q}}(S)$:
+\[
+  N(\mathbf{q}) = \frac{\mathbf{x}_u \wedge \mathbf{x}_v}{|\mathbf{x}_u \wedge \mathbf{x}_v|},
+  \qquad \text{or} \qquad
+  N(\mathbf{q}) = -\frac{\mathbf{x}_u \wedge \mathbf{x}_v}{|\mathbf{x}_u \wedge \mathbf{x}_v|}.
+\]
+Since $N(\mathbf{q}) \in S^2$ for each $\mathbf{q}$, the Gauss map sends $\mathbf{q} \mapsto N(\mathbf{q})$.
+
+\begin{definition}[Gauss Map]
+  Let $S$ be a regular surface. The \textbf{Gauss map} is a smooth map
+  \[
+    N : S \to S^2
+  \]
+  where $N(\mathbf{q})$ is the unit normal at $\mathbf{q}$ as above.
+
+  \textbf{Remarks.}
+  \begin{enumerate}
+    \item Not every regular surface admits a Gauss map.
+    \item $N(\mathbf{q})$ can always \emph{locally} be found via the cross product of coordinate
+    vectors, which exists by regularity of $S$.
+    \item If $N: S \to S^2$ is a Gauss map, then $-N: S \to S^2$ is also a Gauss map,
+    corresponding to the other consistent choice of unit normal.
+  \end{enumerate}
+\end{definition}
+
+\subsection{The Second Fundamental Form}
+
+Consider the map $dN: T_p(S) \to T_{N(p)}(S^2)$. Since $\mathbf{q}$ is the origin of
+$T_{\mathbf{q}}(S)$ and $N(\mathbf{q})$ is the origin of $T_{N(\mathbf{q})}(S^2)$, both
+tangent planes contain the origin and are perpendicular to $N(\mathbf{q})$. Hence the two
+tangent spaces coincide, and we may view $dN$ as a linear transformation
+\[
+  dN : T_p(S) \to T_p(S).
+\]
+
+\begin{proposition}
+  $dN$ is a self-adjoint linear transformation.
+
+  \begin{proof}
+  By the basis lemma, it suffices to show
+  $\langle dN(\mathbf{x}_u), \mathbf{x}_v \rangle = \langle \mathbf{x}_u, dN(\mathbf{x}_v) \rangle$.
+
+  Since $N \circ \mathbf{x} \perp \mathbf{x}_u$, we have $\langle N \circ \mathbf{x}, \mathbf{x}_u \rangle = 0$.
+  Differentiating with respect to $v$:
+  \[
+    \left\langle \frac{\partial}{\partial v}(N \circ \mathbf{x}),\ \mathbf{x}_u \right\rangle
+    + \langle N \circ \mathbf{x},\ \mathbf{x}_{uv} \rangle = 0.
+  \]
+  Since $\frac{\partial}{\partial v}(N \circ \mathbf{x}) = dN(\mathbf{x}_v)$, this gives
+  $\langle dN(\mathbf{x}_v), \mathbf{x}_u \rangle = -\langle N \circ \mathbf{x}, \mathbf{x}_{uv} \rangle$.
+  Interchanging $u$ and $v$:
+  $\langle dN(\mathbf{x}_u), \mathbf{x}_v \rangle = -\langle N \circ \mathbf{x}, \mathbf{x}_{vu} \rangle$.
+  Since $\mathbf{x}_{uv} = \mathbf{x}_{vu}$, we conclude
+  \[
+    \langle dN(\mathbf{x}_u), \mathbf{x}_v \rangle
+    = -\langle N \circ \mathbf{x}, \mathbf{x}_{uv} \rangle
+    = \langle \mathbf{x}_u, dN(\mathbf{x}_v) \rangle. \qedhere
+  \]
+\end{proof}
+\end{proposition}
+
+
+
+\begin{definition}[Second Fundamental Form]
+  For $\mathbf{v} \in T_p(S)$, the \textbf{second fundamental form} of $S$ at $\mathbf{q}$ is
+  \[
+    \mathrm{II}_{\mathbf{q}}(\mathbf{v}) = -\langle dN(\mathbf{v}), \mathbf{v} \rangle.
+  \]
+\end{definition}
+
+\begin{proposition}[Finding $dN$ from $\mathrm{II}_p$]
+  Let $\mathcal{B} = \{\mathbf{v}_1, \mathbf{v}_2\}$ be an orthonormal basis of $T_p(S)$, and write
+  \[
+    -[dN]_{\mathcal{B},\mathcal{B}} = \begin{pmatrix} a & b \\ c & d \end{pmatrix}.
+  \]
+  Then
+  \[
+    a = \mathrm{II}_{\mathbf{q}}(\mathbf{v}_1), \qquad
+    d = \mathrm{II}_{\mathbf{q}}(\mathbf{v}_2), \qquad
+    b = \frac{1}{2}\Big[\mathrm{II}_{\mathbf{q}}(\mathbf{v}_1 + \mathbf{v}_2)
+        - \mathrm{II}_{\mathbf{q}}(\mathbf{v}_1) - \mathrm{II}_{\mathbf{q}}(\mathbf{v}_2)\Big].
+  \]
+
+\begin{proof}
+  From the matrix representation, $-dN(\mathbf{v}_1) = a\mathbf{v}_1 + b\mathbf{v}_2$ and
+  $-dN(\mathbf{v}_2) = b\mathbf{v}_1 + d\mathbf{v}_2$. Then by definition of $\mathrm{II}$:
+  \[
+    \mathrm{II}_{\mathbf{q}}(\mathbf{v}_1)
+    = \langle a\mathbf{v}_1 + b\mathbf{v}_2, \mathbf{v}_1 \rangle = a, \qquad
+    \mathrm{II}_{\mathbf{q}}(\mathbf{v}_2)
+    = \langle b\mathbf{v}_1 + d\mathbf{v}_2, \mathbf{v}_2 \rangle = d.
+  \]
+  For $b$, expand:
+  \begin{align*}
+    \mathrm{II}_{\mathbf{q}}(\mathbf{v}_1 + \mathbf{v}_2)
+    &= \langle -dN(\mathbf{v}_1 + \mathbf{v}_2),\ \mathbf{v}_1 + \mathbf{v}_2 \rangle \\
+    &= \langle -dN(\mathbf{v}_1), \mathbf{v}_1 \rangle
+     + \langle -dN(\mathbf{v}_1), \mathbf{v}_2 \rangle
+     + \langle -dN(\mathbf{v}_2), \mathbf{v}_1 \rangle
+     + \langle -dN(\mathbf{v}_2), \mathbf{v}_2 \rangle \\
+    &= \mathrm{II}_{\mathbf{q}}(\mathbf{v}_1) + \mathrm{II}_{\mathbf{q}}(\mathbf{v}_2) + 2b.
+  \end{align*}
+  Solving for $b$ gives the stated formula.
+\end{proof}
+
+\end{proposition}
+
+
+\subsection{Normal Curvature}
+
+\begin{definition}[Normal Curvature]
+  Let $\alpha(s)$ be a curve parameterised by arc length on a surface $S$, passing through
+  $\mathbf{p} = \alpha(0)$. The \textbf{normal curvature} is
+  \[
+    k_n = \kappa \cos\theta,
+  \]
+  where $\theta$ is the angle between $\alpha''(0)$ and $N(\mathbf{p})$.
+\end{definition}
+
+The normal curvature is the projection of the curvature vector $\alpha''(0)$ onto the
+surface normal. In particular, $|k_n(\mathbf{p})| \leq \kappa$.
+
+\begin{proposition}[Normal curvature $=$ second fundamental form]
+  Let $\alpha(s)$ be a curve parameterised by arc length, and $\mathbf{p} = \alpha(0) \in S$.
+  Then
+  \[
+    \mathrm{II}_{\mathbf{p}}(\alpha'(0))
+    = -\langle dN(\alpha'(0)),\ \alpha'(0) \rangle
+    = k_n(\mathbf{p}).
+  \]
+
+
+\begin{proof}
+  Since $N(\alpha(s)) \perp \alpha'(s)$, we have $\langle N(\alpha(s)), \alpha'(s) \rangle = 0$.
+  Differentiating:
+  \begin{align*}
+    0 &= \frac{d}{ds}\langle N(\alpha(s)), \alpha'(s) \rangle \\
+      &= \langle dN(\alpha'(s)), \alpha'(s) \rangle + \langle N(\alpha(s)), \alpha''(s) \rangle \\
+      &= -\mathrm{II}_{\mathbf{p}}(\alpha'(s)) + \langle N(\alpha(s)), \kappa\,\mathbf{n}(s) \rangle \\
+      &= -\mathrm{II}_{\mathbf{p}}(\alpha'(s)) + \kappa\cos\theta.
+  \end{align*}
+  Hence $\mathrm{II}_{\mathbf{p}}(\alpha'(s)) = \kappa\cos\theta = k_n(\mathbf{p})$.
+\end{proof}
+\end{proposition}
+
+
+
+The significance is that the normal curvature depends only on the unit tangent vector
+$\alpha'(0)$: if two curves satisfy $\alpha'(0) = \beta'(0)$, they have the same normal curvature.
+
+\subsection{Gaussian Curvature}
+
+\begin{proposition}
+  $-dN: T_{\mathbf{p}}(S) \to T_{\mathbf{p}}(S)$ is a self-adjoint linear transformation.
+
+\begin{proof}
+  Since $dN$ is self-adjoint, for all $\mathbf{v}, \mathbf{w} \in T_{\mathbf{p}}(S)$:
+  \[
+    \langle -dN(\mathbf{v}), \mathbf{w} \rangle
+    = -\langle dN(\mathbf{v}), \mathbf{w} \rangle
+    = -\langle \mathbf{v}, dN(\mathbf{w}) \rangle
+    = \langle \mathbf{v}, -dN(\mathbf{w}) \rangle. \qedhere
+  \]
+\end{proof}
+\end{proposition}
+
+
+
+\begin{definition}[Principal curvatures and directions]
+  By the main theorem on self-adjoint maps, there exists an orthonormal basis
+  $\mathcal{B} = \{\mathbf{v}_1, \mathbf{v}_2\}$ of $T_{\mathbf{p}}(S)$ diagonalising $-dN$:
+  \[
+    -[dN]_{\mathcal{B},\mathcal{B}} = \begin{pmatrix} k_1 & 0 \\ 0 & k_2 \end{pmatrix}.
+  \]
+  We call $\mathbf{v}_1, \mathbf{v}_2$ the \textbf{principal directions} and $k_1, k_2$ the
+  \textbf{principal curvatures} at $\mathbf{p}$.
+\end{definition}
+
+\begin{proposition}[Second fundamental form in principal directions]
+  For $\mathbf{v} = a\mathbf{v}_1 + b\mathbf{v}_2 \in T_{\mathbf{p}}(S)$,
+  \[
+    \mathrm{II}_{\mathbf{p}}(\mathbf{v}) = k_1 a^2 + k_2 b^2.
+  \]
+
+\begin{proof}
+  \begin{align*}
+    \mathrm{II}_{\mathbf{p}}(\mathbf{v})
+    &= \langle -dN(a\mathbf{v}_1 + b\mathbf{v}_2),\ a\mathbf{v}_1 + b\mathbf{v}_2 \rangle \\
+    &= \langle k_1 a\mathbf{v}_1 + k_2 b\mathbf{v}_2,\ a\mathbf{v}_1 + b\mathbf{v}_2 \rangle \\
+    &= k_1 a^2 + k_2 b^2. \qedhere
+  \end{align*}
+\end{proof}
+
+\end{proposition}
+
+
+
+\begin{proposition}
+  The maximal and minimal normal curvatures at $\mathbf{p}$ occur at $\mathbf{v}_1$ and
+  $\mathbf{v}_2$ respectively, and they are perpendicular to each other.
+\end{proposition}
+
+\begin{definition}[Gaussian and mean curvatures]
+  Let $k_1, k_2$ be the principal curvatures at $\mathbf{p}$. The \textbf{Gaussian curvature}
+  and \textbf{mean curvature} are defined as
+  \[
+    K(\mathbf{p}) = \det(-[dN_p]_{\mathcal{B},\mathcal{B}}) = k_1 k_2,
+    \qquad
+    H(\mathbf{p}) = \frac{1}{2}\operatorname{tr}(-[dN_p]_{\mathcal{B},\mathcal{B}})
+    = \frac{k_1 + k_2}{2}.
+  \]
+
+  \textbf{Remarks.}
+  \begin{enumerate}
+    \item $K(\mathbf{p})$ is the determinant of $-dN$ (product of eigenvalues); $2H(\mathbf{p})$
+    is the trace (sum of eigenvalues).
+    \item Both $K(\mathbf{p})$ and $H(\mathbf{p})$ are independent of the choice of
+    orthonormal basis.
+  \end{enumerate}
+\end{definition}
+
+\subsection{Gauss Map in Local Coordinates}
+
+In this section we derive formulas for $dN$, $H$, and $K$ in terms of the coordinate map
+$\mathbf{x}$ and the first fundamental form coefficients $E, F, G$.
+
+\begin{definition}[Gauss map in local coordinates]
+  We define
+  \[
+    \mathbf{M}(u,v) := N \circ \mathbf{x}(u,v),
+  \]
+  viewing the Gauss map in local coordinates. Since $\mathbf{M}_u$ and $\mathbf{M}_v$ lie
+  in $T_p(S)$, which is spanned by $\{\mathbf{x}_u, \mathbf{x}_v\}$, we write
+  \[
+    \mathbf{M}_u = a_{11}\mathbf{x}_u + a_{21}\mathbf{x}_v, \qquad
+    \mathbf{M}_v = a_{12}\mathbf{x}_u + a_{22}\mathbf{x}_v.
+  \]
+\end{definition}
+
+\begin{lemma}
+  \[
+    d(N \circ \mathbf{x}) = d\mathbf{M}
+    = d\mathbf{x} \begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix},
+  \]
+  which is equivalent to
+  \[
+    [dN]_{\mathcal{B},\mathcal{B}} = \begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix}.
+  \]
+\end{lemma}
+
+Since $K$ and $H$ are determined by $[dN]_{\mathcal{B},\mathcal{B}}$, it remains to express
+$a_{ij}$ in terms of the first and second fundamental form coefficients.
+
+
+
 
 \pagebreak
 
 \section{Isometries}
+\subsection{Isometries}
 
+\begin{definition}[Diffeomorphism]
+  A diffeomorphism is a map $\phi: S_1 \to S_2$ such that
+  \begin{itemize}
+    \item $\phi$ is smooth (between surfaces),
+    \item $\phi$ is a bijection (so $\phi^{-1}$ exists),
+    \item $\phi^{-1}$ is also smooth (between surfaces).
+  \end{itemize}
+  We say that two surfaces are \textbf{diffeomorphic} if there exists a diffeomorphism between them.
+\end{definition}
+
+\textbf{Facts.}
+\begin{enumerate}
+  \item If $\phi: S_1 \to S_2$ is a diffeomorphism, then its inverse $\phi^{-1}: S_2 \to S_1$ is also a diffeomorphism.
+  \item If $\phi: S_1 \to S_2$ is a diffeomorphism, and $\mathbf{x}: U \to S_1$ is a coordinate function of $S_1$, then
+  \[
+    \mathbf{y} = \phi \circ \mathbf{x} : U \to S_2
+  \]
+  is a coordinate function of $S_2$.
+\end{enumerate}
+
+Now, we introduce the notion of an \textbf{isometry}.
+
+\begin{definition}[Isometry]
+  A diffeomorphism $\phi: S_1 \to S_2$ is an \textbf{isometry} if the arc lengths of tangent
+  vectors remain unchanged under $d\phi: T_{\mathbf{p}}(S_1) \to T_{\phi(\mathbf{p})}(S_2)$
+  for all $\mathbf{p} \in S_1$, i.e.
+  \[
+    |\mathbf{u}| = |d\phi(\mathbf{u})| \quad \text{for all } \mathbf{u} \in T_{\mathbf{p}}(S_1),
+  \]
+  or equivalently, for all $\mathbf{p} \in S_1$ and for all $\mathbf{u} \in T_{\mathbf{p}}(S_1)$,
+  \[
+    \mathrm{I}_{\mathbf{p}}(\mathbf{u}) = \mathrm{I}_{\phi(\mathbf{p})}(d\phi(\mathbf{u})). \tag{$*$}
+  \]
+\end{definition}
+
+\begin{definition}[Isometry, DoCarmo]
+  A diffeomorphism $\phi: S_1 \to S_2$ is an \textbf{isometry} if for all $\mathbf{p} \in S_1$
+  and for all $\mathbf{u}, \mathbf{v} \in T_{\mathbf{p}}(S_1)$,
+  \[
+    \langle \mathbf{u}, \mathbf{v} \rangle = \langle d\phi(\mathbf{u}), d\phi(\mathbf{v}) \rangle. \tag{$**$}
+  \]
+\end{definition}
+
+The surfaces $S_1, S_2$ are then said to be \emph{isometric}.
+
+\begin{remark}
+\begin{enumerate}
+  \item We have an equivalent definition of isometry if we replace Equation $(**)$ by the
+  seemingly weaker Equation $(*)$. It turns out both are equivalent. We prove this in T9Q2.
+  \item By definition, an isometry is a diffeomorphism.
+\end{enumerate}
+\end{remark}
+
+\pagebreak
+\subsection{Local Isometries}
+
+\begin{definition}[Local Isometry]
+  A smooth map $\phi: S_1 \to S_2$ is a \emph{local isometry} at $\mathbf{p} \in S_1$ if
+  there is an open neighbourhood $V_1$ of $\mathbf{p}$ on $S_1$ and an open neighbourhood
+  $V_2$ of $\phi(\mathbf{p})$ on $S_2$ such that $\phi: V_1 \to V_2$ is an isometry.
+
+  A smooth map $\phi: S_1 \to S_2$ is a \emph{local isometry} if it is a local isometry at
+  every point on $S_1$.
+\end{definition}
+
+\begin{remark}
+Key facts about local isometries.
+\begin{enumerate}
+  \item Since $\phi: V_1 \to V_2$ is an isometry, it is also a diffeomorphism.
+  \item Every (global) isometry is a local isometry.
+  \item A local isometry $\phi: S_1 \to S_2$ is \textbf{NOT} necessarily a diffeomorphism.
+  It may not even be a bijection. Hence a local isometry may \textbf{NOT} be an isometry.
+  \item $\phi$ being a local isometry at a point $\mathbf{p}$ is stronger than saying
+  $\mathrm{I}_{\mathbf{p}}(\mathbf{u}) = \mathrm{I}_{\phi(\mathbf{p})}(d\phi(\mathbf{u}))$ alone.
+  It means $\mathrm{I}_{\mathbf{q}}(\mathbf{u}) = \mathrm{I}_{\phi(\mathbf{q})}(d\phi(\mathbf{u}))$
+  for all points $\mathbf{q}$ in the open neighbourhood $V_1$ of $\mathbf{p}$ and for all
+  $\mathbf{u} \in T_{\mathbf{q}}(S_1)$.
+\end{enumerate}
+\end{remark}
+
+\begin{proposition}
+  Let $\mathbf{x}: U \to S_1$ and $\mathbf{y}: U \to S_2$ be coordinate functions. Let
+  $E_1, F_1, G_1$ and $E_2, F_2, G_2$ denote the coefficients of the first fundamental forms
+  on $S_1$ and $S_2$ respectively. Suppose $E_1 = E_2$, $F_1 = F_2$, and $G_1 = G_2$ as
+  functions of $(u, v) \in U$. Then
+  \[
+    \Phi = \mathbf{y} \circ \mathbf{x}^{-1} : \mathbf{x}(U) \to \mathbf{y}(U)
+  \]
+  is an isometry.
+
+  \begin{proof}
+  Let $\mathbf{p} = \mathbf{x}(u,v)$. Let $\mathbf{w} = a\mathbf{x}_u + b\mathbf{x}_v =
+  d\mathbf{x}\begin{pmatrix}a\\b\end{pmatrix}$ be a tangent vector at $\mathbf{p}$. Then,
+  \[
+    d\Phi(\mathbf{w})
+    = d\Phi\, d\mathbf{x}\begin{pmatrix}a\\b\end{pmatrix}
+    = d(\mathbf{y} \circ \mathbf{x}^{-1} \circ \mathbf{x})\begin{pmatrix}a\\b\end{pmatrix}
+    = a\mathbf{y}_u + b\mathbf{y}_v.
+  \]
+  Next we compare
+  \[
+    \mathrm{I}_{\mathbf{p}}(\mathbf{w}) = a^2 E_1 + 2ab F_1 + b^2 G_1,
+  \]
+  \[
+    \mathrm{I}_{\Phi(\mathbf{p})}(d\Phi(\mathbf{w}))
+    = \mathrm{I}_{\Phi(\mathbf{p})}(a\mathbf{y}_u + b\mathbf{y}_v)
+    = a^2 E_2 + 2ab F_2 + b^2 G_2.
+  \]
+  Since $E_1 = E_2$, $F_1 = F_2$, $G_1 = G_2$, the two first fundamental forms agree.
+  Since $\Phi: \mathbf{x}(U) \to \mathbf{y}(U)$ is a diffeomorphism, it is an isometry.
+\end{proof}
+\end{proposition}
+
+
+
+\begin{corollary}
+  Let $\phi: S_1 \to S_2$ be a diffeomorphism. Let $\mathbf{x}: U \to S_1$ be a coordinate
+  function. Then $\mathbf{y} = \phi \circ \mathbf{x}: U \to S_2$ is a coordinate function on
+  $S_2$. Let $E_i, F_i, G_i$ be the coefficients of the first fundamental forms on $S_i$ for
+  $i = 1, 2$. Then the following are equivalent:
+  \begin{enumerate}
+    \item $E_1 = E_2,\ F_1 = F_2,\ G_1 = G_2$ as functions of $(u,v) \in U$.
+    \item $\phi = \mathbf{y} \circ \mathbf{x}^{-1}: \mathbf{x}(U) \to \mathbf{y}(U)$ is an isometry.
+  \end{enumerate}
+\end{corollary}
+
+\pagebreak
+\subsection{Gauss Theorema Egregium}
+
+\begin{theorem}[Theorema Egregium]
+  Let $\phi: S_1 \to S_2$ be a local isometry. Let $p_1 \in S_1$ and $p_2 \in S_2$. Let
+  $K$ and $\bar{K}$ be the Gaussian curvatures at $p_1$ and $p_2$ respectively. Then
+  $K = \bar{K}$.
+
+  \begin{proof}
+The main idea of the proof is as follows:
+\begin{enumerate}
+  \item Suppose $\phi: S_1 \to S_2$ is a local isometry.
+  \item Write the Gaussian curvature $K$ on $S_1$ in terms of the first fundamental form of $S_1$.
+  \item Similarly $\overline{K}$ on $S_2$ can be written in terms of the first fundamental form of $S_2$.
+  \item Since $\phi$ is a local isometry, the first fundamental forms agree locally.
+  \item Hence $K = \overline{K}$.
+\end{enumerate}
+
+
+
+Let $S$ be a regular surface and $\mathbf{x}: U \to S$ a coordinate function. The partial
+derivatives $\mathbf{x}_{uu}, \mathbf{x}_{uv} = \mathbf{x}_{vu}, \mathbf{x}_{vv}$ can be
+expressed in the basis $\{\mathbf{x}_u, \mathbf{x}_v, N\}$:
+\[
+  \mathbf{x}_{uu} = \Gamma_{11}^1\mathbf{x}_u + \Gamma_{11}^2\mathbf{x}_v + L_1 N, \qquad
+  \mathbf{x}_{uv} = \Gamma_{12}^1\mathbf{x}_u + \Gamma_{12}^2\mathbf{x}_v + L_2 N,
+\]
+\[
+  \mathbf{x}_{vu} = \Gamma_{21}^1\mathbf{x}_u + \Gamma_{21}^2\mathbf{x}_v + \bar{L}_2 N, \qquad
+  \mathbf{x}_{vv} = \Gamma_{22}^1\mathbf{x}_u + \Gamma_{22}^2\mathbf{x}_v + L_3 N,
+\]
+\[
+  N_u = a_{11}\mathbf{x}_u + a_{21}\mathbf{x}_v, \qquad
+  N_v = a_{12}\mathbf{x}_u + a_{22}\mathbf{x}_v.
+\]
+The coefficients $\Gamma_{ij}^k$ are the \textbf{Christoffel symbols}.
+
+\textbf{Lemma 4.} The Christoffel symbols $\Gamma_{ij}^k$ are functions of $E, F, G$ and
+their partial derivatives. In particular,
+\[
+  \Gamma_{11}^1 = \frac{GE_u - 2FF_u + FE_v}{2(EG - F^2)}, \qquad
+  \Gamma_{11}^2 = \frac{-FE_u + 2EF_u - EE_v}{2(EG - F^2)}.
+\]
+
+\textbf{Lemma 6.}
+\[
+  EK = (\Gamma_{11}^2)_v - (\Gamma_{12}^2)_u
+     + \Gamma_{11}^1\Gamma_{12}^2 + \Gamma_{11}^2\Gamma_{22}^2
+     - \Gamma_{12}^1\Gamma_{11}^2 - (\Gamma_{12}^2)^2,
+\]
+\[
+  FK = (\Gamma_{12}^1)_u - (\Gamma_{11}^1)_v
+     + \Gamma_{12}^1\Gamma_{12}^2 - \Gamma_{11}^2\Gamma_{22}^1.
+\]
+The proof starts from $(\mathbf{x}_{uu})_v - (\mathbf{x}_{uv})_u = 0$, substitutes the
+expressions above, applies the product rule and the Weingarten equations, then collects
+coefficients in $\{\mathbf{x}_u, \mathbf{x}_v, N\}$.
+
+\textbf{Completing the proof.} Let $\mathbf{x}: U \to S_1$ be a coordinate function;
+then $\mathbf{y} = \phi \circ \mathbf{x}: U \to S_2$ is also a coordinate function. Since
+$\phi$ is a local isometry, $E = \overline{E}$, $F = \overline{F}$, $G = \overline{G}$
+(and all their partial derivatives agree), so $\Gamma_{ij}^k = \overline{\Gamma}_{ij}^k$.
+By Lemma 6, $K$ depends only on $E, F, G$ and the Christoffel symbols, hence $K = \overline{K}$.
+\end{proof}
+
+\end{theorem}
+
+
+\begin{remark}
+A modification of the proof of Lemma 6 yields the \textbf{Mainardi--Codazzi equations}:
+\[
+  e_v - f_u = e\Gamma_{12}^1 + f(\Gamma_{12}^2 - \Gamma_{11}^1) - g\Gamma_{11}^2,
+\]
+\[
+  f_v - g_u = e\Gamma_{22}^1 + f(\Gamma_{22}^2 - \Gamma_{12}^1) - g\Gamma_{12}^2.
+\]
+\end{remark}
+
+\begin{theorem}[Fundamental Theorem of Surfaces]
+  Let $E, F, G, e, f, g$ be smooth functions on an open set $U$ with $EG - F^2 > 0$,
+  $E > 0$, $G > 0$. Form the Christoffel symbols $\Gamma_{ij}^k$ from $E, F, G$ as in
+  Lemma~4. Suppose $E, F, G, e, f, g$ and $\Gamma_{ij}^k$ satisfy Lemma~6 and the two
+  Mainardi--Codazzi equations. Then for any $(u_0, v_0) \in U$ there exists a regular
+  surface $S$ and a coordinate function $\mathbf{x}: U' \to S$ (with $U' \subseteq U$
+  open, $(u_0, v_0) \in U'$) such that $E, F, G$ and $e, f, g$ are the first and second
+  fundamental forms of $S$ respectively.
+\end{theorem}
 
 \pagebreak
 
 \section{Vector Fields \& Geodesics}
+
+
+\subsection{Tangent Vector Fields}
+
+\begin{definition}[Vector Field]
+  Let $S$ be a regular surface and let $W \subseteq S$ be an open subset. A \textbf{vector
+  field} $\mathbf{w}$ \emph{on $W$} is a correspondence that assigns to each $p \in W$ a
+  tangent vector $\mathbf{w}(p) \in T_p(S)$.
+
+  We can express $\mathbf{w}$ in terms of a coordinate function. More precisely, if
+  $p = \mathbf{x}(u,v) \in S$, then
+  \[
+    \mathbf{w}(\mathbf{x}(u,v)) = a(u,v)\,\mathbf{x}_u + b(u,v)\,\mathbf{x}_v \;\in\; T_p(S)
+  \]
+  for some functions $a, b$ on $U$. In matrix form,
+  \[
+    \mathbf{w}(p) = a(u,v)\,\mathbf{x}_u + b(u,v)\,\mathbf{x}_v
+    = d\mathbf{x}\begin{pmatrix} a(u,v) \\ b(u,v) \end{pmatrix}.
+  \]
+\end{definition}
+
+We interpret this expression by viewing $\begin{pmatrix} a(u,v) \\ b(u,v) \end{pmatrix}$ as a
+vector field on $U$, and $d\mathbf{x}$ as the map transforming it to the field $\mathbf{w}$ on $S$.
+
+\begin{definition}[Smooth Vector Field]
+  We say that a vector field $\mathbf{w}$ is \textbf{smooth} at $p_0 = \mathbf{x}(u_0, v_0)$ if
+  the vector field $\begin{pmatrix} a(u,v) \\ b(u,v) \end{pmatrix}$ on $U$ is smooth at
+  $(u_0, v_0)$.
+\end{definition}
+
+This definition is independent of the choice of coordinate function.
+
+\begin{proposition}[Smoothness is independent of coordinate function]
+  The smoothness of $\mathbf{w}$ at a point $p$ does not depend on the choice of coordinate
+  function used to define it.
+
+  \begin{proof}
+    Suppose $\mathbf{y}\colon U' \to S$ is another coordinate function with $p \in \mathbf{y}(U')$.
+    Then
+    \[
+      \mathbf{w}(q)
+      = a(u,v)\,\mathbf{x}_u + b(u,v)\,\mathbf{x}_v
+      = c(\xi,\eta)\,\mathbf{y}_\xi + d(\xi,\eta)\,\mathbf{y}_\eta
+    \]
+    for all $q$ in a neighbourhood of $p$. Without loss of generality assume
+    $\mathbf{x}(U) = \mathbf{y}(U')$ (otherwise restrict to $U \cap U'$). Suppose $\mathbf{w}$
+    is smooth with respect to $\mathbf{y}$. One then shows via the chain rule and the transition
+    map $\mathbf{y}^{-1} \circ \mathbf{x}$ that it is also smooth with respect to $\mathbf{x}$.
+  \end{proof}
+\end{proposition}
+
+\pagebreak
+\subsection{A Good Definition for the Derivative of a Vector Field}
+
+\begin{definition}[Differentiation along a curve]
+  Let $\alpha(t) = \mathbf{x}(u(t), v(t))$ be a curve on $S$. Write
+  \[
+    \mathbf{w}(\alpha(t)) = a(u(t), v(t))\,\mathbf{x}_u + b(u(t), v(t))\,\mathbf{x}_v.
+  \]
+  If $\alpha(0) = p$ and $\alpha'(0) = (a_1, a_2)$, then by the chain rule,
+  \[
+    \frac{d}{dt}\mathbf{w}(\alpha(t))\bigg|_{t=0}
+    = a_1\,\frac{\partial \mathbf{w}}{\partial u}\bigg|_p
+    + a_2\,\frac{\partial \mathbf{w}}{\partial v}\bigg|_p.
+  \]
+  Crucially, this expression depends on the curve $\alpha$ \emph{only through its tangent
+  vector} $\alpha'(0) = (a_1, a_2)$.
+\end{definition}
+
+Differentiating along the line $\alpha(t) = p + t\mathbf{v} = (p_1 + ta_1,\, p_2 + ta_2)$
+recovers the classical directional derivative:
+\[
+  \frac{d}{dt}\mathbf{w}(\alpha(t))\bigg|_{t=0}
+  = \lim_{\Delta t \to 0}
+    \frac{\mathbf{w}(p_1 + a_1\Delta t,\, p_2 + a_2\Delta t) - \mathbf{w}(p_1, p_2)}{\Delta t}.
+\]
+
+In general, $\frac{d}{dt}\mathbf{w}(\alpha(t))$ need \emph{not} lie in the tangent plane.
+This motivates the following definition.
+
+\begin{definition}[Covariant Derivative]
+  The \textbf{covariant derivative} of $\mathbf{w}$ at $p$ relative to the tangent vector
+  $\alpha'(0)$ is
+  \[
+    \frac{D\mathbf{w}}{dt}
+    = \frac{d}{dt}\mathbf{w}(\alpha(t))
+    - \left\langle \frac{d}{dt}\mathbf{w}(\alpha(t)),\, \mathbf{N} \right\rangle \mathbf{N},
+  \]
+  i.e.\ the orthogonal projection of $\frac{d}{dt}\mathbf{w}(\alpha(t))$ onto the tangent
+  plane $T_p(S)$.
+\end{definition}
+
+\pagebreak
+\subsection{Christoffel Symbols in Vector Fields}
+
+\subsubsection*{Christoffel Symbols in the Covariant Derivative}
+
+Let $\alpha(t) = (u(t), v(t))$ and write
+\[
+  \mathbf{w}(\alpha(t)) = A(t)\,\mathbf{x}_u + B(t)\,\mathbf{x}_v,
+  \qquad A(t) = a(u(t), v(t)),\quad B(t) = b(u(t), v(t)).
+\]
+Differentiating by the product rule and expanding via the Christoffel symbols, then projecting
+onto the tangent plane, yields
+\begin{align*}
+  \frac{D\mathbf{w}}{dt}
+  &= \Bigl(A' + \Gamma_{11}^1 Au' + \Gamma_{12}^1 Av'
+           + \Gamma_{21}^1 Bu' + \Gamma_{22}^1 Bv'\Bigr)\mathbf{x}_u \\
+  &\quad + \Bigl(B' + \Gamma_{11}^2 Au' + \Gamma_{12}^2 Av'
+                   + \Gamma_{21}^2 Bu' + \Gamma_{22}^2 Bv'\Bigr)\mathbf{x}_v.
+\end{align*}
+
+\begin{remark}
+  Since the Christoffel symbols $\Gamma_{ij}^k$ are determined entirely by the first fundamental
+  form coefficients $E, F, G$ (as shown in Chapter~4), the covariant derivative is an
+  \emph{intrinsic} quantity: it can be computed purely from the first fundamental form, without
+  any reference to the unit normal $\mathbf{N}$.
+\end{remark}
+
+\subsubsection*{Maps Between Vector Fields}
+
+Let $S_1, S_2$ be regular surfaces, $\mathbf{x}\colon U \to S_1$ a coordinate function, and
+$\phi\colon S_1 \to S_2$ a diffeomorphism. Then $\mathbf{y} = \phi \circ \mathbf{x}\colon U \to S_2$
+is also a coordinate function. For a vector field
+$\mathbf{w} = a(u,v)\,\mathbf{x}_u + b(u,v)\,\mathbf{x}_v$ on $S_1$,
+\[
+  d\phi(\mathbf{w}) = a(u,v)\,\mathbf{y}_u + b(u,v)\,\mathbf{y}_v,
+\]
+which is a vector field on $S_2$.
+
+\begin{proposition}
+  Let $\phi\colon S_1 \to S_2$ be an isometry. Then
+  \[
+    \frac{D\bigl(d\phi(\mathbf{w})\bigr)}{dt} = d\phi\!\left(\frac{D\mathbf{w}}{dt}\right).
+  \]
+
+  \begin{proof}[Proof (sketch)]
+    Let $E_i, F_i, G_i$ denote the first fundamental form coefficients with respect to
+    $\mathbf{x}$ on $S_1$ and $\mathbf{y} = \phi \circ \mathbf{x}$ on $S_2$. Since $\phi$ is
+    an isometry, the two first fundamental forms coincide, hence the Christoffel symbols of
+    $S_1$ and $S_2$ are identical. The covariant derivative formula above then shows both
+    sides have the same expression in coordinates.
+  \end{proof}
+\end{proposition}
+
+
+\pagebreak
+\subsection{Geodesic Curvature}
 
 \pagebreak
 
