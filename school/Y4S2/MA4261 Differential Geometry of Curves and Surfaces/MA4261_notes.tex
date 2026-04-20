@@ -16,7 +16,7 @@
 \usepackage{etoolbox}
 \usepackage[capitalise, noabbrev]{cleveref}
 \usepackage{titlesec}
-
+\usepackage{enumitem}
 % --- Page Setup ---
 \geometry{margin=0.5in}
 \setlength{\headheight}{15pt}
@@ -24,13 +24,7 @@
 % --- Header and Footer ---
 \usepackage{fancyhdr}
 \pagestyle{fancy}
-\fancyhf{}
-\newcommand{\coursename}{MA4261} % <-- SET COURSE NAME HERE
-\renewcommand{\subsectionmark}[1]{\markright{\thesubsection.\ \textit{#1}}}
-\fancyhead[L]{\textbf{\coursename}\ifx\rightmark\empty\else\ $\cdot$\ \rightmark\fi}
-\fancyhead[R]{\thepage}
-\fancyfoot{}
-\renewcommand{\headrulewidth}{0.4pt}
+\newcommand{\coursename}{MA4261} % <-- SET
 
 % --- Hyperref Setup ---
 \hypersetup{
@@ -169,36 +163,6 @@
   \color{black}%
 }
 
-% ==========================================
-% --- Question Environment ---
-% Usage: \begin{question}[1] for manual numbering
-%        \begin{question}   for auto-increment
-% Counter resets each section.
-% ==========================================
-% ==========================================
-% --- Question Environment ---
-% ==========================================
-\newcounter{question}[section]
-
-\newenvironment{questionbox}{%
-  \begin{tcolorbox}[
-    notestyle,
-    borderline west={3pt}{0pt}{qcolor},
-    colback=qbg, colframe=qbg,
-    fonttitle=\bfseries,
-    title=Question~\thequestion,
-    attach boxed title to top left={yshift=-2pt},
-    boxed title style={
-      colback=qcolor, colframe=qcolor,
-      sharp corners, left=4pt, right=4pt
-    }
-  ]%
-}{\end{tcolorbox}}
-
-\NewDocumentEnvironment{question}{o}{
-  \IfNoValueTF{#1}{\refstepcounter{question}}{\setcounter{question}{#1}}%
-  
-  \begin{questionbox} \end{questionbox}}
 
 
 % ==========================================
@@ -425,7 +389,7 @@ tangent spaces coincide, and we may view $dN$ as a linear transformation
 
 
 
-\begin{definition}[Second Fundamental Form]
+\begin{definition}[Second Fundamental Form]{\label{def:sff}}
   For $\mathbf{v} \in T_p(S)$, the \textbf{second fundamental form} of $S$ at $\mathbf{q}$ is
   \[
     \mathrm{II}_{\mathbf{q}}(\mathbf{v}) = -\langle dN(\mathbf{v}), \mathbf{v} \rangle.
@@ -472,7 +436,7 @@ tangent spaces coincide, and we may view $dN$ as a linear transformation
 
 \subsection{Normal Curvature}
 
-\begin{definition}[Normal Curvature]
+\begin{definition}[Normal Curvature]{\label{def:normalcurve}}
   Let $\alpha(s)$ be a curve parameterised by arc length on a surface $S$, passing through
   $\mathbf{p} = \alpha(0)$. The \textbf{normal curvature} is
   \[
@@ -989,20 +953,97 @@ which is a vector field on $S_2$.
 \pagebreak
 \subsection{Geodesic Curvature}
 
+In this section, we introduce the \textit{geodesic curvature}. 
+
+\medskip \noindent Consider a point $\textbf{p} = \alpha(s_0) \in S$ for some point $s_0 \in U$. Then, we define 
+
+$$\textbf{t} = \alpha'(s) \qquad \textbf{s} = N \wedge \textbf{t}$$ and these two (unit) vectors form an \textit{orthonormal basis} at \textbf{p}.
+
+And then, we have $\alpha''(s_0)$ to be perpendicular to \textbf{t}, but not necessarily on the tangent plane. So, it is made of components of $N$ and \textbf{s}. 
+
+It is easier to visualise with this diagram.
+
+\textit{insert diagram here.}
+
+Then, we have:
+$$\alpha''(s_0) = \langle N, \alpha''(s_0) \rangle N + \langle \textbf{s}, \alpha''(s)\rangle \textbf{s}$$
+
+And $\langle N, \alpha''(s_0)\rangle$ is the size of the vector that is projected from $\alpha''(s_0) $ onto the "normal plane", which we recall from \ref{def:normalcurve} is in fact the \textit{normal curvature}!
+
+\begin{proposition}
+    Let $k_n$ be the normal curvature at \textbf{v}. We show that the following are equivalent:
+    \begin{enumerate} 
+        \item $k_n = \langle N, \alpha''(0) \rangle$
+        \item $k_n = \mathrm{II}_{v}(v)$
+    \end{enumerate}
+    \begin{proof}
+        We know that $\langle N(\alpha(s)), \alpha'(s)\rangle = 0$ since they are perpendicular to each other. So, it follows that
+
+        \begin{align*}
+            \langle N(\alpha(s)), \alpha'(s)\rangle = 0 &\iff \frac{d}{ds} \langle N(\alpha(s)), \alpha'(s)\rangle = 0\\ 
+            &\iff \langle N, \alpha''(s) \rangle + \langle dN (\alpha'(s)), \alpha'(s) \rangle = 0
+            \\
+            &\iff \langle N, \alpha''(s)  = - \langle dN(\alpha'(s)), \alpha'(s)\rangle = \textrm{II}_\textbf{p}(\alpha'(0)) = k_n
+        \end{align*}
+    \end{proof}
+\end{proposition}
+
+And we define the second component as the geodesic curvature.
+\begin{definition}[Geodesic Curvature]\label{def:geodesiccurve}
+    We define $$k_g := \langle \textbf{s}, \alpha''(s_0)\rangle$$ to be the \textit{geodesic curvature} of $\alpha(s)$ at the point $s_0$.
+\end{definition}
+
+And so, we can simplify the expression for $\alpha''$ to be $$\alpha ''(s_0) = k_n \textbf{N}+ k_g \textbf{s}$$
+
+\begin{proposition}
+Let $k$, $k_n$ and $k_g$ be the curvature, \textit{normal curvature} and \textit{geodesic curvature} of $\alpha$ respectively. Then,
+    $$k= k_n^2+k_g^2$$
+
+    \begin{proof}
+    Follows from Pythagroas Theorem.
+    \end{proof}
+\end{proposition}
+
+
+\pagebreak
+\subsection{Geodesic}
+We introduce the concept of a geodesic.First, we motivate the idea using a proposition.
+
+\begin{proposition}
+    Let $\alpha(s)$ be a curve on a surface $S$ parameterized by arc length. Then, the following are equivalent. 
+    
+    For all $s$,
+    \begin{enumerate} 
+    \item $$\frac{D\alpha'}{ds} = (0,0,0)$$
+        \item $\alpha''(s)$ is perpendicular to the tangent space.
+        \item $\alpha''(s)$ is parallel to the normal vector \textbf{N}.
+        \item The geodesic curvature $k_g$ of $\alpha$ is zero.
+    \end{enumerate}
+
+    \begin{proof} 
+       \medskip \noindent $(1) \Rightarrow (2):$ 
+
+       \medskip \noindent $(2) \Rightarrow (3):$
+
+       \medskip \noindent $(3) \Rightarrow (4):$
+
+       \medskip \noindent $(4) \Rightarrow (1) :$
+    \end{proof}
+\end{proposition}
 \pagebreak
 
 \section{Gauss-Bonnet Theorem}
-
-
+\begin{center}
+    \textbf{-- omitted for now --}
+\end{center}
+\pagebreak
 % ==========================================
 \section{Tutorials}
 % ==========================================
 
 
-\pagebreak
-
-
-
+% ============================================================
+\section{Tutorials}
 % ==========================================
 \section{Cheatsheet}
 % ==========================================
