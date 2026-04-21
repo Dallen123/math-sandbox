@@ -1,4 +1,4 @@
-\documentclass[12pt, a4paper]{article}
+\documentclass[10pt, a4paper]{article}
 
 % --- Essential Libraries ---
 \usepackage{amsmath}
@@ -16,6 +16,19 @@
 \usepackage{etoolbox}
 \usepackage[capitalise, noabbrev]{cleveref}
 \usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{graphicx}
+
+% --- Graphics ---
+\graphicspath{ {./images/} }
+
+
+% --- Font ---
+\usepackage{fetamont}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{sfmath} 
 
 % --- Page Setup ---
 \geometry{margin=0.5in}
@@ -29,9 +42,9 @@
 % --- Hyperref Setup ---
 \hypersetup{
     colorlinks=true,
-    linkcolor=blue,
-    urlcolor=blue,
-    citecolor=blue
+    linkcolor=red,
+    urlcolor=red,
+    citecolor=red
 }
 
 % --- Section Title Styling ---
@@ -79,9 +92,9 @@
 % --- Colour Palette ---
 % ==========================================
 \definecolor{defcolor}{RGB}{255, 0, 0}         % red  — definitions, sidenotes
-\definecolor{thmcolor}{RGB}{30, 120, 60}       % green — theorems, lemmas, etc.
+\definecolor{thmcolor}{RGB}{0, 00, 255}       % green — theorems, lemmas, etc.
 \definecolor{excolor}{RGB}{180, 100, 0}        % amber — examples
-\definecolor{remcolor}{RGB}{80, 80, 180}       % slate — remarks
+\definecolor{remcolor}{RGB}{0, 255, 0}       % slate — remarks
 \definecolor{proofcolor}{RGB}{0, 0, 255}       % blue  — proofs
 \definecolor{qcolor}{RGB}{90, 90, 90}          % grey  — questions
 \definecolor{qbg}{RGB}{245, 245, 245}          % light grey background
@@ -163,43 +176,14 @@
   \color{black}%
 }
 
-% ==========================================
-% --- Question Environment ---
-% Usage: \begin{question}[1] for manual numbering
-%        \begin{question}   for auto-increment
-% Counter resets each section.
-% ==========================================
-% ==========================================
-% --- Question Environment ---
-% ==========================================
-\newcounter{question}[section]
-
-\newenvironment{questionbox}{%
-  \begin{tcolorbox}[
-    notestyle,
-    borderline west={3pt}{0pt}{qcolor},
-    colback=qbg, colframe=qbg,
-    fonttitle=\bfseries,
-    title=Question~\thequestion,
-    attach boxed title to top left={yshift=-2pt},
-    boxed title style={
-      colback=qcolor, colframe=qcolor,
-      sharp corners, left=4pt, right=4pt
-    }
-  ]%
-}{\end{tcolorbox}}
-
-\NewDocumentEnvironment{question}{o}{
-  \IfNoValueTF{#1}{\refstepcounter{question}}{\setcounter{question}{#1}}%
-  
-  \begin{questionbox} \end{questionbox}}
 
 
 % ==========================================
 % --- Document Information ---
 % ==========================================
-\title{\textbf{ST3246 Statistical Models for Actuarial Science}} % <-- SET TITLE HERE
+\title{\textbf{ST3246 Statistical Models for Acturial Science}} % <-- SET TITLE HERE
 \author{Dallen Lee}
+\date{\today}
 
 % ==========================================
 \begin{document}
@@ -211,10 +195,12 @@
 \newpage
 
 
-\section{Theory of Interest}
 
 
 \pagebreak
-\section{Cheatsheet}
+% ==========================================
+
+
+
 
 \end{document}

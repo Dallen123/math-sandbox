@@ -1,0 +1,177 @@
+
+<style>
+  .geo-wrap { padding: 1rem 0; }
+  .geo-controls { display: flex; align-items: center; gap: 16px; margin: 12px 0 0; font-size: 13px; color: var(--color-text-secondary); }
+  .geo-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 14px 0 0; }
+  .geo-stat { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px 14px; }
+  .geo-stat-label { font-size: 11px; color: var(--color-text-secondary); margin-bottom: 4px; }
+  .geo-stat-val { font-size: 18px; font-weight: 500; color: var(--color-text-primary); }
+  .geo-stat-val.purple { color: #534AB7; }
+  .geo-stat-val.green  { color: #0F6E56; }
+  .geo-stat-val.red    { color: #A32D2D; }
+</style>
+
+<div class="geo-wrap">
+  <svg id="gsvg" width="100%" viewBox="0 0 680 420">
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+
+    <path d="M60,290 Q210,248 400,258 Q520,263 620,282 Q582,358 390,368 Q190,378 60,360 Z"
+          fill="#E6F1FB" stroke="#378ADD" stroke-width="1" opacity="0.65"/>
+    <text font-size="12" fill="#185FA5" x="580" y="300" font-family="var(--font-sans)">S</text>
+    <text font-size="11" fill="#888780" x="80" y="354" font-family="var(--font-sans)" font-style="italic">T&#x2082;S</text>
+
+    <path d="M90,322 C190,282 280,262 350,260 C410,258 475,266 560,285"
+          fill="none" stroke="#A32D2D" stroke-width="2"/>
+    <text id="alpha-label" font-size="12" fill="#A32D2D" x="566" y="282" font-family="var(--font-sans)">&#x3B1;(s)</text>
+
+    <circle id="pt" cx="340" cy="260" r="5" fill="#2C2C2A"/>
+    <text font-size="11" fill="#2C2C2A" x="350" y="278" font-family="var(--font-sans)" font-style="italic">p</text>
+
+    <line id="tangent" x1="340" y1="260" x2="440" y2="243" stroke="#BA7517" stroke-width="2" marker-end="url(#arr)"/>
+    <text id="tangent-label" font-size="12" fill="#BA7517" x="448" y="240" font-family="var(--font-sans)">&#x3B1;&#x2032;</text>
+
+    <line id="normal" x1="340" y1="260" x2="340" y2="55" stroke="#0F6E56" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr)"/>
+    <text font-size="12" fill="#0F6E56" x="348" y="48" font-family="var(--font-sans)">N</text>
+
+    <line id="accel" x1="340" y1="260" x2="340" y2="140" stroke="#534AB7" stroke-width="2.5" marker-end="url(#arr)"/>
+    <text id="accel-label" font-size="13" fill="#534AB7" x="0" y="0" font-family="var(--font-sans)" font-weight="500">&#x3B1;&#x2033;</text>
+
+    <path id="ra" d="M340,260 L356,260 L356,244 L340,244" fill="none" stroke="#888780" stroke-width="1"/>
+
+    <path id="kn-brace" fill="none" stroke="#0F6E56" stroke-width="1.5"/>
+    <text id="kn-label" font-size="11" fill="#0F6E56" font-family="var(--font-sans)">k&#x2099;</text>
+
+    <path id="kg-brace" fill="none" stroke="#A32D2D" stroke-width="1.5"/>
+    <text id="kg-label" font-size="11" fill="#A32D2D" font-family="var(--font-sans)">k&#x1D454;</text>
+
+    <rect x="420" y="330" width="190" height="72" rx="8" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="0.8" opacity="0.9"/>
+    <line x1="436" y1="348" x2="456" y2="348" stroke="#0F6E56" stroke-width="2" marker-end="url(#arr)"/>
+    <text font-size="11" fill="#2C2C2A" x="462" y="352" font-family="var(--font-sans)">N (normal)</text>
+    <line x1="436" y1="366" x2="456" y2="366" stroke="#534AB7" stroke-width="2.5" marker-end="url(#arr)"/>
+    <text font-size="11" fill="#2C2C2A" x="462" y="370" font-family="var(--font-sans)">&#x3B1;&#x2033; (acceleration)</text>
+    <line x1="436" y1="384" x2="456" y2="384" stroke="#BA7517" stroke-width="2" marker-end="url(#arr)"/>
+    <text font-size="11" fill="#2C2C2A" x="462" y="388" font-family="var(--font-sans)">&#x3B1;&#x2032; (tangent)</text>
+
+    <rect x="60" y="330" width="200" height="35" rx="6" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="0.8" opacity="0.9"/>
+    <text font-size="11" fill="#534AB7" x="160" y="352" text-anchor="middle" font-family="var(--font-sans)">D&#x3B1;&#x2032;/ds = (0,0,0)</text>
+  </svg>
+
+  <div class="geo-controls">
+    <span style="white-space:nowrap">Tilt &#x3B1;&#x2033; off N</span>
+    <input type="range" id="angle-slider" min="0" max="85" value="0" step="1" style="flex:1">
+    <span id="angle-out" style="min-width:32px;text-align:right">0°</span>
+  </div>
+
+  <div class="geo-stats">
+    <div class="geo-stat">
+      <div class="geo-stat-label">|&#x3B1;&#x2033;|</div>
+      <div class="geo-stat-val purple" id="stat-mag">1.00</div>
+    </div>
+    <div class="geo-stat">
+      <div class="geo-stat-label">k&#x2099; (normal curv.)</div>
+      <div class="geo-stat-val green" id="stat-kn">1.00</div>
+    </div>
+    <div class="geo-stat">
+      <div class="geo-stat-label">k&#x1D454; (geodesic curv.)</div>
+      <div class="geo-stat-val red" id="stat-kg">0.00</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const PX = 340, PY = 260;
+const NORMAL_LEN = 200;
+const ACCEL_LEN = 120;
+
+function update(angleDeg) {
+  const rad = angleDeg * Math.PI / 180;
+  const kn = Math.cos(rad);
+  const kg = Math.sin(rad);
+
+  const ax = PX + ACCEL_LEN * Math.sin(rad);
+  const ay = PY - ACCEL_LEN * Math.cos(rad);
+
+  const accel = document.getElementById('accel');
+  accel.setAttribute('x2', ax);
+  accel.setAttribute('y2', ay);
+
+  const lbl = document.getElementById('accel-label');
+  const lx = ax + 10 * Math.cos(rad) + 6;
+  const ly = ay - 10 * Math.sin(rad);
+  lbl.setAttribute('x', lx);
+  lbl.setAttribute('y', ly);
+
+  const NX = PX, NY = PY - NORMAL_LEN;
+  const knEndX = PX + ACCEL_LEN * kn * Math.sin(rad);
+  const knEndY = PY - ACCEL_LEN * kn;
+
+  const braceX = PX - 22;
+  const braceTop = Math.min(PY - ACCEL_LEN * Math.abs(kn), PY);
+  const braceBot = PY;
+  const bMid = (braceTop + braceBot) / 2;
+
+  const knBrace = document.getElementById('kn-brace');
+  if (Math.abs(kn) > 0.02) {
+    knBrace.setAttribute('d',
+      `M${braceX+6},${braceBot} C${braceX},${braceBot} ${braceX},${braceBot} ${braceX},${bMid+8}
+       L${braceX},${bMid} C${braceX},${bMid-8} ${braceX-4},${bMid-8} ${braceX-4},${bMid-8}
+       C${braceX-4},${bMid-8} ${braceX},${bMid-8} ${braceX},${bMid-16}
+       L${braceX},${braceTop} C${braceX},${braceTop} ${braceX},${braceTop} ${braceX+6},${braceTop}`
+    );
+    knBrace.style.display = '';
+    const knLbl = document.getElementById('kn-label');
+    knLbl.setAttribute('x', braceX - 22);
+    knLbl.setAttribute('y', bMid + 4);
+    knLbl.style.display = '';
+  } else {
+    knBrace.style.display = 'none';
+    document.getElementById('kn-label').style.display = 'none';
+  }
+
+  const kgBraceRight = PX + 22;
+  const kgEndX = PX + ACCEL_LEN * kg;
+  const kgMid = (PX + kgEndX) / 2;
+
+  const kgBrace = document.getElementById('kg-brace');
+  if (Math.abs(kg) > 0.02) {
+    const startX = PX;
+    const endX = PX + ACCEL_LEN * kg;
+    const mid = (startX + endX) / 2;
+    const by = PY + 22;
+    kgBrace.setAttribute('d',
+      `M${startX},${PY+6} C${startX},${by} ${startX},${by} ${mid-8},${by}
+       L${mid},${by} C${mid+8},${by} ${mid+8},${by+4} ${mid+8},${by+4}
+       C${mid+8},${by+4} ${mid+8},${by} ${mid+16},${by}
+       L${endX},${by} C${endX},${by} ${endX},${by} ${endX},${PY+6}`
+    );
+    kgBrace.style.display = '';
+    const kgLbl = document.getElementById('kg-label');
+    kgLbl.setAttribute('x', mid);
+    kgLbl.setAttribute('y', by + 16);
+    kgLbl.style.display = '';
+    kgLbl.setAttribute('text-anchor', 'middle');
+  } else {
+    kgBrace.style.display = 'none';
+    document.getElementById('kg-label').style.display = 'none';
+  }
+
+  document.getElementById('stat-kn').textContent = Math.abs(kn).toFixed(2);
+  document.getElementById('stat-kg').textContent = Math.abs(kg).toFixed(2);
+  document.getElementById('stat-mag').textContent = '1.00';
+
+  const isGeodesic = angleDeg < 3;
+  document.getElementById('stat-kg').style.color = isGeodesic ? '#0F6E56' : '#A32D2D';
+}
+
+document.getElementById('angle-slider').addEventListener('input', function() {
+  const v = +this.value;
+  document.getElementById('angle-out').textContent = v + '°';
+  update(v);
+});
+
+update(0);
+</script>

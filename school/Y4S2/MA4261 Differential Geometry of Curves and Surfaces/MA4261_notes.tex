@@ -1,4 +1,4 @@
-\documentclass[12pt, a4paper]{article}
+\documentclass[10pt, a4paper]{article}
 
 % --- Essential Libraries ---
 \usepackage{amsmath}
@@ -17,6 +17,19 @@
 \usepackage[capitalise, noabbrev]{cleveref}
 \usepackage{titlesec}
 \usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{graphicx}
+
+% --- Graphics ---
+\graphicspath{ {./images/} }
+
+
+% --- Font ---
+\usepackage{fetamont}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{sfmath} 
+
 % --- Page Setup ---
 \geometry{margin=0.5in}
 \setlength{\headheight}{15pt}
@@ -29,9 +42,9 @@
 % --- Hyperref Setup ---
 \hypersetup{
     colorlinks=true,
-    linkcolor=blue,
-    urlcolor=blue,
-    citecolor=blue
+    linkcolor=red,
+    urlcolor=red,
+    citecolor=red
 }
 
 % --- Section Title Styling ---
@@ -79,9 +92,9 @@
 % --- Colour Palette ---
 % ==========================================
 \definecolor{defcolor}{RGB}{255, 0, 0}         % red  — definitions, sidenotes
-\definecolor{thmcolor}{RGB}{30, 120, 60}       % green — theorems, lemmas, etc.
+\definecolor{thmcolor}{RGB}{0, 00, 255}       % green — theorems, lemmas, etc.
 \definecolor{excolor}{RGB}{180, 100, 0}        % amber — examples
-\definecolor{remcolor}{RGB}{80, 80, 180}       % slate — remarks
+\definecolor{remcolor}{RGB}{0, 255, 0}       % slate — remarks
 \definecolor{proofcolor}{RGB}{0, 0, 255}       % blue  — proofs
 \definecolor{qcolor}{RGB}{90, 90, 90}          % grey  — questions
 \definecolor{qbg}{RGB}{245, 245, 245}          % light grey background
@@ -609,7 +622,7 @@ $a_{ij}$ in terms of the first and second fundamental form coefficients.
 
 Now, we introduce the notion of an \textbf{isometry}.
 
-\begin{definition}[Isometry]
+\begin{definition}[Isometry]\label{def:isometry}
   A diffeomorphism $\phi: S_1 \to S_2$ is an \textbf{isometry} if the arc lengths of tangent
   vectors remain unchanged under $d\phi: T_{\mathbf{p}}(S_1) \to T_{\phi(\mathbf{p})}(S_2)$
   for all $\mathbf{p} \in S_1$, i.e.
@@ -934,7 +947,7 @@ $\mathbf{w} = a(u,v)\,\mathbf{x}_u + b(u,v)\,\mathbf{x}_v$ on $S_1$,
 \]
 which is a vector field on $S_2$.
 
-\begin{proposition}
+\begin{proposition}[Isometries and vector fields]\label{prop:isometries-vec-fields}
   Let $\phi\colon S_1 \to S_2$ be an isometry. Then
   \[
     \frac{D\bigl(d\phi(\mathbf{w})\bigr)}{dt} = d\phi\!\left(\frac{D\mathbf{w}}{dt}\right).
@@ -983,7 +996,7 @@ And $\langle N, \alpha''(s_0)\rangle$ is the size of the vector that is projecte
             \langle N(\alpha(s)), \alpha'(s)\rangle = 0 &\iff \frac{d}{ds} \langle N(\alpha(s)), \alpha'(s)\rangle = 0\\ 
             &\iff \langle N, \alpha''(s) \rangle + \langle dN (\alpha'(s)), \alpha'(s) \rangle = 0
             \\
-            &\iff \langle N, \alpha''(s)  = - \langle dN(\alpha'(s)), \alpha'(s)\rangle = \textrm{II}_\textbf{p}(\alpha'(0)) = k_n
+            &\iff \langle N, \alpha''(s) \rangle = - \langle dN(\alpha'(s)), \alpha'(s)\rangle = \textrm{II}_\textbf{p}(\alpha'(0)) = k_n
         \end{align*}
     \end{proof}
 \end{proposition}
@@ -1007,9 +1020,9 @@ Let $k$, $k_n$ and $k_g$ be the curvature, \textit{normal curvature} and \textit
 
 \pagebreak
 \subsection{Geodesic}
-We introduce the concept of a geodesic.First, we motivate the idea using a proposition.
+We introduce the concept of a geodesic. First, we motivate the idea using a proposition.
 
-\begin{proposition}
+\begin{proposition}{\label{prop:condition_for_geodesic}}
     Let $\alpha(s)$ be a curve on a surface $S$ parameterized by arc length. Then, the following are equivalent. 
     
     For all $s$,
@@ -1021,20 +1034,401 @@ We introduce the concept of a geodesic.First, we motivate the idea using a propo
     \end{enumerate}
 
     \begin{proof} 
-       \medskip \noindent $(1) \Rightarrow (2):$ 
+       \medskip \noindent $(1) \Leftrightarrow (2):$ $\frac{D \alpha'}{ds}$ is the orthogonal projection of $\alpha''$. So, it is clear that it is $0$ if and only if $\alpha''$ is perpendicular to the tangent space.
 
-       \medskip \noindent $(2) \Rightarrow (3):$
+       \medskip \noindent $(2) \Leftrightarrow (3):$ The tangent space is perpendicular to \textbf{N}. So, $\alpha''$ must be parallel to \textbf{N}.
 
-       \medskip \noindent $(3) \Rightarrow (4):$
-
-       \medskip \noindent $(4) \Rightarrow (1) :$
+       \medskip \noindent $(3) \Leftrightarrow (4):$ $k_g$ is the \textit{length} of the projection of $\alpha''$ onto the tangent plane, which is $0$ because $\alpha''$ is parallel to \textbf{N} by assumption. And the converse direction follows by a reverse argument.
     \end{proof}
 \end{proposition}
+
+\includegraphics[width=\textwidth]{geodesic}
+
+This is a visualisation of the following proposition. So, $\alpha''$ is perpendicular to the tangent space, so $k_g=0$. 
+
+\begin{definition}[Geodesic]
+    A curve \textit{parameterised by arc length} satisfying any of the four conditions in \ref{prop:condition_for_geodesic} is called a \textbf{geodesic}.
+\end{definition}
+
+
+\begin{sidenote}
+    Now, why is the definition of a geodesic as such? Well, how I interpret it is that given a curve between $a$ and $b$, the shortest path would be the one where the $\alpha''$ does not go left or right, so it just goes straight, following the line of the normal \textit{N} --- "the curve outlines the boundary of the surface".
+\end{sidenote}
+
+Lastly, we have a proposition linking geodesics to isometry.
+
+\begin{proposition}[Geodesics are preserved by isometry]
+Let $\phi :S_1 \to S_2$ be an isometry. And suppose $\alpha(s)$ is a geodesic on $S_1$. Then $\beta(s) =  \phi(\alpha(s))$ is a geodesic on $S_2$.
+
+\begin{proof}
+    First, we check that $\beta(s)$ is parameterized by arc length. Since $\phi$ is an isometry, 
+    $$|\beta'(s)| = | d\phi(\alpha'(s))| =|\alpha'(s)| =1$$
+    The first equality is using chain rule, and the second equality is by definition of an isometry (\ref{def:isometry}). Hence, $\beta$ is indeed parameterized by arc length.
+
+    Next, let $\textbf{w} = \alpha'(s)$. The curve $\alpha(s)$ being a geodesic means (by \ref{def:geodesiccurve}) that $\frac{D\textbf{w}}{ds} = (0,0,0)$. And so using Proposition \ref{prop:isometries-vec-fields},
+
+    $$\frac{D\beta'}{ds} =\frac{D (d\phi(\textbf{w}))}{ds} = d\phi \Bigg(\frac{D\textbf{w}}{ds} \Bigg) = d\phi(0,0,0) = (0,0,0)$$
+
+So $\beta$ is indeed also a geodesic.
+\end{proof}
+\end{proposition}
+
+\subsection{Existence of Geodesics}
+\begin{sidenote}
+    Note: I combined 5.7 and 5.8 into this chapter.
+\end{sidenote}
+In this section, we ask the question: \textit{Given any surface, can we always find a geodesic?}
+
+\begin{proposition}\label{prop:existence-of-geodesic}
+    Let $\textbf{p} \in S$ be a point on a surface and let $\textbf{v}$ be a unit tangent vector at \textbf{p}. Then there exists a unique geodesic $\alpha(s)$ parameterized by arc length
+ which passes through \textbf{p} at $s=0$ and $\alpha'(0) = \textbf{v}$.
+
+ \begin{proof}
+     Skip. See notes for the full proof.
+ \end{proof}
+ \end{proposition}
+
+\begin{proposition}
+    Given two points \textbf{p,q} on a regular surface $S$ which are sufficiently near to each other. Then
+
+    \begin{enumerate}[label=(\roman*)]
+        \item There is a geodesic $\alpha(s) $ on the surface joining \textbf{p} and \textbf{q}.
+        \item If $\beta(s)$ is another curve on the surface joining \textbf{p,q}, then the arc length of $\beta(s)$ must be same or less than that of $\alpha(s)$.
+    \end{enumerate}
+\end{proposition}
+
+
+\pagebreak
+\subsection{The Exponential Map}
+
+\begin{proposition}
+Let $\alpha(s)$ be a geodesic. Then, given a constant $c >0$, it follows that $\gamma(t) =  \alpha(ct)$ is also a geodesic.
+
+\begin{proof}
+    We verify that the geodesic curvature of $\gamma$ vanishes. By the chain rule,
+    \[
+        \gamma'(t) = c\alpha'(ct), \qquad \gamma''(t) = c^2\alpha''(ct).
+    \]
+    Since $\alpha$ is a geodesic, $\alpha''(s)$ is parallel to the normal $\mathbf{N}$ 
+    for all $s$. In particular, $\alpha''(ct)$ is parallel to $\mathbf{N}$ at 
+    $\alpha(ct) = \gamma(t)$, and so $\gamma''(t) = c^2\alpha''(ct)$ is also parallel 
+    to $\mathbf{N}$. Hence the geodesic curvature of $\gamma$ is
+    \[
+        k_g(\gamma) = 0,
+    \]
+    and so $\gamma$ is a geodesic.
+\end{proof}
+
+\end{proposition}
+
+Now, we have a few important stuff to get through. First,
+
+\begin{theorem}
+    Give any point \textbf{p} on a regular surface $S$, and a nonzero vector $\textbf{v}\in T_\textbf{p}(S)$, there exists a \textit{unique} geodesic $\gamma :(- \epsilon, \epsilon) \to S$ with $\gamma(0) = \textbf{p}$ and $\gamma'(0) = \textbf{v}$. We denote this geodesic by $\gamma(t, \textbf{v})$. 
+
+    \begin{proof}
+        Follows from (\ref{prop:existence-of-geodesic}).
+    \end{proof}
+\end{theorem}
+
+\begin{sidenote}
+    This theorem essentially says that given a point \textbf{p} on a regular surface, we can find a geodesic with tangent vector \textbf{v}. It is essentially the same as \ref{prop:existence-of-geodesic}, but now we don't need the condition that \textbf{v} is a unit vector.
+\end{sidenote}
+
+
+\begin{theorem}
+    Let $S$ be a regular surface and let \textbf{p} $\in S$. Then, there exists $\epsilon>0$ such that the map
+    \begin{align*}
+        \gamma: (-2,2) \times B(\epsilon) &\to S \\
+        (t, \textbf{v}_\epsilon) &\mapsto \gamma(t,\textbf{v}_\epsilon)
+    \end{align*} 
+
+    is a smooth map. Here, $B(\epsilon) := \{ \textbf{v} \in T_\textbf{p}(S): |\textbf{v}| < \epsilon \}$.
+\end{theorem}
+
+\begin{sidenote}
+    This theorem is very unintuitive, but let's try to understand it. Basically, $B(\epsilon)$ is the set of all possible tangent vectors of length less than some small $\epsilon$. Then, this theorem says that if we \textit{perturb} \textbf{v} slightly, the geodesic will not change drastically, and in fact, will change \textit{smoothly}.
+\end{sidenote}
+
+
+\begin{example}
+    We provide an example to demonstrate the notion of smoothness of $\gamma$. Consider the plane $S = \mathbb{R}^2$ and the point $p = (0,0)$. A geodesic in $\mathbb{R}^2$ is just a straight line, so given a tangent vector 
+    $\mathbf{v} = (a, b)$, the geodesic is simply
+    \[
+        \gamma(t, \mathbf{v}) = t\mathbf{v} = (ta, tb).
+    \]
+    The exponential map is then
+    \[
+        \exp_p(\mathbf{v}) = \gamma(1, \mathbf{v}) = (a, b).
+    \]
+    Now suppose we perturb $\mathbf{v}$ slightly, replacing it with 
+    $\mathbf{v}_\epsilon = (a + \epsilon, b)$ for some small $\epsilon > 0$. Then
+    \[
+        \gamma(t, \mathbf{v}_\epsilon) = (t(a+\epsilon),\ tb).
+    \]
+    The difference between the two geodesics at any time $t$ is
+    \[
+        \|\gamma(t, \mathbf{v}_\epsilon) - \gamma(t, \mathbf{v})\| = |t\epsilon| \leq |\epsilon|.
+    \]
+    So as $\epsilon \to 0$, the perturbed geodesic converges uniformly to the original 
+    one. This is what smoothness of $\gamma(t, \mathbf{v})$ in $\mathbf{v}$ means: 
+    a small change in the initial velocity produces a small change in the entire curve,
+    with no sudden jumps.
+\end{example}
+
+We are now ready to define the exponential map.
+
+\begin{definition}[Exponential Map]\label{def:exp-map}
+    Let $\mathbf{v} \in B(\epsilon)$. We define
+    \[
+        \exp_\mathbf{p}(\mathbf{v}) := \gamma(1, \mathbf{v}) \in S,
+    \]
+    that is, the point obtained by following the geodesic starting at $\mathbf{p}$ 
+    with initial velocity $\mathbf{v}$, for time $t = 1$.
+\end{definition}
+
+\begin{sidenote}
+    Think of $\exp_\mathbf{p}(\mathbf{v})$ as: \textit{stand at $\mathbf{p}$, face 
+    direction $\mathbf{v}$, walk in a straight line (on the surface) for distance 
+    $|\mathbf{v}|$, and see where you end up.} The arc length from $\mathbf{p}$ to 
+    $\exp_\mathbf{p}(\mathbf{v})$ along the geodesic is exactly $|\mathbf{v}|$, so 
+    the length of the tangent vector encodes the distance travelled.
+\end{sidenote}
+
+Now, we want $\exp$ to be a coordinate map, so we want it to be a \textit{diffeomorphism}.
+
+\begin{proposition}\label{prop:exp-smooth}
+    Let $\mathbf{p} \in S$. There exists $\epsilon > 0$ such that
+    \[
+        \exp_\mathbf{p}: B(\epsilon) \to S
+    \]
+    is defined and smooth.
+
+    \begin{proof}
+        Immediate corollary of Theorem \ref{thm:smooth-dependence}.
+    \end{proof}
+\end{proposition}
+
+\begin{proposition}\label{prop:exp-diffeo}
+    Given $\exp_\mathbf{p}$ as in Proposition \ref{prop:exp-smooth}, there exists an 
+    open neighbourhood $U \subset B(\epsilon)$ of the origin $0 \in T_\mathbf{p}(S)$ 
+    such that
+    \[
+        \exp_\mathbf{p}: U \to S
+    \]
+    is a diffeomorphism onto its image $V := \exp_\mathbf{p}(U) \subseteq S$.
+
+    \begin{proof}
+    By Proposition \ref{prop:exp-smooth}, $\exp_\mathbf{p}$ is smooth. It remains to 
+    show that its differential
+    \[
+        d(\exp_\mathbf{p})_0: T_0(B(\epsilon)) \to T_\mathbf{p}(S)
+    \]
+    is nonsingular at $0$, so that the inverse function theorem applies.
+
+    We identify $T_0(B(\epsilon))$ with $T_\mathbf{p}(S)$ in the natural way. Let 
+    $\mathbf{v} \in T_\mathbf{p}(S)$ and consider the straight line 
+    $\alpha(t) = t\mathbf{v}$ in $B(\epsilon)$. Define
+    \[
+        \beta(t) = (\exp_\mathbf{p} \circ\, \alpha)(t) = \exp_\mathbf{p}(t\mathbf{v}) 
+        = \gamma(t, \mathbf{v}),
+    \]
+    which is the geodesic on $S$ starting at $\mathbf{p}$ with velocity $\mathbf{v}$. 
+    Differentiating at $t = 0$,
+    \[
+        \beta'(0) = \frac{d}{dt}\Big|_{t=0} \gamma(t, \mathbf{v}) = \mathbf{v}.
+    \]
+    Hence $d(\exp_\mathbf{p})_0(\mathbf{v}) = \mathbf{v}$ for all $\mathbf{v} \in 
+    T_\mathbf{p}(S)$, so $d(\exp_\mathbf{p})_0$ is the identity map, which is 
+    nonsingular. By the inverse function theorem, $\exp_\mathbf{p}$ is invertible on 
+    some open neighbourhood $U$ of $0$, with smooth inverse. Hence it is a 
+    diffeomorphism.
+    \end{proof}
+\end{proposition}
+
+\begin{sidenote}
+    The key insight in the proof is that $d(\exp_\mathbf{p})_0$ is just the 
+    \textit{identity} --- pushing a tangent vector $\mathbf{v}$ through the 
+    exponential map (to first order) just gives $\mathbf{v}$ back. This makes 
+    intuitive sense: very close to $\mathbf{p}$, the surface looks flat, so the 
+    exponential map looks like the identity.
+
+    Proposition \ref{prop:exp-diffeo} says that $\exp_\mathbf{p}$ gives a valid 
+    coordinate system near $\mathbf{p}$. That is, every point $q$ sufficiently close 
+    to $\mathbf{p}$ can be uniquely described by a tangent vector $\mathbf{v}$ at 
+    $\mathbf{p}$, via $q = \exp_\mathbf{p}(\mathbf{v})$.
+\end{sidenote}
+
+The open set $V = \exp_\mathbf{p}(U)$ is called a \textbf{normal neighbourhood} of 
+$\mathbf{p}$.
+
+x\subsection{Geodesic Coordinate Functions}
+
+Recall from Proposition \ref{prop:exp-diffeo} that there exists an open 
+neighbourhood $U \subset T_\mathbf{p}(S)$ of the origin such that
+
+\[
+\exp_\mathbf{p} : U \to V := \exp_\mathbf{p}(U)
+\]
+
+is a diffeomorphism onto its image. The set $V$ is an open subset of $S$ 
+containing $\mathbf{p}$, and is called a \textbf{normal neighbourhood} of 
+$\mathbf{p}$.
+
+This allows us to construct coordinate systems on the surface using the 
+tangent plane at $\mathbf{p}$.
+
+\begin{definition}[Normal coordinates]
+Let $\mathbf{p} \in S$. Choose two orthonormal vectors 
+$\mathbf{e}_1, \mathbf{e}_2 \in T_\mathbf{p}(S)$.
+
+Every vector $\mathbf{w} \in U$ can be written uniquely as
+
+\[
+\mathbf{w} = u\mathbf{e}_1 + v\mathbf{e}_2 .
+\]
+
+We define a coordinate map
+
+\[
+\textbf{x}(u,v) = \exp_\mathbf{p}(u\mathbf{e}_1 + v\mathbf{e}_2).
+\]
+
+If $S \ni \textbf{q} = \textbf{x}(u,v)$, we say that $(u,v)$ are the \textbf{normal coordinates} of 
+$q$.
+\end{definition}
+
+
+\begin{proposition}
+Let $(u,v)$ be normal coordinates centred at $\mathbf{p}$. Given
+
+\[
+E = \langle x_u, x_u \rangle, 
+\qquad
+F = \langle x_u, x_v \rangle, 
+\qquad
+G = \langle x_v, x_v \rangle
+\]
+
+to be the coefficients of the first fundamental form, then
+
+\[
+E(\mathbf{p}) = G(\mathbf{p}) = 1, 
+\qquad
+F(\mathbf{p}) = 0 .
+\]
+\end{proposition}
+
+\begin{sidenote}
+Thus, at the point $\mathbf{p}$ the coordinate system behaves like the 
+standard Euclidean coordinate system: the coordinate curves are orthogonal 
+and have unit length. This reflects the fact that a surface looks flat when 
+viewed infinitesimally.
+\end{sidenote}
+
+\begin{definition}[Geodesic polar coordinates]
+Let $(\rho,\theta)$ be polar coordinates in the tangent plane $T_\mathbf{p}(S)$.
+We define
+
+\[
+w(\rho,\theta) = \rho(\cos\theta\,\mathbf{e}_1 + \sin\theta\,\mathbf{e}_2)
+\]
+
+and
+
+\[
+x(\rho,\theta) = \exp_\mathbf{p}(w(\rho,\theta)).
+\]
+
+The coordinates $(\rho,\theta)$ are called \textbf{geodesic polar coordinates}.
+\end{definition}
+
+\begin{sidenote}
+Geodesic polar coordinates are analogous to polar coordinates in the plane. 
+The parameter $\rho$ represents the geodesic distance from $\mathbf{p}$, 
+while $\theta$ specifies the direction of the geodesic leaving $\mathbf{p}$.
+\end{sidenote}
+
+\begin{proposition}
+Let $(\rho,\theta)$ be geodesic polar coordinates and let
+
+\[
+E = \langle x_\rho, x_\rho \rangle,
+\qquad
+F = \langle x_\rho, x_\theta \rangle,
+\qquad
+G = \langle x_\theta, x_\theta \rangle .
+\]
+
+Then
+
+\[
+E = 1, 
+\qquad
+F = 0,
+\]
+
+and
+
+\[
+\lim_{\rho \to 0} \sqrt{G} = 0,
+\qquad
+\lim_{\rho \to 0} (\sqrt{G})_\rho = 1 .
+\]
+\end{proposition}
+
+\begin{sidenote}
+The condition $E=1$ means that radial curves have unit speed, while $F=0$ 
+means that radial geodesics are orthogonal to curves with constant $\rho$ 
+(the geodesic circles centred at $\mathbf{p}$).
+\end{sidenote}
+
+\begin{definition}
+A coordinate map $x(u,v)$ is called an \textbf{orthogonal coordinate system} 
+if
+
+\[
+F(u,v) = \langle x_u, x_v \rangle = 0
+\]
+
+for all $(u,v)$.
+\end{definition}
+
+\begin{theorem}[Gauss Lemma]
+Let $\mathbf{p}$ be a point on a regular surface $S$. Then there exists a 
+coordinate system around $\mathbf{p}$ such that
+
+\[
+\langle x_\rho, x_\theta \rangle = 0 .
+\]
+
+In other words, the radial geodesics issuing from $\mathbf{p}$ are 
+perpendicular to the geodesic circles centred at $\mathbf{p}$.
+\end{theorem}
+
+\begin{sidenote}
+Gauss Lemma generalises the familiar fact from Euclidean geometry that 
+radial lines are perpendicular to circles. It plays an important role in 
+many geometric results, including the Gauss–Bonnet theorem and the study 
+of minimal properties of geodesics.
+\end{sidenote}
+
+\subsection{Geodesics and Calculus of Variations}
+
+
+\begin{center}
+    --- not tested ---
+\end{center}
+
+
+
+
+
 \pagebreak
 
 \section{Gauss-Bonnet Theorem}
 \begin{center}
-    \textbf{-- omitted for now --}
+    \textbf{-- not tested --}
 \end{center}
 \pagebreak
 % ==========================================

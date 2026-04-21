@@ -368,7 +368,7 @@ $$\mu_p = \mathbb{E}(r_p) = \sum_{i=1}^n w_i\mu_i$$ where $\mu_i = \mathbb{E}(r_
 \end{proposition}
 
 
-\begin{proposition}[Portfolio Variance]
+\begin{proposition}[Portfolio Variance]\label{prop: port-var-n}
 The variance of the rate of return of a portfolio of $n$ assets is given by
 
 $$\sigma_p^2 = \op{Var}(r_p) = \sum_{i=1}^n\sum_{j=1}^n w_iw_j \sigma_{ij}$$ where $\sigma_{ij} = \op{Cov}(r_i, r_j)$
@@ -379,11 +379,60 @@ $$\sigma_p^2 = \op{Var}(r_p) = \sum_{i=1}^n\sum_{j=1}^n w_iw_j \sigma_{ij}$$ whe
 \end{proposition}
 
 
-Now,we go into \textit{Mean-Variance Analysis}
-
 \subsubsection{Mean-Variance Analysis}
 
-The \textit{mean-variance} analysis aims to ask the question: \textit{As $\alpha$ varies, how will $\mu_p$ and $\sigma_p$ change?}
+The \textbf{mean-variance analysis} aims to ask the question: \textit{As $\alpha$ varies, how will $\mu_p$ and $\sigma_p$ change?}
+
+We first recall the portfolio variance of n variables (\ref{prop: port-var-n}) and look at the case of two assets.
+
+\begin{proposition}
+    The variance of the portfolio return is given by
+    \begin{align*}
+        \sigma_p^2 &= \alpha^2 \sigma_1^2 + (1-\alpha)^2 \sigma_2^2 +2 \alpha(1-\alpha) \sigma_{12}\\
+        &= \alpha^2 \sigma_1^2 + (1-\alpha)^2 \sigma_2^2 +2 \alpha(1-\alpha) \rho_{12}\sigma_1\sigma_2
+    \end{align*}
+    \begin{proof}
+    We use the following result:
+    \[
+        \operatorname{Var}(X+Y) = \operatorname{Var}(X) + \operatorname{Var}(Y) + 2\operatorname{Cov}(X,Y).
+    \]
+    So,
+    \begin{align*}
+        \sigma_p^2 &= \operatorname{Var}(r_p)\\
+        &= \operatorname{Var}\big(\alpha r_1 + (1-\alpha)r_2\big)\\
+        &= \alpha^2 \operatorname{Var}(r_1) + (1-\alpha)^2 \operatorname{Var}(r_2) 
+           + 2\operatorname{Cov}(\alpha r_1,\ (1-\alpha) r_2)\\
+        &= \alpha^2 \operatorname{Var}(r_1) + (1-\alpha)^2 \operatorname{Var}(r_2) 
+           + 2\alpha(1-\alpha)\operatorname{Cov}(r_1, r_2)\\
+        &= \alpha^2 \sigma_1^2 + (1-\alpha)^2 \sigma_2^2 + 2\alpha(1-\alpha)\sigma_{12},
+    \end{align*}
+    where we used the bilinearity of covariance to pull out the scalar factors 
+    $\alpha$ and $(1-\alpha)$, and set $\sigma_{12} = \operatorname{Cov}(r_1, r_2)$.
+    The second line follows from the definition $\sigma_{12} = \rho_{12}\sigma_1\sigma_2$,
+    where $\rho_{12}$ is the correlation coefficient between $r_1$ and $r_2$.
+    \end{proof}
+\end{proposition}
+
+And in \textit{mean-variance analysis}, we are interested to find the $\alpha$ that minimises this $\sigma_p^2$, that is, $$\alpha^* = \arg \min_{\alpha \in \R} \sigma_p^2$$
+
+\begin{proposition}
+    The minimum portfolio variance $\sigma_p^2$ occurs when
+
+    $$\alpha^* = \frac{\sigma_2(\sigma_2- \rho_{12}\sigma_1)}{\sigma_1^2 + \sigma_2^2 -2 \rho_{12} \sigma_1 \sigma_2}$$
+
+    
+    and the minimum portfolio \textbf{variance} and \textbf{mean} is given by
+
+    $$(\sigma_p^2)^* = \frac{\sigma_1^2 \sigma_2^2 (1- \rho_{12}^2)}{ \sigma_1^2 + \sigma_2^2 - 2 \rho_{12} \sigma_1 \sigma_2}$$
+
+    $$(\mu_p)^* = \alpha^* \mu_1 + (1- \alpha^*) \mu_2$$
+\end{proposition}
+
+This is called the \textbf{global minimum-variance portfolio (GMVP)}.
+
+\subsubsection{Feasible Sets}
+
+
 
 \pagebreak
 \section{Forwards \& Futures}
