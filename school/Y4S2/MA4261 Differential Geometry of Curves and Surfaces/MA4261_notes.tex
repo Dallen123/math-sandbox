@@ -195,17 +195,304 @@
 \newpage
 
 
+
+```latex
+% ==========================================
 \section{Introduction to Curves}
+% ==========================================
+
+\subsection{Curves and Arc Length}
+
+Here, we introduce the notion of a \textbf{curve}.
+\begin{definition}[Parametrized smooth curve]
+  A \textbf{parametrized smooth curve} in $\mathbb{R}^3$ is a function $\alpha:(a,b)\to\mathbb{R}^3$ given by
+  \[
+    \alpha(t)=(x(t),y(t),z(t)),
+  \]
+  where $x(t),y(t),z(t)$ are smooth functions of $t$.
+\end{definition}
+
+\begin{definition}[Tangent vector, speed, acceleration]
+  The \textbf{tangent (velocity) vector} at $t$ is $\alpha'(t)=(x'(t),y'(t),z'(t))$.
+  The \textbf{speed} is $|\alpha'(t)|=\sqrt{(x')^2+(y')^2+(z')^2}$.
+  The \textbf{acceleration} is $\alpha''(t)$.
+\end{definition}
+
+\begin{definition}[Non-singular curve]
+  A curve is \textbf{non-singular} if $\alpha'(t)\neq\mathbf{0}$ for all $t$. We only consider non-singular smooth curves.
+\end{definition}
+
+\begin{sidenote}
+    The intuition of a "non-singular" curve is that it is always moving, that is, its velocity is never $0$.
+\end{sidenote}
+
+Now, we look at arc length. This notion of arc length will be used heavily in next chapters.
+
+\begin{definition}[Arc length]
+Recall that we have $|\alpha'(t)|$ to be the velocity of the curve at $t$. We then take the product of it with an infinitesimally small time factor $dt$, and summing it over all $t \in [a,b]$. Formally, this would look like an integral
+$$s=\int_{a}^b |\alpha'(t)|\ dt$$
+
+where we denote its arc length to be $s$.
+    
+\end{definition}
 
 
+Now, using this, what we are interested to do is to \textit{parameterise $\alpha$ by its arc length.} This will result in $|\alpha'(s) | = 1$ for all $s$. We prove it here.
+
+\begin{proposition}
+    Given a curve $\alpha(t)$ with $s =s(t)$ for $t \in [a,b]$. Now, let $\beta(s)$ be the curve when $\alpha(t)$ is parameterised by arc length, that is, $\beta(s) = \alpha(t(s))$. Then, $|\beta'(s)| =1$.
+    \begin{proof}
+       $$\beta'(s) = \alpha'(t(s))\cdot t'(s)$$
+
+        Now, by FTC,
+        $$s'(t) = \frac{d}{dt} \int |\alpha'(t) | \ dt \Rightarrow s'(t) = |\alpha'(t)|$$
+        And it follows that,
+        $$\frac{dt}{ds} = \frac{1}{|\alpha'(t)|}$$
+
+        And so, by the first equation, we have
+
+        $$|\beta(s)| = \Bigg|\alpha'(t) \cdot \frac{1}{|\alpha'(t)|} \Bigg| =\frac{|\alpha'(t)|}{|\alpha'(t)|}=1$$
+        
+    \end{proof}
+\end{proposition}
+
+Now, for us to be able to "parameterise by arc length", we need to ensure that $t(s)$ exists, and that $\alpha(t(s))$ is \textit{smooth}. Well, we use the inverse function theorem for this.
+
+\begin{theorem}[Inverse function theorem]
+    Suppose $s:[a,b] \in \mathbb{R}$ be a function of $t$ such that
+
+    \begin{enumerate}[label=(\roman*)]
+        \item $s$ is continuous and smooth
+        \item $s'(t) >0$ for all $t \in(a,b)$
+    \end{enumerate}
+    Then, $t(s)$ exists and is smooth.
+\end{theorem}
+
+\begin{corollary}
+    Let $\alpha(t)$ be a nonsingular smooth curve. Then the curve could be parameterised by arc length.
+
+    \begin{proof}
+        Since $\alpha'(t)$ is nonsingular, we have $s'(t) =|\alpha'(t)| >0$ and is also smooth. By the inverse function theorem, $t$ exists and is smooth, and so we can parameterise $\alpha(t)$ by its arc length.
+    \end{proof}
+\end{corollary}
 
 \pagebreak
 
+\subsection{Curvature}
+
+\begin{definition}[Curvature and radius of curvature]
+  Let $\alpha(s)$ be parametrized by arc length. The \textbf{curvature} of $\alpha$ at $s$ is $k(s):=|\alpha''(s)|$. The \textbf{radius of curvature} is $1/k(s)$.
+\end{definition}
+
+\begin{lemma}
+  If $\alpha(s)$ is parametrized by arc length, then $\alpha''(s)\perp\alpha'(s)$.
+
+  \begin{proof}[Proof sketch]
+      Differentiate the dot product $\alpha'(t) \cdot \alpha'(t)$ and use product rule.
+  \end{proof}
+\end{lemma}
+
+
+\subsection{The Frenet Trihedron}
+
+We assume $\alpha''(s)\neq\mathbf{0}$ (i.e. $k(s) \neq 0$) for all $s$.
+
+\begin{definition}[Frenet trihedron] We define the Frenet triherdron to be a \textit{unit vectors}.
+  \begin{itemize}
+    \item \textbf{Unit tangent:} $\mathbf{t}(s):=\alpha'(s)$.
+    \item \textbf{Principal normal:} $\mathbf{n}(s):=\alpha''(s)/k(s)$.
+    \item \textbf{Binormal:} $\mathbf{b}(s):=\mathbf{t}(s)\wedge\mathbf{n}(s)$.
+  \end{itemize}
+\end{definition}
+
+\begin{lemma}
+  $\mathbf{b}'(s)$ is parallel to $\mathbf{n}(s)$. Hence we can write $\mathbf{b}'(s)=\tau(s)\mathbf{n}(s)$, where $\tau(s)$ is the \textbf{torsion} of $\alpha$.
+
+
+  \begin{proof}
+      Differentiate dot product.
+  \end{proof}
+\end{lemma}
+
+\begin{theorem}[Frenet--Serret formulas]
+  \[
+    \mathbf{t}'=k\mathbf{n},\qquad
+    \mathbf{n}'=-k\mathbf{t}-\tau\mathbf{b},\qquad
+    \mathbf{b}'=\tau\mathbf{n}.
+  \]
+  Equivalently,
+  $\begin{pmatrix}\mathbf{t}\\\mathbf{n}\\\mathbf{b}\end{pmatrix}'
+  =\begin{pmatrix}0&k&0\\-k&0&-\tau\\0&\tau&0\end{pmatrix}
+  \begin{pmatrix}\mathbf{t}\\\mathbf{n}\\\mathbf{b}\end{pmatrix}.$
+\end{theorem}
+
+\begin{proposition}
+  If $\mathbf{b}(s)=\mathbf{c}$ (constant) for all $s$, then $\alpha(s)$ lies on a plane perpendicular to $\mathbf{c}$.
+\end{proposition}
+
+\subsection{Frenet Formulas for Arbitrary Parametrization}
+
+\begin{theorem}
+  Let $\alpha(t)$ be a non-singular curve. Then:
+  \[
+    \mathbf{t}=\frac{\alpha'}{|\alpha'|},\quad
+    \mathbf{b}=\frac{\alpha'\wedge\alpha''}{|\alpha'\wedge\alpha''|},\quad
+    \mathbf{n}=\mathbf{b}\wedge\mathbf{t}
+  \]
+  \[
+    k=\frac{|\alpha'\wedge\alpha''|}{|\alpha'|^3},\quad
+    \tau=-\frac{(\alpha'\wedge\alpha'')\cdot\alpha'''}{|\alpha'\wedge\alpha''|^2}.
+  \]
+\end{theorem}
+
+\subsection{Fundamental Theorem of Local Theory of Curves}
+
+\begin{definition}[Rigid motion]
+  A \textbf{rigid motion} is a map $R:\mathbb{R}^3\to\mathbb{R}^3$ of the form $R(\mathbf{x})=A\mathbf{x}+\mathbf{v}$, where $A$ is orthogonal with $\det A=1$ and $\mathbf{v}\in\mathbb{R}^3$. It preserves distances, angles, inner products, and orientation.
+\end{definition}
+
+\begin{theorem}[Fundamental Theorem]
+  \hfill
+  \begin{enumerate}
+    \item \emph{(Uniqueness)} Two unit-speed curves with identical $k(s)>0$ and $\tau(s)$ for all $s$ differ only by a rigid motion.
+    \item \emph{(Existence)} For any smooth functions $k(s)>0$ and $\tau(s)$, there exists a unit-speed curve with those curvature and torsion functions.
+  \end{enumerate}
+\end{theorem}
+
+
+\pagebreak
+% ==========================================
 \section{Introduction to Surfaces}
+% ==========================================
+
+\subsection{Regular Surfaces and Examples}
+
+\begin{definition}[Regular surface]
+  A subset $S\subset\mathbb{R}^3$ is a \textbf{regular surface} if for each $p\in S$ there exist an open neighbourhood $V \subset \mathbb{R}^3$, an open set $U\subset\mathbb{R}^2$, and a map $\mathbf{x}:U\to V \cap S$ (a \textbf{coordinate function}) satisfying:
+  \begin{enumerate}
+    \item $\mathbf{x}$ is smooth.
+    \item $\mathbf{x}$ is a homeomorphism (bijective and $\mathbf{x}^{-1}$ is continuous).
+    \item \textbf{Regularity condition:} The differential $d\mathbf{x}_q:\mathbb{R}^2\to\mathbb{R}^3$ has rank 2 (i.e., $\mathbf{x}_u\wedge\mathbf{x}_v\neq\mathbf{0}$) for all $q \in U$.
+  \end{enumerate}
+\end{definition}
+
+Now, the regularity condition is equivalent to the condition that $d\textbf{x}_q$ is injective.
+
+\begin{proposition}
+    Given $d\textbf{x}_q :\R^2 \to \R^3$, we have
+    $$d\textbf{x}_q \text{ has rank 2} \iff d\textbf{x}_q \text{ is injective}$$
+    \begin{proof}
+        \begin{align*}
+            d\textbf{x}_q \text{ is injective} &\iff \ker(d\textbf{x}_q) =\{0\}\\
+            &\iff \op{nullity}(d\textbf{x}_q) =0\\
+            &\iff \op{rank}(d\textbf{x}_q) =2 \quad (\text{by rank-nullity theorem})
+        \end{align*}
+    \end{proof}
+\end{proposition}
+
+\begin{example}[The unit sphere]
+  The sphere $S^2 = \{(x,y,z)\in\mathbb{R}^3: x^2+y^2+z^2=1\}$ is a regular surface. It can be covered by six coordinate patches (hemispheres), e.g., the northern hemisphere parametrization $\mathbf{x}(u,v) = (u,v,\sqrt{1-u^2-v^2})$ defined on $U = \{(u,v): u^2+v^2 < 1\}$.
+\end{example}
+
+
+Now, we want to find easy-to-check conditions for regularity of surfaces. The following are 
+
+\begin{proposition}[Graphs]
+  If $f:U\to\mathbb{R}$ is smooth on an open subset $U\subset\mathbb{R}^2$, its graph $S = \{(x,y,f(x,y)) : (x,y)\in U\}$ is a regular surface.
+
+  \begin{proof}
+      We construct the following coordinate function
+      \begin{align*}
+          \textbf{x}:U &\to S, \\
+          (u,v) &\mapsto (u,v, f(u,v))
+      \end{align*}
+
+      Then we check that it fulfills the 3 criterion for a regular surface.
+
+      \begin{enumerate}
+          \item \textbf{x} is smooth because $f(u,v)$ is smooth.
+          \item \textbf{x} is bijective with $\textbf{x}^{-1}(u,v, f(u,v)) = (u,v)$.
+          \item Regularity follows from looking at $d\textbf{x}_q$ for some $q= (u_0,v_0)$.
+      \end{enumerate}
+  \end{proof}
+\end{proposition}
+
+\begin{proposition}[Surfaces of revolution]
+  Rotating a smooth curve $x=f(z)$ (with $f(z)>0$) about the z-axis generates a regular surface $S = \{(f(v)\cos u, f(v)\sin u, v) : u \in (0,2\pi), v \in \mathbb{R}\}$.
+
+  \begin{proof}
+      Skip.
+  \end{proof}
+\end{proposition}
+
+\subsection{Inverse Function Theorem and Level Sets}
+
+\begin{theorem}[Inverse Function Theorem]
+  Let $F:U\to\mathbb{R}^n$ be smooth ($U \subset \mathbb{R}^n$ open). If $p \in U$ is a regular point (i.e., $\det(dF_p) \neq 0$), there exists an open neighbourhood $V$ of $p$ and $W$ of $F(p)$ such that $F:V\to W$ is a diffeomorphism.
+\end{theorem}
+
+\begin{proposition}[Level sets]
+  Let $f:V\to\mathbb{R}$ be smooth on open $V\subset\mathbb{R}^3$. If $a\in\mathbb{R}$ is a regular value (i.e., the gradient $df_p \neq (0,0,0)$ for all $p \in f^{-1}(a)$), then $f^{-1}(a)$ is a regular surface.
+\end{proposition}
+
+\subsection{Tangent Spaces}
+
+\begin{theorem}
+  The tangent plane $T_p(S)$ of $S$ at $p$ is the union of tangent vectors to all smooth curves on $S$ passing through $p$. It is spanned by $\{\mathbf{x}_u, \mathbf{x}_v\}$ and is independent of the choice of coordinate function.
+\end{theorem}
+
+\subsection{Change of Parameters}
+
+\begin{proposition}
+  Let $x:U\to S$ and $y:V\to S$ be two coordinate functions with non-empty overlap $W = x(U) \cap y(V)$. The transition map $h = x^{-1}\circ y : y^{-1}(W) \to x^{-1}(W)$ is a smooth diffeomorphism.
+\end{proposition}
+
+\begin{remark}
+  This property allows us to define abstract 2-dimensional \textbf{smooth manifolds} by gluing open subsets of $\mathbb{R}^2$ via smooth transition functions. A regular surface in $\mathbb{R}^3$ is always a smooth 2-manifold, but abstract manifolds (like the Klein bottle) need not embed globally in $\mathbb{R}^3$.
+\end{remark}
+
+\subsection{Smooth Functions and Maps}
+
+\begin{definition}
+  A function $f:S\to\mathbb{R}$ is smooth if $f\circ\mathbf{x}:U\to\mathbb{R}$ is smooth in the sense of calculus for any coordinate function $\mathbf{x}$. Smoothness is independent of the chosen coordinate chart.
+\end{definition}
+
+\begin{definition}
+  A map $\phi:S_1\to S_2$ between regular surfaces is smooth if $x_2^{-1}\circ\phi\circ x_1$ is smooth wherever defined.
+\end{definition}
+
+\begin{proposition}
+  Any smooth map $\phi:S_1\to S_2$ induces a linear map between tangent spaces, the \textbf{differential} $d\phi_p : T_p(S_1) \to T_{\phi(p)}(S_2)$, defined by $d\phi_p(\alpha'(0)) = (\phi\circ\alpha)'(0)$ for any curve $\alpha$ with $\alpha(0)=p$. In local coordinates, its matrix is exactly the Jacobian of $x_2^{-1}\circ\phi\circ x_1$.
+\end{proposition}
+
+\subsection{The First Fundamental Form and Area}
+
+\begin{definition}[First fundamental form]
+  The first fundamental form $I_p$ at $p \in S$ is the restriction of the Euclidean inner product to $T_p(S)$:
+  \[
+    I_p(\mathbf{v}) = \langle \mathbf{v}, \mathbf{v} \rangle.
+  \]
+  For $\mathbf{v} = a\mathbf{x}_u + b\mathbf{x}_v$, $I_p(\mathbf{v}) = a^2E + 2abF + b^2G$, where $E=\langle\mathbf{x}_u,\mathbf{x}_u\rangle$, $F=\langle\mathbf{x}_u,\mathbf{x}_v\rangle$, and $G=\langle\mathbf{x}_v,\mathbf{x}_v\rangle$.
+\end{definition}
+
+\begin{remark}[Arc Length and Angles]
+  The arc length of a curve $\alpha(t) = \mathbf{x}(u(t),v(t))$ on $S$ is $\int \sqrt{E(u')^2 + 2Fu'v' + G(v')^2} \,dt$. 
+  The angle $\theta$ between coordinate curves is given by $\cos\theta = \frac{F}{\sqrt{EG}}$. A parametrization is \textbf{orthogonal} if $F=0$.
+\end{remark}
+
+\begin{definition}[Area]
+  The area of a region $\mathbf{x}(U)$ is defined as:
+  \[
+    \text{Area}(\mathbf{x}(U)) = \iint_U |\mathbf{x}_u \wedge \mathbf{x}_v| \,du\,dv = \iint_U \sqrt{EG-F^2} \,du\,dv.
+  \]
+\end{definition}
+
+\begin{example}
+  For a torus $x(u,v) = ((a+r\cos u)\cos v, (a+r\cos u)\sin v, r\sin u)$, $E=r^2$, $F=0$, and $G=(a+r\cos u)^2$. The area is $\int_0^{2\pi}\int_0^{2\pi} r(a+r\cos u) \,du\,dv = 4\pi^2ra$.
+\end{example}
 
 
 \pagebreak
-
 \section{Gauss' Curvature and Second Fundamental Form}
 
 \subsection{Curvature of Surfaces}
@@ -1430,17 +1717,15 @@ of minimal properties of geodesics.
 \begin{center}
     \textbf{-- not tested --}
 \end{center}
+
+
+% 
+\section{Tutorials}
+
+
 \pagebreak
-% ==========================================
-\section{Tutorials}
-% ==========================================
-
-
-% ============================================================
-\section{Tutorials}
-% ==========================================
 \section{Cheatsheet}
-% ==========================================
+% 
 
 
 

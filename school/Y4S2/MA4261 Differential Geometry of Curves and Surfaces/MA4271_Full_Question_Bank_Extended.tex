@@ -1,0 +1,1679 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage[colorlinks=true, linkcolor=blue!70!black, urlcolor=blue!70!black]{hyperref}
+\usepackage{titlesec}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage{tocloft}
+\usepackage{fancyhdr}
+\usepackage{booktabs}
+\usepackage{array}
+
+\geometry{margin=2.5cm, top=3cm, bottom=3cm}
+
+%----------------------------------------------------------
+% Page Style
+%----------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textcolor{gray!70}{\small MA4271 Differential Geometry}}
+\lhead{\textcolor{gray!70}{\small Question Bank}}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+%----------------------------------------------------------
+% Colour Palette
+%----------------------------------------------------------
+\definecolor{sectionblue}{RGB}{30, 80, 160}
+\definecolor{hardred}{RGB}{180, 30, 30}
+\definecolor{newgreen}{RGB}{0, 110, 50}
+\definecolor{newbg}{RGB}{235, 255, 240}
+\definecolor{boxbg}{RGB}{240, 245, 255}
+\definecolor{rulecol}{RGB}{30, 80, 160}
+
+%----------------------------------------------------------
+% Section Formatting
+%----------------------------------------------------------
+\titleformat{\section}[block]
+  {\large\bfseries\color{sectionblue}}
+  {\thesection.}{0.5em}{}
+  [{\color{rulecol}\titlerule[1.2pt]}]
+
+\titlespacing{\section}{0pt}{18pt}{10pt}
+
+%----------------------------------------------------------
+% Question Environment
+%----------------------------------------------------------
+\newtheoremstyle{qstyle}{4pt}{4pt}{}{}{\bfseries}{.}{.5em}{}
+\theoremstyle{qstyle}
+\newtheorem{question}{Q}[section]
+\renewcommand{\thequestion}{\thesection.\arabic{question}}
+
+% Difficulty badge for hard questions
+\newcommand{\hard}{\textcolor{hardred}{\textbf{[$\bigstar$]}}}
+% Badge for new questions
+\newcommand{\NEW}{\textcolor{newgreen}{\textbf{[NEW]}}}
+
+% Framed box for hard questions
+\newenvironment{hardq}[1][]{%
+  \begin{mdframed}[backgroundcolor=boxbg, linecolor=hardred, linewidth=1pt,
+    innertopmargin=4pt, innerbottommargin=4pt, skipabove=4pt, skipbelow=4pt]
+  \begin{question}#1
+}{%
+  \end{question}
+  \end{mdframed}
+}
+
+% Framed box for new questions
+\newenvironment{newq}[1][]{%
+  \begin{mdframed}[backgroundcolor=newbg, linecolor=newgreen, linewidth=1pt,
+    innertopmargin=4pt, innerbottommargin=4pt, skipabove=4pt, skipbelow=4pt]
+  \begin{question}#1
+}{%
+  \end{question}
+  \end{mdframed}
+}
+
+%----------------------------------------------------------
+% Math Macros
+%----------------------------------------------------------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\norm}[1]{\left\|#1\right\|}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\ip}[2]{\langle #1,\, #2 \rangle}
+\newcommand{\grad}{\nabla}
+\DeclareMathOperator{\rank}{rank}
+\newcommand{\dd}[2]{\frac{d#1}{d#2}}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\mbf}[1]{\mathbf{#1}}
+\newcommand{\kp}{\kappa}
+\newcommand{\tp}{\tau}
+
+%----------------------------------------------------------
+% TOC Style
+%----------------------------------------------------------
+\renewcommand{\cftsecfont}{\bfseries\color{sectionblue}}
+\renewcommand{\cftsecpagefont}{\bfseries\color{sectionblue}}
+\renewcommand{\cftsecdotsep}{\cftdotsep}
+\setlength{\cftbeforesecskip}{4pt}
+
+%===========================================================
+\begin{document}
+%===========================================================
+
+%----------------------------------------------------------
+% Title Block
+%----------------------------------------------------------
+\begin{center}
+  {\LARGE \textbf{MA4271 Differential Geometry}}\\[8pt]
+  {\large Full Exam-Level Question Bank --- Extended Edition}\\[4pt]
+  {\normalsize 40 Questions Per Section $\cdot$ 5 Sections $\cdot$ 200 Questions Total}\\[4pt]
+  {\small \textcolor{newgreen}{\textbf{Questions 21--40 in each section are new, drawn directly from lecture notes.}}}\\[6pt]
+  \textcolor{gray}{\rule{0.6\linewidth}{0.4pt}}
+\end{center}
+
+\vspace{0.5em}
+
+\begin{mdframed}[backgroundcolor=boxbg, linecolor=sectionblue, linewidth=1pt,
+  innertopmargin=8pt, innerbottommargin=8pt]
+\noindent\textbf{Notes.}\quad All curves are assumed smooth and regular.
+Surfaces are in $\R^3$ unless stated otherwise.
+Questions marked \hard\ are harder and may require combining ideas from multiple topics.
+Questions marked \NEW\ are new additions directly grounded in the NUS MA4271 lecture notes.
+Answers should be written with full justification unless stated otherwise.
+\end{mdframed}
+
+\vspace{1.5em}
+
+\tableofcontents
+\newpage
+
+%===========================================================
+\section{Curves and Frenet--Serret Theory}
+%===========================================================
+
+\begin{question}
+Let $\alpha(t) = (a\cos t,\, a\sin t,\, bt)$ be a circular helix with $a,b>0$.
+Reparametrise $\alpha$ by arc length $s$ and compute the Frenet trihedron $\{\mbf{t}, \mbf{n}, \mbf{b}\}$.
+Show that $\kp$ and $\tp$ are both constant and express them in terms of $a$ and $b$.
+\end{question}
+
+\begin{question}
+A curve $\alpha(s)$ parametrised by arc length is a plane curve if and only if $\tau(s) \equiv 0$.
+Prove both directions of this equivalence.
+\end{question}
+
+\begin{question}
+For a non-unit speed curve $\alpha(t)$, show that
+\[
+  \mbf{t} = \frac{\alpha'}{|\alpha'|}, \qquad
+  \mbf{b} = \frac{\alpha' \times \alpha''}{|\alpha' \times \alpha''|}, \qquad
+  \kp = \frac{|\alpha' \times \alpha''|}{|\alpha'|^3}.
+\]
+\end{question}
+
+\begin{question}
+Compute the curvature $\kp(t)$ and torsion $\tp(t)$ for the \textbf{Catenary Helix}
+$\alpha(t) = (\cosh t,\, \sinh t,\, t)$.
+\end{question}
+
+\begin{question}
+For $\alpha(t) = (t, t^2, t^3)$, find the Frenet trihedron $\{\mbf{t}, \mbf{n}, \mbf{b}\}$ at $t=1$.
+Compute $\kp(1)$ and $\tp(1)$.
+\end{question}
+
+\begin{hardq}
+  \textbf{Lancret's Theorem.} \hard\;
+  Prove that a curve is a \emph{generalized helix} (makes a constant angle with a fixed direction) if and only if $\kp/\tp$ is constant along the curve.
+\end{hardq}
+
+\begin{question}
+Let $\alpha(s)$ be unit-speed. Derive the Taylor expansion
+\[
+  |\alpha(s)-\alpha(0)|^2 = s^2 - \tfrac{\kp(0)^2}{12}s^4 + O(s^5)
+\]
+and hence obtain the leading-order formula $|\alpha(s)-\alpha(0)| = s - \frac{\kp(0)^2}{24}s^3 + O(s^4)$.
+\end{question}
+
+\begin{question}
+Let $\alpha(s)$ be a unit-speed curve lying on a sphere of radius $R$.
+Deduce the constraint
+\[
+  R^2 = \frac{1}{\kp^2} + \left(\frac{1}{\tp}\cdot\frac{d}{ds}\frac{1}{\kp}\right)^2.
+\]
+\end{question}
+
+\begin{question}
+Find the curvature and torsion of
+$\alpha(t) = \bigl(t - \sin t,\; 1 - \cos t,\; 4\sin(t/2)\bigr)$.
+\end{question}
+
+\begin{hardq}
+  \textbf{Darboux Vector.} \hard\;
+  Show that the Frenet equations $\mbf{t}' = \kp\mbf{n}$, $\mbf{n}' = -\kp\mbf{t}+\tp\mbf{b}$, $\mbf{b}'=-\tp\mbf{n}$
+  can be written uniformly as $\mbf{v}' = \mbf{d}\times\mbf{v}$ for $\mbf{v}\in\{\mbf{t},\mbf{n},\mbf{b}\}$,
+  where $\mbf{d}=\tp\mbf{t}+\kp\mbf{b}$ is the \emph{Darboux vector}.
+\end{hardq}
+
+\begin{question}
+\textbf{Evolute and Involute.}\;
+The \emph{evolute} of a unit-speed plane curve $\alpha(s)$ is $\beta(s) = \alpha(s) + \frac{1}{\kp(s)}\mbf{n}(s)$.
+Show that $\beta'(s)$ is parallel to $\mbf{b}(s)$ and interpret $\beta$ geometrically.
+\end{question}
+
+\begin{question}
+\textbf{Fenchel's Theorem.}\;
+State Fenchel's Theorem and apply it to deduce that a closed curve with $\kp < 2\pi/L$ everywhere cannot be convex.
+\end{question}
+
+\begin{question}
+\textbf{Bertrand Curves.}\;
+Show that $\alpha$ and $\beta$ are Bertrand mates if and only if there exist constants $a, b$ such that $a\kp + b\tp = 1$.
+\end{question}
+
+\begin{question}
+For $\alpha(t) = (e^t \cos t,\; e^t \sin t,\; e^t)$, compute the arc length from $t=0$ to $t=T$, find $\mbf{t}(t)$, and show $\kp(t)$ is constant.
+\end{question}
+
+\begin{question}
+\textbf{Four-Vertex Theorem.}\;
+State the theorem and verify it for an ellipse $\alpha(t) = (a\cos t, b\sin t)$ with $a\neq b$ by computing where $\kp'(t)=0$.
+\end{question}
+
+\begin{question}
+Let $\alpha(s)$ be unit-speed. Prove the Frenet--Serret equations by differentiating $\mbf{t}\cdot\mbf{t}=1$, $\mbf{t}\cdot\mbf{n}=0$, etc., from first principles.
+\end{question}
+
+\begin{hardq}
+  \textbf{Isoperimetric Inequality.} \hard\;
+  State $L^2 \geq 4\pi A$. Sketch a Fourier series proof and characterise equality.
+\end{hardq}
+
+\begin{question}
+\textbf{Signed Curvature.}\;
+For $\alpha(t)=(x(t),y(t))$, define $\kp_s = (x'y''-y'x'')/|\alpha'|^3$. Show it changes sign under orientation reversal and $|\kp_s|=\kp$.
+\end{question}
+
+\begin{question}
+\textbf{Umlaufsatz.}\;
+State Hopf's theorem and verify total signed curvature equals $\pm 2\pi$ for (a) a circle of radius $r$, (b) an ellipse.
+\end{question}
+
+\begin{hardq}
+  \textbf{Fundamental Theorem of Curve Theory.} \hard\;
+  State the theorem and outline the proof via the Frenet ODE system.
+\end{hardq}
+
+%---------- NEW QUESTIONS 21-40 ----------
+\begin{newq}
+  \NEW\; \textbf{Smooth vs.\ Singular.}\;
+  The lecture notes define a parametrised curve $\alpha(t)$ to be \emph{non-singular} if $\alpha'(t)\neq\mathbf{0}$ for all $t$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Let $\alpha(t)=(t^2, t^3)$. Show $\alpha$ is smooth but singular at $t=0$.
+    \item Explain geometrically why no velocity vector can reasonably be assigned at the origin.
+    \item Identify the value of $|\alpha'(t)|$ near $t=0$ and explain why this prevents arc-length reparametrisation.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Arc-Length Reparametrisation Step by Step.}\;
+  Let $\gamma(t) = (r\cos t, r\sin t, 0)$ for $t\in(0,\pi)$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Compute the arc-length function $s(t) = \int_0^t |\gamma'(u)|\,du$.
+    \item Find the inverse $t = t(s)$ explicitly.
+    \item Write $\alpha(s) = \gamma(t(s))$ parametrised by arc length and verify $|\alpha'(s)|=1$.
+  \end{enumerate}
+  Then explain why the Inverse Function Theorem guarantees the existence and smoothness of $t(s)$ for any non-singular smooth curve.
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Unit Vectors and Perpendicularity.}\;
+  The lecture notes prove that if $\mathbf{v}(t)$ is a unit vector for all $t$, then $\mathbf{v}'(t)\perp\mathbf{v}(t)$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Supply the proof by differentiating $\mathbf{v}(t)\cdot\mathbf{v}(t)=1$.
+    \item Apply this lemma to deduce that $\alpha''(s)\perp\alpha'(s)$ for any arc-length parametrised curve.
+    \item Use it again to show $\mathbf{b}'(s)\perp\mathbf{b}(s)$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Plane Curves and the Binormal.}\;
+  The lecture notes prove: if $\mathbf{b}(s)=\mathbf{c}$ is constant, then $\alpha(s)$ lies on a plane perpendicular to $\mathbf{c}$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Reproduce the proof: let $z(s) = \alpha(s)\cdot\mathbf{c}$, differentiate, and conclude $z(s)$ is constant.
+    \item Verify that the constant equals $\alpha(0)\cdot\mathbf{c}$. Interpret geometrically.
+    \item Conversely, if $\alpha(s)$ lies on a plane with unit normal $\mathbf{c}$, prove $\mathbf{b}(s)=\pm\mathbf{c}$ and hence $\tp\equiv 0$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Deriving $\mathbf{n}'(s)$.}\;
+  The lecture notes derive $\mathbf{n}'(s) = -\kp(s)\mathbf{t}(s) - \tp(s)\mathbf{b}(s)$ by differentiating $\mathbf{n}=\mathbf{b}\wedge\mathbf{t}$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Carry out the derivation step by step, applying the product rule for the cross product.
+    \item Write the Frenet--Serret system as the matrix equation
+    $\begin{pmatrix}\mathbf{t}'\\\mathbf{n}'\\\mathbf{b}'\end{pmatrix}
+    = \begin{pmatrix}0&\kp&0\\-\kp&0&\tp\\0&-\tp&0\end{pmatrix}
+    \begin{pmatrix}\mathbf{t}\\\mathbf{n}\\\mathbf{b}\end{pmatrix}$
+    and observe that the matrix is skew-symmetric.
+    \item Explain why skew-symmetry follows from $\{\mathbf{t},\mathbf{n},\mathbf{b}\}$ being orthonormal.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{The Worked Example from Section~1.4.}\;
+  Consider the arc-length parametrised curve
+  \[
+    \alpha(s) = \Bigl(\sqrt{2}\arctan\tfrac{s}{\sqrt{2}},\;\log(s^2+2),\;s - \sqrt{2}\arctan\tfrac{s}{\sqrt{2}}\Bigr).
+  \]
+  \begin{enumerate}[label=(\alph*)]
+    \item Verify that $|\alpha'(s)|=1$.
+    \item Compute $\kp(s)$ and $\tp(s)$ as in the lecture notes.
+    \item Independently verify the formula $\mathbf{n}'(s)=-\kp(s)\mathbf{t}(s)-\tp(s)\mathbf{b}(s)$ for this example by direct differentiation.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Frenet Frame of the Standard Example in Section~1.5.}\;
+  The lecture notes compute the Frenet frame for $\alpha(t)=(3t-t^3, 3t^2, 3t+t^3)$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Using the non-unit-speed formulas from Section~1.5, reproduce the computation of $\kp(t)$ and $\tp(t)$.
+    \item Verify that $\kp = -\tp = \dfrac{1}{3(1+t^2)^2}$.
+    \item Compute the Frenet trihedron $\{\mathbf{t},\mathbf{n},\mathbf{b}\}$ at $t=0$ and $t=1$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Rigid Motions and the Frenet Frame.}\;
+  A rigid motion is $R(\mathbf{x})=A\mathbf{x}+\mathbf{v}$ where $A\in O(3)$ with $\det A=1$ and $\mathbf{v}\in\R^3$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Show $R$ is an isometry: $|R(\mathbf{x})-R(\mathbf{y})|=|\mathbf{x}-\mathbf{y}|$ for all $\mathbf{x},\mathbf{y}$.
+    \item Let $\beta(s)=R(\alpha(s))$. Show $\beta'(s)=A\alpha'(s)$ and hence the unit tangent of $\beta$ equals $A\mathbf{t}_\alpha$.
+    \item Conclude that $\kp_\beta(s)=\kp_\alpha(s)$ and $\tp_\beta(s)=\tp_\alpha(s)$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Uniqueness in the Fundamental Theorem.}\;
+  Suppose $\alpha(s)$ and $\beta(s)$ satisfy the same curvature $\kp(s)$ and torsion $\tp(s)$, and at $s=0$ their Frenet trihedra are aligned: $\mathbf{t}_1(0)=\mathbf{t}_2(0)$, $\mathbf{n}_1(0)=\mathbf{n}_2(0)$, $\mathbf{b}_1(0)=\mathbf{b}_2(0)$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Define $f(s) = |\mathbf{t}_1(s)-\mathbf{t}_2(s)|^2+|\mathbf{n}_1(s)-\mathbf{n}_2(s)|^2+|\mathbf{b}_1(s)-\mathbf{b}_2(s)|^2$.
+    \item Show $f'(s)=0$ using the Frenet equations and conclude $f\equiv 0$.
+    \item Integrate $\mathbf{t}_1(s)=\mathbf{t}_2(s)$ to deduce $\alpha(s)=\beta(s)$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Non-Singular Condition and Arc Length.}\;
+  The lecture notes use the Inverse Function Theorem to reparametrise by arc length.
+  \begin{enumerate}[label=(\alph*)]
+    \item State the one-variable Inverse Function Theorem as stated in Section~1.1 of the notes.
+    \item Let $\alpha(t)$ be non-singular. Show $s(t)=\int_0^t|\alpha'(u)|\,du$ satisfies $s'(t)>0$.
+    \item Explain why $s'(t)>0$ implies $t(s)$ exists and is smooth, even when the integral $s(t)$ cannot be evaluated in closed form.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Translating Curves.}\;
+  The lecture notes observe: if $\beta(s)=\alpha(s)+\mathbf{c}$ for a constant vector $\mathbf{c}$, then $\alpha$ and $\beta$ have the same Frenet data.
+  \begin{enumerate}[label=(\alph*)]
+    \item Prove this from scratch: $\beta'=\alpha'$, so $\mathbf{t}_\beta=\mathbf{t}_\alpha$, and so on.
+    \item Explain why translation is a special case of a rigid motion.
+    \item Give an example of two curves that share the same $\kp$ and $\tp$ but differ by a rotation (not just a translation).
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Curvature via the Osculating Circle.}\;
+  The curvature $\kp(s_0)=1/R$ where $R$ is the radius of the osculating (best-approximating) circle at $\alpha(s_0)$.
+  \begin{enumerate}[label=(\alph*)]
+    \item For a circle $\alpha(s) = (r\cos(s/r), r\sin(s/r))$, verify $\kp(s)=1/r$ from the definition $\kp=|\alpha''|$.
+    \item For a straight line $\alpha(s)=\mathbf{a}+s\mathbf{t}_0$, verify $\kp=0$ and explain why the radius of curvature is infinite.
+    \item Using the centripetal acceleration analogy from Section~1.3 of the notes, explain intuitively why higher curvature corresponds to a tighter bend.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Orientation and the Cross Product.}\;
+  Section~1.2 of the notes discusses orientation. Let $\{\mathbf{e}_1,\mathbf{e}_2,\mathbf{e}_3\}$ be a right-handed basis.
+  \begin{enumerate}[label=(\alph*)]
+    \item Prove the product rule for cross products: $(\mathbf{v}(t)\wedge\mathbf{w}(t))'=\mathbf{v}'(t)\wedge\mathbf{w}(t)+\mathbf{v}(t)\wedge\mathbf{w}'(t)$.
+    \item Use this to verify $\mathbf{b}'(s) = ({\mathbf{t}(s)\wedge\mathbf{n}(s)})'= \tp(s)\mathbf{n}(s)$ without assuming the result.
+    \item What happens to the orientation of the Frenet frame under a reflection? Does $\kp$ or $\tp$ change sign?
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Speed, Velocity, Acceleration.}\;
+  The lecture notes carefully distinguish velocity $\alpha'(t)$, speed $|\alpha'(t)|$, and acceleration $\alpha''(t)$.
+  \begin{enumerate}[label=(\alph*)]
+    \item For a non-arc-length curve $\alpha(t)$, write $\alpha''(t)$ in terms of $\mathbf{t}$, $\mathbf{n}$, $s'(t)=|\alpha'(t)|$, and $\kp$.
+    Specifically show $\alpha''(t) = \dfrac{d|\alpha'|}{dt}\mathbf{t} + \kp|\alpha'|^2\mathbf{n}$.
+    \item Identify the tangential component of acceleration (change in speed) and the normal component (centripetal term).
+    \item Explain the \emph{Warning} in Section~1.3: why does using acceleration to gauge curvature fail for non-arc-length curves?
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Frenet Frame of the $\alpha(t)=(t,t^2,t^3)$ Curve Revisited.}\;
+  Recompute the Frenet frame for $\alpha(t)=(t,t^2,t^3)$ using the non-unit-speed formulas of Section~1.5.
+  \begin{enumerate}[label=(\alph*)]
+    \item Compute $\alpha'$, $\alpha''$, $\alpha'''$.
+    \item Use $\mathbf{b}=\dfrac{\alpha'\times\alpha''}{|\alpha'\times\alpha''|}$ to find $\mathbf{b}(t)$ for general $t$.
+    \item Verify: as $t\to 0$, the torsion $\tp(t)\to 2/3$ and the curvature $\kp(0)=2$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Elliptical Orbit.}\;
+  A particle in an elliptical orbit (in the $xy$-plane) follows $\alpha(t)=(a\cos t, b\sin t, 0)$ with $a>b>0$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Compute $\kp(t)$ using the formula for non-unit-speed curves.
+    \item Show $\kp$ is maximum at $t=0,\pi$ (ends of the major axis) and minimum at $t=\pi/2, 3\pi/2$.
+    \item Using the Frenet frame, express the curvature at $t=0$ and $t=\pi/2$ in terms of $a$ and $b$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Helical Curve Check.}\;
+  A curve $\alpha(s)$ is called a \emph{circular helix} if $\kp=\kp_0>0$ and $\tp=\tp_0$ are both constant.
+  \begin{enumerate}[label=(\alph*)]
+    \item Starting from the Frenet ODEs with constant $\kp_0, \tp_0$, reduce the system to a second-order ODE for $\mathbf{t}(s)$.
+    \item Solve the ODE to show $\mathbf{t}(s)$ traces a circle on the unit sphere.
+    \item Integrate $\mathbf{t}(s)$ to recover $\alpha(s)$ and verify it is a helix with the given $a,b$ (in terms of $\kp_0, \tp_0$).
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Product Rule Application.}\;
+  Suppose $\alpha(s)$ is unit-speed and define $f(s) = \alpha(s)\cdot\mathbf{c}$ for a fixed unit vector $\mathbf{c}$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Compute $f'(s)$ and $f''(s)$.
+    \item Show that if $\mathbf{c}$ is chosen to be the binormal $\mathbf{b}(0)$ at $s=0$, then $f'(0)=0$ and $f''(0)=-\kp(0)\langle\mathbf{n}(0),\mathbf{b}(0)\rangle=0$.
+    \item Using this, explain why the curve remains close to its osculating plane for small $s$: $\alpha(s)\cdot\mathbf{b}(0) = O(s^3)$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Torsion as a Measure of Non-Planarity.}\;
+  \begin{enumerate}[label=(\alph*)]
+    \item Suppose $\tp(s_0)>0$. Give an intuitive and a rigorous explanation of what this says about how the curve is twisting out of its osculating plane near $s_0$.
+    \item If $\kp>0$ and $\tp\equiv 0$, prove the curve lies in a fixed plane by showing $\mathbf{b}$ is constant.
+    \item If $\kp\equiv 0$, show $\alpha(s)$ is a straight line regardless of $\tp$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Creative: The Train on the Track.}\;
+  A passenger on a train experiences forces that tell them how the track curves.
+  The train moves along $\alpha(t)$ with non-constant speed.
+  \begin{enumerate}[label=(\alph*)]
+    \item Decompose $\alpha''(t)$ into components along $\mathbf{t}$ and $\mathbf{n}$ and identify which component the passenger feels as ``sideways force'' (centripetal).
+    \item Suppose the train moves at constant speed $v_0$. Show the sideways force is $m\kp v_0^2$, proportional to curvature.
+    \item The train enters a spiral easement where $\kp(t)=ct$ (linearly increasing). How does the sideways force change over time? Why are spiral easements used in real railway design?
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Creative: Knottedness and Total Torsion.}\;
+  For a closed curve $\alpha: [0,L]\to\R^3$ with $\alpha(0)=\alpha(L)$:
+  \begin{enumerate}[label=(\alph*)]
+    \item The total torsion is $\int_0^L \tp(s)\,ds$. Show this equals the total rotation of the binormal vector around the curve.
+    \item For the standard unknot (a circle), compute the total torsion.
+    \item For the $(2,1)$-torus knot $\alpha(t)=((R+r\cos 2t)\cos t, (R+r\cos 2t)\sin t, r\sin 2t)$, describe qualitatively why the total torsion is nonzero. (No explicit computation required; argue geometrically.)
+  \end{enumerate}
+\end{newq}
+
+%===========================================================
+\section{Regular Surfaces and Parametrisations}
+%===========================================================
+
+\begin{question}
+State the \textbf{Pre-image Theorem}.
+Show that the ellipsoid $\frac{x^2}{a^2} + \frac{y^2}{b^2} + \frac{z^2}{c^2} = 1$ is a regular surface.
+\end{question}
+
+\begin{question}
+Is the cone $z^2 = x^2 + y^2$ a regular surface?
+Examine $\grad f$ at $(0,0,0)$ and explain the geometric failure.
+\end{question}
+
+\begin{question}
+Parametrise a surface of revolution. State necessary and sufficient conditions on $f$ and $g$ for regularity.
+\end{question}
+
+\begin{question}
+Show that stereographic projection of $S^2\setminus\{N\}$ onto $\R^2$ is a diffeomorphism.
+\end{question}
+
+\begin{question}
+Let $S = \{f(x,y,z)=c\}$ with $\grad f\neq 0$ on $S$. Show $\grad f(p)$ is normal to $T_pS$.
+\end{question}
+
+\begin{question}
+Compute $E, F, G$ for the catenoid $\mathbf{x}(u,v) = (c\cosh v\cos u,\; c\cosh v\sin u,\; cv)$.
+\end{question}
+
+\begin{question}
+Compute the surface area of the torus $\mathbf{x}(u,v) = \bigl((R+r\cos u)\cos v,\; (R+r\cos u)\sin v,\; r\sin u\bigr)$.
+\end{question}
+
+\begin{question}
+Show that the graph $\{(x,y,f(x,y))\}$ of any smooth $f:\R^2\to\R$ is always a regular surface.
+\end{question}
+
+\begin{question}
+Show $\mathbf{x}(u,v)=(u+v,\;u-v,\;uv)$ defines a regular surface and compute $E,F,G$.
+\end{question}
+
+\begin{hardq}
+  \textbf{Orthogonal Parametrisations.} \hard\;
+  Explain why locally one can find an orthogonal parametrisation with $F=0$.
+\end{hardq}
+
+\begin{question}
+\textbf{Transition Maps.}\;
+Show the transition map $\mathbf{y}^{-1}\circ\mathbf{x}$ between overlapping parametrisations is a diffeomorphism.
+\end{question}
+
+\begin{question}
+\textbf{Tangent Space as a Subspace.}\;
+Define $T_pS$ intrinsically and show it is a 2-dimensional vector subspace of $\R^3$.
+\end{question}
+
+\begin{question}
+\textbf{Implicit Function Theorem.}\;
+Show that $f(x,y,z)=0$ with $\partial f/\partial z\neq 0$ can locally be written as a graph $z=g(x,y)$.
+\end{question}
+
+\begin{question}
+Compute $E,F,G$ for the helicoid $\mathbf{x}(u,v)=(v\cos u,\; v\sin u,\; cu)$ and find $\mathbf{N}$.
+\end{question}
+
+\begin{question}
+Show that the area formula $\iint|\mathbf{x}_u\times\mathbf{x}_v|\,du\,dv$ is independent of parametrisation.
+\end{question}
+
+\begin{question}
+Parametrise the M\"obius strip and show it is not orientable.
+\end{question}
+
+\begin{question}
+Define $d\varphi_p: T_pS_1\to T_{\varphi(p)}S_2$ and show it is a well-defined linear map.
+\end{question}
+
+\begin{hardq}
+  \textbf{Compact Surfaces.} \hard\;
+  Show every compact regular surface in $\R^3$ has at least one point of positive Gaussian curvature.
+\end{hardq}
+
+\begin{question}
+\textbf{Conformal Maps.}\;
+Show $\varphi$ is conformal iff $E_1=\lambda^2 E_2$, $F_1=\lambda^2 F_2$, $G_1=\lambda^2 G_2$.
+\end{question}
+
+\begin{question}
+\textbf{Tubular Neighbourhood.}\;
+For compact $S$, show that for small $\varepsilon>0$ every point of $T_\varepsilon$ has a unique closest point on $S$.
+\end{question}
+
+%---------- NEW QUESTIONS 21-40 ----------
+
+\begin{newq}
+  \NEW\; \textbf{The Three Conditions for a Regular Surface.}\;
+  The lecture notes define a regular surface using three conditions on a coordinate function $\mathbf{x}: U\to S$.
+  \begin{enumerate}[label=(\alph*)]
+    \item State all three conditions precisely.
+    \item For the unit sphere, exhibit the coordinate function covering the northern hemisphere and verify each condition explicitly, including the RREF computation of $d\mathbf{x}_q$.
+    \item Explain why the six coordinate functions are needed to cover the full sphere.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{The Union of Two Coordinate Planes.}\;
+  Let $S=\{(x,y,z)\in\R^3 : yz=0\}$ (the union of the $xy$- and $xz$-planes).
+  \begin{enumerate}[label=(\alph*)]
+    \item Show that every point other than $(x,0,0)$ has a coordinate function by checking the three conditions.
+    \item Explain geometrically why no coordinate function can cover a neighbourhood of $(1,0,0)$ in $S$.
+    \item Relate this to the fact that $S$ is not a topological manifold at such points.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Surface of Revolution: Full Verification.}\;
+  The lecture notes treat the surface of revolution $\mathbf{x}(u,v)=(f(v)\cos u, f(v)\sin u, v)$ for $f(v)>0$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Verify the three conditions for $\mathbf{x}: (0,2\pi)\times\R \to S\cap V$ where $V=\R^3\setminus\{(x,0,z):x\geq 0\}$.
+    \item Why is a second coordinate function needed? Provide it explicitly.
+    \item Show the transition map between the two coordinate functions is smooth.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Regularity via the Inverse Function Theorem.}\;
+  Section~2.4 uses the Inverse Function Theorem to show level sets $f^{-1}(a)$ are regular surfaces when $\grad f\neq\mathbf{0}$.
+  \begin{enumerate}[label=(\alph*)]
+    \item State the multivariable Inverse Function Theorem as in Section~2.3.
+    \item Apply it to show that the hyperboloid $\{z^2=x^2+y^2+1\}$ is a regular surface.
+    \item Compare the efficiency of this approach with directly exhibiting coordinate functions.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Tangent Vectors from Curves.}\;
+  Section~2.8 defines $T_pS$ as the set of velocity vectors of smooth curves through $p$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Let $\mathbf{x}(u,v)=(u,v,\sqrt{1-u^2-v^2})$ (northern hemisphere) and $p=\mathbf{x}(\tfrac{1}{2},\tfrac{1}{3})$.
+    Compute $\mathbf{x}_u(p)$ and $\mathbf{x}_v(p)$.
+    \item Find a curve $\alpha(t)$ on the sphere such that $\alpha(0)=p$ and $\alpha'(0) = 2\mathbf{x}_u(p)+3\mathbf{x}_v(p)$, following the recipe in the notes.
+    \item Explain why $T_pS$ is the column space of $d\mathbf{x}_p$ and is independent of the choice of coordinate function.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Smooth Functions on Surfaces.}\;
+  Let $f(x,y,z)=xz^2$ on the unit sphere.
+  \begin{enumerate}[label=(\alph*)]
+    \item Using $\mathbf{x}(u,v)=(u,v,\sqrt{1-u^2-v^2})$ for the northern hemisphere, compute $(f\circ\mathbf{x})(u,v)$.
+    \item Compute $\dfrac{\partial f}{\partial u}$ and $\dfrac{\partial^2 f}{\partial u^2}$ at the north pole $(u,v)=(0,0)$.
+    \item Prove that $f$ is smooth on the sphere by verifying it on each of the six hemisphere patches.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Independence of Smoothness from Charts.}\;
+  Let $S$ be a regular surface, $f:S\to\R$ smooth at $p$ using chart $\mathbf{x}$, and let $\mathbf{y}$ be another chart also covering $p$.
+  \begin{enumerate}[label=(\alph*)]
+    \item State the transition map $h=\mathbf{x}^{-1}\circ\mathbf{y}$ and explain why it is smooth (quoting Section~2.6).
+    \item Show that $(f\circ\mathbf{y}) = (f\circ\mathbf{x})\circ h$, hence $(f\circ\mathbf{y})$ is smooth.
+    \item Conclude that the definition of smoothness of $f:S\to\R$ is independent of the coordinate chart.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Smooth Maps Between Surfaces.}\;
+  Let $\varphi: S_1\to S_2$ be the antipodal map $\varphi(x,y,z)=(-x,-y,-z)$ on the unit sphere.
+  \begin{enumerate}[label=(\alph*)]
+    \item Verify that $\varphi$ is smooth on the northern hemisphere by computing $(\mathbf{x}_2^{-1}\circ\varphi\circ\mathbf{x}_1)(u,v)=(-u,-v)$.
+    \item Explain how the short proof from Section~2.10 (using the restriction of a smooth map on $\R^3$) works.
+    \item Compute $d\varphi_p: T_pS\to T_{\varphi(p)}S$ explicitly for $p=(\tfrac{1}{2},\tfrac{1}{2},\tfrac{1}{\sqrt{2}})$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{The Differential of a Smooth Map.}\;
+  Section~2.11 defines $d\varphi_p(\mathbf{v}_1) = \beta'(0)$ where $\beta=\varphi\circ\alpha$ and $\alpha'(0)=\mathbf{v}_1$.
+  \begin{enumerate}[label=(\alph*)]
+    \item State the key lemma expressing $d\varphi$ as $d\mathbf{x}_2\cdot d\Phi\cdot(a,b)^T$ where $\Phi=\mathbf{x}_2^{-1}\circ\varphi\circ\mathbf{x}_1$.
+    \item Verify that this is a linear map (i.e.\ the matrix $d\mathbf{x}_2\cdot d\Phi$ acts linearly on $(a,b)^T$).
+    \item Apply the lemma to the $90^\circ$ rotation example from the lecture: compute $d\varphi_p$ for the specific point $p=(\frac{3}{13},\frac{4}{13},\frac{12}{13})$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{First Fundamental Form for the Tube.}\;
+  The cylinder (tube) is $\mathbf{x}(u,v)=(\cos u, \sin u, v)$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Compute $\mathbf{x}_u$ and $\mathbf{x}_v$; hence find $E, F, G$.
+    \item Express the arc length of a curve $\alpha(t)=\mathbf{x}(u(t),v(t))$ on the tube in terms of $u'$ and $v'$.
+    \item Show that the first fundamental form for the tube is identical to that of a flat plane in Cartesian coordinates.  What does this tell us about the tube and the plane?
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Area Formula via $\sqrt{EG-F^2}$.}\;
+  \begin{enumerate}[label=(\alph*)]
+    \item Prove the identity $\|\mathbf{x}_u\wedge\mathbf{x}_v\|^2 = EG-F^2$ from the lecture notes.
+    \item Use it to re-derive the area of the torus $\mathbf{x}(u,v)=((a+r\cos u)\cos v,(a+r\cos u)\sin v,r\sin u)$, obtaining $A=4\pi^2 ar$.
+    \item Explain why $\sqrt{EG-F^2}\,du\,dv$ is the correct area element and relate it to the cross product of the tangent vectors.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Change of Parameters as a Diffeomorphism.}\;
+  Section~2.6 proves that the transition map $h=\mathbf{x}_1^{-1}\circ\mathbf{x}_2: V'\to U'$ is a diffeomorphism.
+  \begin{enumerate}[label=(\alph*)]
+    \item Show $h$ is a bijection (as in the blog proof).
+    \item Using Proposition~11 from Section~2.6, prove $h$ is smooth.
+    \item Give an explicit example with the sphere: compute $h$ between the charts $\mathbf{x}_1(u,v)=(u,v,\sqrt{1-u^2-v^2})$ and $\mathbf{x}_2(\xi,\eta)=(\sqrt{1-\xi^2-\eta^2},\xi,\eta)$ on their overlap.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Angle Between Tangent Vectors.}\;
+  Let $\theta$ be the angle between $\mathbf{x}_u$ and $\mathbf{x}_v$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Show $\cos\theta = F/\!\sqrt{EG}$.
+    \item For an orthogonal parametrisation ($F=0$), show $\mathbf{x}_u\perp\mathbf{x}_v$.
+    \item Let $\mathbf{v}_1=a\mathbf{x}_u+b\mathbf{x}_v$ and $\mathbf{v}_2=c\mathbf{x}_u+d\mathbf{x}_v$. Derive a formula for the angle between $\mathbf{v}_1$ and $\mathbf{v}_2$ in terms of $E,F,G,a,b,c,d$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Regular vs.\ Non-Regular: The Cone.}\;
+  \begin{enumerate}[label=(\alph*)]
+    \item Show that $f(x,y,z)=x^2+y^2-z^2$ has $\grad f=(0,0,0)$ at the origin, and hence the Pre-image Theorem fails there.
+    \item Attempt to parametrise the cone near $(0,0,0)$ and show the regularity condition breaks down.
+    \item Contrast with the hyperboloid $z^2=x^2+y^2+1$, where the Pre-image Theorem applies everywhere. Compare the two geometries.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Surfaces as Manifolds (Section~2.7).}\;
+  \begin{enumerate}[label=(\alph*)]
+    \item State the definition of a smooth 2-dimensional manifold (as in Section~2.7), including the Hausdorff and second-countable conditions.
+    \item Show that a regular surface $S\subset\R^3$ is a smooth manifold of dimension 2 by exhibiting a compatible atlas.
+    \item Give an example of a smooth 2-manifold that cannot be embedded in $\R^3$ (e.g.\ the Klein bottle). Explain why regular surfaces in $\R^3$ are more restrictive.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Coordinate Function Counter-Example.}\;
+  The lecture notes give a counter-example: $\mathbf{x}(u,v)=(\sin 2u, \sin u, v)$ on $(-\pi,\pi)\times(-1,1)$ is a smooth bijection with $\rank(d\mathbf{x})=2$, yet $\mathbf{x}^{-1}$ is not continuous.
+  \begin{enumerate}[label=(\alph*)]
+    \item Describe the image surface $\mathbf{x}(U)$.
+    \item Find an explicit sequence $\mathbf{x}(u_n,v_n)\to\mathbf{x}(0,0)$ but $(u_n,v_n)\not\to(0,0)$, demonstrating discontinuity of $\mathbf{x}^{-1}$.
+    \item Explain why this does not contradict the regularity theorem (Proposition~4 in [DoCarmo]): what additional assumption is missing?
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Composition of Smooth Maps Between Surfaces.}\;
+  The lecture notes prove: if $\varphi:S_1\to S_2$ and $\psi:S_2\to S_3$ are smooth, so is $\psi\circ\varphi$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Reproduce the proof using coordinate functions.
+    \item Identify where the chain rule is used in the argument.
+    \item Give an explicit example: let $S_1=S_2=S_3=S^2$, $\varphi$ = antipodal map, $\psi$ = rotation by $\pi/2$ about the $z$-axis. Compute $(\psi\circ\varphi)(x,y,z)$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Graph Surface: Normal Vector and Area.}\;
+  Let $S$ be the graph of $z=f(x,y)=x^2+y^2$ (paraboloid).
+  \begin{enumerate}[label=(\alph*)]
+    \item Using $\mathbf{x}(u,v)=(u,v,u^2+v^2)$, compute $E, F, G$.
+    \item Find the unit normal $\mathbf{N}$ and verify it is indeed a unit vector.
+    \item Set up the area integral for the region $\{x^2+y^2\leq R^2\}$ on the paraboloid and evaluate it.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Creative: Restricting Smooth Functions.}\;
+  The lecture notes state that the restriction of a smooth function $F:\R^3\to\R$ to a regular surface $S$ is smooth on $S$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Let $S$ be the surface of revolution of $x=z^2+1$ about the $z$-axis. Show $S$ is a regular surface (use the Pre-image Theorem).
+    \item Consider $f(x,y,z)=\dfrac{1}{x^2+2y^2}$. Determine an open set $V\supset S$ on which $f$ is well-defined and smooth; hence conclude $f|_S$ is smooth.
+    \item Give an example of a smooth function on $S$ that is \emph{not} the restriction of any polynomial on $\R^3$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Creative: Latitude Circles and Parametrisation.}\;
+  On the sphere $S^2$, a \emph{latitude circle} is $\{\theta=\theta_0\}$ in spherical coordinates $(\theta,\varphi)$ where $\theta\in(0,\pi)$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Parametrise $S^2$ by $\mathbf{x}(\theta,\varphi)=(\sin\theta\cos\varphi,\sin\theta\sin\varphi,\cos\theta)$ and compute $E,F,G$.
+    \item Show the parametrisation is orthogonal ($F=0$). What does this say about latitude and longitude circles?
+    \item Compute the arc length of the latitude circle $\theta=\theta_0$ as $\varphi$ varies from $0$ to $2\pi$, and recover the familiar formula $2\pi\sin\theta_0$.
+  \end{enumerate}
+\end{newq}
+
+%===========================================================
+\section{Second Fundamental Form and Curvatures}
+%===========================================================
+
+\begin{question}
+Show that the Weingarten map $dN_p: T_pS\to T_pS$ is self-adjoint with respect to the first fundamental form.
+\end{question}
+
+\begin{question}
+Prove $K = \det(\mathrm{II})/\det(\mathrm{I})$.
+\end{question}
+
+\begin{question}
+Compute $K$ and $H$ for the sphere $x^2+y^2+z^2=R^2$ using both the Weingarten map and the formula.
+\end{question}
+
+\begin{question}
+Find the principal curvatures of the helicoid and show $H=0$.
+\end{question}
+
+\begin{question}
+Prove: if every point of a connected surface $S$ is umbilic, then $S$ is a plane or a sphere.
+\end{question}
+
+\begin{question}
+Compute $K$ for the Enneper surface and show $K\leq 0$ everywhere.
+\end{question}
+
+\begin{question}
+Define elliptic, parabolic, and hyperbolic points. Show $K<0$ at a hyperbolic point with a geometric example.
+\end{question}
+
+\begin{question}
+\textbf{Euler's Theorem.}\;
+Derive $\kp_n(\theta) = \kp_1\cos^2\theta + \kp_2\sin^2\theta$.
+\end{question}
+
+\begin{question}
+Let $S$ be the graph $z=f(x,y)$. Compute $K$ at a critical point and relate it to $\det[f_{ij}]$.
+\end{question}
+
+\begin{question}
+\textbf{Meusnier's Theorem.}\;
+Prove that all curves through $p$ with the same tangent direction have the same normal curvature.
+\end{question}
+
+\begin{question}
+\textbf{Second Fundamental Form of the Torus.}\;
+Compute $e,f,g$, $K$ and $H$ as functions of $u$. Identify where $K=0$.
+\end{question}
+
+\begin{question}
+\textbf{Lines of Curvature.}\;
+Show $\alpha$ is a line of curvature iff $dN(\alpha')$ is parallel to $\alpha'$.
+\end{question}
+
+\begin{question}
+\textbf{Rodrigues' Formula.}\;
+Prove a unit-speed curve is a line of curvature iff $N'(s)=-\kp_i\,\alpha'(s)$.
+\end{question}
+
+\begin{question}
+\textbf{Asymptotic Curves.}\;
+Show they exist only at non-elliptic points. Compute asymptotic directions on $z=xy$.
+\end{question}
+
+\begin{question}
+\textbf{Minimal Surfaces.}\;
+Show $H=0$ iff $\kp_1=-\kp_2$. Verify the catenoid is minimal.
+\end{question}
+
+\begin{question}
+\textbf{Shape Operator and Curvature Lines.}\;
+With $\kp_1\neq\kp_2$ everywhere, show principal directions define two orthogonal foliations.
+\end{question}
+
+\begin{question}
+\textbf{Curvature of a Surface of Revolution.}\;
+Derive formulas for $K$ and $H$ in terms of $f,g$ and their derivatives.
+\end{question}
+
+\begin{hardq}
+  \textbf{Bonnet's Theorem.} \hard\;
+  State Bonnet's Theorem and explain why both the Gauss and Codazzi--Mainardi equations are needed.
+\end{hardq}
+
+\begin{question}
+\textbf{Gauss Map.}\;
+Define $N:S\to S^2$. Show $dN_p=-\mathcal{W}_p$ and the Jacobian of $N$ equals $K$.
+\end{question}
+
+\begin{hardq}
+  \textbf{Codazzi--Mainardi Equations.} \hard\;
+  Derive them from $N_{uv}=N_{vu}$.
+\end{hardq}
+
+%---------- NEW QUESTIONS 21-40 ----------
+
+\begin{newq}
+  \NEW\; \textbf{Gauss Map: Smoothness.}\;
+  The lecture notes define $N(\mathbf{x}(u,v))=\dfrac{\mathbf{x}_u\wedge\mathbf{x}_v}{|\mathbf{x}_u\wedge\mathbf{x}_v|}$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Show that $N(\mathbf{x}(u,v))$ is a smooth function of $(u,v)$.
+    \item Verify that $N\in S^2$, i.e.\ $|N|=1$.
+    \item Show that $dN_p$ maps $T_pS$ to $T_{N(p)}S^2 = T_pS$ (identify these tangent spaces).
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Gauss Map of the Graph.}\;
+  For the graph $z=f(x,y)$ with coordinate function $\mathbf{x}(u,v)=(u,v,f(u,v))$:
+  \begin{enumerate}[label=(\alph*)]
+    \item Compute $\mathbf{x}_u\wedge\mathbf{x}_v$ and hence the Gauss map $N(u,v)=\dfrac{(-f_u,-f_v,1)}{\sqrt{1+f_u^2+f_v^2}}$.
+    \item Compute $N_u=dN(\mathbf{x}_u)$ and $N_v=dN(\mathbf{x}_v)$.
+    \item At a critical point $f_u=f_v=0$, simplify $N$ and compute $e,f,g$ directly.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Second Fundamental Form Coefficients.}\;
+  The lecture notes define $e=\mathrm{II}(\mathbf{x}_u,\mathbf{x}_u)$, $f=\mathrm{II}(\mathbf{x}_u,\mathbf{x}_v)$, $g=\mathrm{II}(\mathbf{x}_v,\mathbf{x}_v)$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Show that $e = -\langle N_u, \mathbf{x}_u\rangle = \langle N, \mathbf{x}_{uu}\rangle$.
+    \item Use this to compute $e, f, g$ for the sphere $\mathbf{x}(u,v)=(R\sin v\cos u, R\sin v\sin u, R\cos v)$.
+    \item Verify that $K = (eg-f^2)/(EG-F^2) = 1/R^2$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{The Matrix of the Weingarten Map.}\;
+  The lecture notes derive $[dN]_{BB} = -(EG-F^2)^{-1}\begin{pmatrix}E&F\\F&G\end{pmatrix}^{-1}\begin{pmatrix}e&f\\f&g\end{pmatrix}$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Derive this matrix expression by expressing $dN(\mathbf{x}_u)$ and $dN(\mathbf{x}_v)$ in the basis $\{\mathbf{x}_u,\mathbf{x}_v\}$.
+    \item Use it to express $K=\det(dN)$ and $H=-\tfrac{1}{2}\mathrm{tr}(dN)$ in terms of $e,f,g,E,F,G$.
+    \item Verify the formulas for the unit sphere ($E=G=1$, $F=0$, $e=g=1/R$, $f=0$) giving $K=1/R^2$ and $H=1/R$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Self-Adjointness of $dN$.}\;
+  \begin{enumerate}[label=(\alph*)]
+    \item Prove $\langle dN(\mathbf{x}_u), \mathbf{x}_v\rangle = \langle \mathbf{x}_u, dN(\mathbf{x}_v)\rangle$ by differentiating $\langle N, \mathbf{x}_u\rangle = 0$ with respect to $v$ and $\langle N, \mathbf{x}_v\rangle=0$ with respect to $u$.
+    \item Show this implies $f=\langle N_u, -\mathbf{x}_v\rangle = \langle N_v, -\mathbf{x}_u\rangle$, and hence the matrix $\begin{pmatrix}e&f\\f&g\end{pmatrix}$ is symmetric.
+    \item Explain why self-adjointness implies $dN_p$ is diagonalisable with real eigenvalues.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Normal Curvature from the Second Fundamental Form.}\;
+  Let $\alpha(s)$ be a unit-speed curve on $S$ with $\alpha'(s)=\mathbf{v}$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Show $\kp_n = \mathrm{II}(\mathbf{v},\mathbf{v}) = -\langle dN(\mathbf{v}),\mathbf{v}\rangle$.
+    \item For a curve $\mathbf{v}=\cos\theta\,\mathbf{e}_1+\sin\theta\,\mathbf{e}_2$ where $\mathbf{e}_1,\mathbf{e}_2$ are principal directions, derive $\kp_n=\kp_1\cos^2\theta+\kp_2\sin^2\theta$.
+    \item For the sphere of radius $R$, confirm $\kp_n=1/R$ for \emph{every} unit tangent direction.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Diagonalising the Gauss Map.}\;
+  The lecture notes (Section~3.6) show that $dN_p$ can be diagonalised.
+  \begin{enumerate}[label=(\alph*)]
+    \item Explain why the self-adjointness of $dN_p$ guarantees it is diagonalisable over $\R$.
+    \item Let $\mathbf{e}_1,\mathbf{e}_2$ be orthonormal eigenvectors with eigenvalues $-\kp_1,-\kp_2$. Show $K=\kp_1\kp_2$ and $H=(\kp_1+\kp_2)/2$.
+    \item For the Enneper surface at the origin, show directly that $dN_0$ has equal and opposite eigenvalues, confirming $H=0$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Gauss Map in Local Coordinates.}\;
+  Section~3.7 derives the formula for $[dN]$ in local coordinates.
+  \begin{enumerate}[label=(\alph*)]
+    \item Verify: setting $a=1, b=0$ gives $dN(\mathbf{x}_u)=e\cdot\text{(first row of }(FFF)^{-1}\mathrm{II})$.
+    \item For the torus $\mathbf{x}(u,v)=((R+r\cos u)\cos v,(R+r\cos u)\sin v, r\sin u)$, compute $N(u,v)$.
+    \item Compute $N_u$ and $N_v$ directly and express them in the basis $\{\mathbf{x}_u,\mathbf{x}_v\}$ to find $e,f,g$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Umbilic Points and Totally Umbilic Surfaces.}\;
+  A point $p$ is umbilic if $\kp_1(p)=\kp_2(p)$, equivalently $dN_p=\lambda\mathrm{Id}$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Show that on the sphere every point is umbilic, with $\kp_1=\kp_2=1/R$.
+    \item On a plane, every point is umbilic with $\kp_1=\kp_2=0$.
+    \item Prove the converse: if $dN_p=\lambda(p)\mathrm{Id}$ for all $p\in S$ (connected), then $\lambda$ is constant and $S$ is a sphere or a plane. (\emph{Hint:} differentiate $N_u=\lambda\mathbf{x}_u$ and use Codazzi.)
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{K at a Graph Critical Point.}\;
+  Let $S$ be the graph of $z=f(x,y)$.  Suppose $f_x(0,0)=f_y(0,0)=0$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Show $N(0,0)=(0,0,1)$ and compute the second fundamental form at $(0,0,0)$.
+    \item Show $K(0,0,0) = f_{xx}f_{yy}-f_{xy}^2 = \det(\mathrm{Hess}_f(0,0))$.
+    \item Apply this to $z=x^2-y^2$ (saddle) and $z=x^2+y^2$ (bowl) and classify the type of point.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Linear Algebra Review for the Shape Operator.}\;
+  Let $\mathcal{W}=-dN: T_pS\to T_pS$ be the shape operator (Weingarten map).
+  \begin{enumerate}[label=(\alph*)]
+    \item Show $\mathrm{II}(\mathbf{v},\mathbf{w})=\langle\mathcal{W}(\mathbf{v}),\mathbf{w}\rangle$ for all $\mathbf{v},\mathbf{w}\in T_pS$.
+    \item Verify this symmetry using the formula $\mathrm{II}(\mathbf{v},\mathbf{w})=\langle N, \mathbf{v}_u w^1+\mathbf{v}_v w^2\rangle$ where appropriate.
+    \item Explain why $\mathcal{W}$ being self-adjoint implies $\mathrm{II}$ is a symmetric bilinear form.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Surface of Revolution: Curvatures.}\;
+  For the surface $\mathbf{x}(u,v)=(f(v)\cos u, f(v)\sin u, g(v))$ with $(f')^2+(g')^2=1$ (unit-speed profile):
+  \begin{enumerate}[label=(\alph*)]
+    \item Compute $E,F,G$ and the unit normal $N$.
+    \item Show that the principal directions at each point are along $\mathbf{x}_u$ and $\mathbf{x}_v$.
+    \item Derive $\kp_1 = -g'/f$ (azimuthal) and $\kp_2 = f''g'-f'g''$ (meridional), and express $K$ and $H$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Catenoid is Minimal.}\;
+  \begin{enumerate}[label=(\alph*)]
+    \item For the catenoid $\mathbf{x}(u,v)=(c\cosh v\cos u, c\cosh v\sin u, cv)$, compute $e,f,g$.
+    \item Verify $H=(eG-2fF+gE)/(2(EG-F^2))=0$.
+    \item Show directly that $\kp_1=-\kp_2$ at every point.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Asymptotic Directions on the Saddle.}\;
+  \begin{enumerate}[label=(\alph*)]
+    \item For $z=xy$ parametrised by $\mathbf{x}(u,v)=(u,v,uv)$, compute $e,f,g$.
+    \item Find the asymptotic directions (solutions of $e(\dot u)^2+2f\dot u\dot v+g(\dot v)^2=0$).
+    \item Verify the asymptotic curves are the lines $y=\text{const}$ and $x=\text{const}$ on the saddle surface.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Creative: Soap Film and Mean Curvature.}\;
+  A soap film minimises area subject to boundary conditions and satisfies $H=0$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Explain physically why $H=0$ corresponds to mechanical equilibrium (equal pressure from both sides of the film).
+    \item Show that for a surface of revolution $H=0$ reduces to the ODE $f''/(1+f'^2)^{3/2} = f'/(f\sqrt{1+f'^2})$, and verify the catenoid $f(z)=c\cosh(z/c)$ satisfies it.
+    \item If you stretched a soap film between two coaxial circles of radius $r$ at heights $z=\pm h$, what happens as $h/r$ exceeds a certain ratio? (Describe qualitatively; relate to $H=0$ losing solutions.)
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Creative: Curvature of the Earth.}\;
+  Model the Earth as a sphere of radius $R=6400$ km.
+  \begin{enumerate}[label=(\alph*)]
+    \item What is the Gaussian curvature $K$ of the Earth's surface?
+    \item If you travel along the equator (a great circle), what is the normal curvature $\kp_n$ and geodesic curvature $\kp_g$?
+    \item A flat map of a region of area $A$ on the Earth's surface will have distortion. Using the Theorema Egregium, explain why no flat map can be perfect.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Codazzi--Mainardi: Physical Interpretation.}\;
+  The Codazzi--Mainardi equations are integrability conditions on the second fundamental form.
+  \begin{enumerate}[label=(\alph*)]
+    \item Write out the Codazzi--Mainardi equations in the orthogonal case $F=0$.
+    \item Explain: they ensure that $N_u$ and $N_v$ computed from $dN$ are consistent as mixed partials ($N_{uv}=N_{vu}$).
+    \item Give an example: verify Codazzi--Mainardi for the sphere, where $e=g=1/R$, $f=0$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Creative: Sign of Gaussian Curvature.}\;
+  Consider the torus $\mathbf{x}(u,v)=((R+r\cos u)\cos v,(R+r\cos u)\sin v,r\sin u)$ with $R>r>0$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Show $K(u,v) = \dfrac{\cos u}{r(R+r\cos u)}$.
+    \item Identify the outer equator ($u=0$), inner equator ($u=\pi$), and top/bottom circles ($u=\pi/2, 3\pi/2$) as elliptic, hyperbolic, or parabolic points.
+    \item Using Gauss--Bonnet, explain why $\iint_T K\,dA=0$ is consistent with your sign analysis.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Creative: Ruled Surfaces and Asymptotic Lines.}\;
+  A \emph{ruled surface} is swept out by a moving line: $\mathbf{x}(u,v)=\mathbf{a}(u)+v\mathbf{b}(u)$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Show that along each ruling $v\mapsto\mathbf{a}(u_0)+v\mathbf{b}(u_0)$, the normal curvature in the direction of $\mathbf{b}$ is zero.
+    \item Conclude that the rulings are asymptotic curves, so $K\leq 0$ at all non-parabolic points.
+    \item The helicoid is a ruled surface. Verify $K\leq 0$ explicitly from your earlier computation of $K$ for the helicoid.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Gauss Map Area Ratio.}\;
+  The Gauss map $N:S\to S^2$ carries area elements in the ratio $|K|$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Show: the area element pulled back by $N$ satisfies $N^*dA_{S^2} = K\,dA_S$.
+    \item For the sphere $S^2_R$, verify that the total image area under $N$ is $4\pi$ (the full unit sphere), consistent with $K=1/R^2$ and $\text{Area}(S^2_R)=4\pi R^2$.
+    \item For a cylinder $x^2+y^2=r^2$, explain why the Gauss map sends all points to a single great circle, and reconcile with $K=0$.
+  \end{enumerate}
+\end{newq}
+
+%===========================================================
+\section{Isometries and Theorema Egregium}
+%===========================================================
+
+\begin{question}
+Define a local isometry. Show $E_1=E_2, F_1=F_2, G_1=G_2$ is sufficient for two surfaces to be locally isometric.
+\end{question}
+
+\begin{question}
+Show the sphere and plane are not locally isometric by comparing $K$, and explain the consequence for flat maps.
+\end{question}
+
+\begin{question}
+Show the catenoid and helicoid are locally isometric via an explicit family of isometries.
+\end{question}
+
+\begin{question}
+\textbf{Theorema Egregium.}\;
+State the theorem and explain why $K$ depends only on $E,F,G$.
+\end{question}
+
+\begin{question}
+\textbf{Developable Surfaces.}\;
+Prove $K\equiv 0$ implies locally isometric to a plane. Give three classes of examples.
+\end{question}
+
+\begin{question}
+Show if $\lambda\equiv 1$ in a conformal map, then $f$ is a local isometry.
+\end{question}
+
+\begin{question}
+Show the cylinder $x^2+y^2=r^2$ is locally isometric to a plane.
+\end{question}
+
+\begin{question}
+Compute Christoffel symbols $\Gamma_{ij}^k$ for $S^2$ in spherical coordinates.
+\end{question}
+
+\begin{hardq}
+  \textbf{Brioschi Formula.} \hard\;
+  Derive the Brioschi formula for $K$ when $F=0$ and verify for the sphere and cylinder.
+\end{hardq}
+
+\begin{question}
+Give a concrete example of an equiareal map that is not an isometry. What additional condition forces isometry?
+\end{question}
+
+\begin{question}
+\textbf{Rigidity of the Sphere.}\;
+State the rigidity theorem and contrast with non-convex surfaces.
+\end{question}
+
+\begin{question}
+\textbf{Gauss Equations.}\;
+Write out $R_{ijk\ell}$ in terms of the second fundamental form and recover $K=(eg-f^2)/(EG-F^2)$.
+\end{question}
+
+\begin{question}
+\textbf{Isometry Group.}\;
+Show isometries $S\to S$ form a group and identify the isometry group of $S^2$.
+\end{question}
+
+\begin{question}
+\textbf{Conformal Flatness.}\;
+State (without full proof) that every regular surface admits isothermal coordinates.
+\end{question}
+
+\begin{question}
+\textbf{Intrinsic vs.\ Extrinsic.}\;
+Classify: (a) $K$, (b) $H$, (c) arc length, (d) $\kp_1,\kp_2$, (e) Christoffel symbols.
+\end{question}
+
+\begin{question}
+Compute $K$ for the pseudosphere and verify $K=-1$ via the Brioschi formula.
+\end{question}
+
+\begin{question}
+\textbf{Nash Embedding Theorem.}\;
+State the theorem and explain its implication for abstract Riemannian metrics on 2-manifolds.
+\end{question}
+
+\begin{hardq}
+  \textbf{Parallel Transport and Curvature.} \hard\;
+  Show $K$ can be recovered as holonomy angle per unit area and relate to Gauss--Bonnet.
+\end{hardq}
+
+\begin{question}
+\textbf{Covariant Derivative.}\;
+Define $\nabla_X Y$ on a surface. State the properties of the Levi-Civita connection.
+\end{question}
+
+\begin{hardq}
+  \textbf{Minding's Theorem.} \hard\;
+  State and use it to conclude all constant negative curvature surfaces share the same local geometry.
+\end{hardq}
+
+%---------- NEW QUESTIONS 21-40 ----------
+
+\begin{newq}
+  \NEW\; \textbf{Local Isometry and the First Fundamental Form.}\;
+  \begin{enumerate}[label=(\alph*)]
+    \item Define a local isometry $\varphi: S_1\to S_2$ precisely.
+    \item Show: if $\varphi$ is a local isometry, then $E_1=E_2\circ\varphi$, $F_1=F_2\circ\varphi$, $G_1=G_2\circ\varphi$ in appropriate parametrisations.
+    \item Show the converse: if $E_1=E_2$, $F_1=F_2$, $G_1=G_2$, then the map induced by the coordinate functions is a local isometry.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Rigid Motions of $\R^3$ Are Isometries.}\;
+  Let $R(\mathbf{x})=A\mathbf{x}+\mathbf{v}$ be a rigid motion with $A\in SO(3)$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Show $R$ induces an isometry between any surface $S$ and its image $R(S)$.
+    \item Show that rigid motions preserve the first fundamental form.
+    \item Conclude they also preserve $K$, $H$, $\kp_1$, $\kp_2$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Gaussian Curvature Is Intrinsic.}\;
+  \begin{enumerate}[label=(\alph*)]
+    \item State the Theorema Egregium precisely.
+    \item The Brioschi formula expresses $K$ in terms of $E,F,G$ and their partial derivatives only. For a surface with $F=0$, it reads
+    \[K = -\frac{1}{2\sqrt{EG}}\left[\frac{\partial}{\partial u}\!\left(\frac{G_u}{\sqrt{EG}}\right)+\frac{\partial}{\partial v}\!\left(\frac{E_v}{\sqrt{EG}}\right)\right].\]
+    Verify this for the unit sphere (spherical coordinates, $E=1, F=0, G=\sin^2\theta$) and confirm $K=1$.
+    \item Explain in one sentence why $H$ is \emph{not} intrinsic.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Cylinder Is Locally Isometric to a Plane.}\;
+  \begin{enumerate}[label=(\alph*)]
+    \item Write the coordinate function for the cylinder and the plane and show their first fundamental forms coincide.
+    \item Exhibit the explicit local isometry $\varphi: \text{cylinder}\to\text{plane}$.
+    \item Verify $K_{\text{cylinder}}=0$ two ways: (i) from the second fundamental form; (ii) from the Theorema Egregium (since the plane has $K=0$ and the map is an isometry).
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Christoffel Symbols from the First Fundamental Form.}\;
+  \begin{enumerate}[label=(\alph*)]
+    \item Derive the general formula $\Gamma_{ij}^k = \tfrac{1}{2}g^{kl}(\partial_i g_{jl}+\partial_j g_{il}-\partial_l g_{ij})$ where $g_{ij}=\begin{pmatrix}E&F\\F&G\end{pmatrix}$.
+    \item Compute all $\Gamma_{ij}^k$ for the sphere in spherical coordinates $(\theta,\varphi)$ where $E=1, F=0, G=\sin^2\theta$.
+    \item Verify: $\Gamma_{22}^1=-\sin\theta\cos\theta$ and $\Gamma_{12}^2=\cot\theta$, all others being zero or equivalent.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Intrinsic vs.\ Extrinsic Quantities.}\;
+  \begin{enumerate}[label=(\alph*)]
+    \item For each quantity: $K$, $H$, arc length, $\kp_1$, $\kp_2$, Christoffel symbols $\Gamma_{ij}^k$ --- state whether it is intrinsic or extrinsic and justify briefly.
+    \item Show that $K=\kp_1\kp_2$ is intrinsic even though $\kp_1$ and $\kp_2$ individually are extrinsic. (\emph{Hint:} $K$ depends only on $E,F,G$.)
+    \item Give an example of two surfaces that are locally isometric but have different mean curvatures everywhere.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Conformal Map vs.\ Isometry.}\;
+  \begin{enumerate}[label=(\alph*)]
+    \item Define a conformal map. Show that every isometry is conformal (with $\lambda=1$).
+    \item Give an example of a conformal map that is not an isometry: stereographic projection $S^2\setminus\{N\}\to\R^2$.
+    \item Compute the conformal factor $\lambda$ for stereographic projection and verify $\lambda\neq 1$ in general.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Developable Surfaces.}\;
+  \begin{enumerate}[label=(\alph*)]
+    \item Prove: a surface with $K\equiv 0$ is locally isometric to a plane (use the Theorema Egregium and the fact that flat metrics are locally Euclidean).
+    \item List three classes of developable surfaces (plane, cylinder, cone) and show each has $K=0$.
+    \item Explain why a cone is locally isometric to a plane but not globally, by describing what happens to the ``apex'' under the development.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Equiareal Maps vs.\ Isometries.}\;
+  \begin{enumerate}[label=(\alph*)]
+    \item Show that an isometry preserves area, hence is equiareal.
+    \item Construct an explicit equiareal map from the sphere to a cylinder that is not an isometry. (\emph{Hint:} Lambert's equal-area projection.)
+    \item Identify which quantity (preserved vs.\ changed) distinguishes the two maps.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{The Gauss Equation.}\;
+  The Gauss equation relates the Riemann curvature to the second fundamental form:
+  \[R^1{}_{212} = eg - f^2.\]
+  \begin{enumerate}[label=(\alph*)]
+    \item State the Gauss equation in the form $R_{1212}=eg-f^2$ and explain what $R_{1212}$ measures.
+    \item Use it to recover $K=(eg-f^2)/(EG-F^2)$ and explain why this proves $K$ is intrinsic.
+    \item Verify for the sphere: compute $R_{1212}$ from Christoffel symbols and confirm $R_{1212}=\sin^2\theta = eg-f^2$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Covariant Derivative on a Surface.}\;
+  The covariant derivative $DV/dt$ of a vector field $V$ along a curve $\gamma$ is the projection of $V'$ onto $T_{\gamma(t)}S$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Show: $\dfrac{DV}{dt}=\dfrac{dV}{dt}-\left\langle\dfrac{dV}{dt},N\right\rangle N$.
+    \item Prove: $\dfrac{d}{dt}\langle V,W\rangle = \left\langle\dfrac{DV}{dt},W\right\rangle+\left\langle V,\dfrac{DW}{dt}\right\rangle$ (metric compatibility).
+    \item Show the Levi-Civita connection is torsion-free: $D_{\mathbf{x}_u}\mathbf{x}_v - D_{\mathbf{x}_v}\mathbf{x}_u = 0$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Pseudosphere and Constant Negative Curvature.}\;
+  The pseudosphere has $\mathbf{x}(u,v)=(\mathrm{sech}\,v\cos u,\mathrm{sech}\,v\sin u, v-\tanh v)$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Compute $E, F, G$ and verify $F=0$.
+    \item Apply the Brioschi formula to confirm $K=-1$.
+    \item State Minding's Theorem and use it to conclude the pseudosphere is locally isometric to the Poincar\'e half-plane (which also has $K=-1$).
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Holonomy as Curvature.}\;
+  \begin{enumerate}[label=(\alph*)]
+    \item Define holonomy: the angle $\Delta\theta$ by which a vector rotates when parallel-transported around a closed curve.
+    \item For a geodesic triangle on $S^2$ with area $A$, show the holonomy is $A/R^2$ (in radians).
+    \item For a small geodesic rectangle of area $\Delta A$ on a surface with $K=K_0$, show $\Delta\theta\approx K_0\,\Delta A$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Catenoid--Helicoid Isometry.}\;
+  \begin{enumerate}[label=(\alph*)]
+    \item Parametrise the helicoid $\mathbf{x}(u,v)=(v\cos u, v\sin u, cu)$ and the catenoid $\mathbf{y}(u,v)=(c\cosh v\cos u, c\cosh v\sin u, cv)$. Compute their first fundamental forms.
+    \item Show they are equal, hence the natural map $\mathbf{y}\circ\mathbf{x}^{-1}$ is a local isometry.
+    \item Since both $K_{\text{helicoid}}$ and $K_{\text{catenoid}}$ can be computed, verify they agree (by Theorema Egregium they must). Compute $K$ explicitly.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Isometry Group of Surfaces.}\;
+  \begin{enumerate}[label=(\alph*)]
+    \item Show that the composition of two isometries is an isometry and the inverse of an isometry is an isometry.
+    \item Identify the isometry group of the flat cylinder $\{x^2+y^2=1\}$: describe all isometries explicitly.
+    \item Show the isometry group of $S^2$ is $O(3)$. Why is it not just $SO(3)$?
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Creative: Paper Folding and Isometries.}\;
+  When you fold a piece of paper, you perform an isometry (no stretching or tearing).
+  \begin{enumerate}[label=(\alph*)]
+    \item Explain why folding preserves $E,F,G$ and hence arc lengths and angles on the paper.
+    \item By Theorema Egregium, $K$ is preserved. Since flat paper has $K=0$, what can you conclude about all surfaces obtained by folding?
+    \item Can you fold a flat sheet into a doubly curved surface (positive Gaussian curvature, like a sphere cap)? Justify rigorously.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Creative: Map Projections.}\;
+  No flat map of the Earth can perfectly preserve distances.
+  \begin{enumerate}[label=(\alph*)]
+    \item Use the Theorema Egregium to give a rigorous proof: $K_{\text{sphere}}\neq K_{\text{plane}}$ implies no local isometry exists.
+    \item The Mercator projection is conformal. What does it preserve and what does it distort?
+    \item The equal-area projection preserves area. Write down the defining property as a condition on the first fundamental forms.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Levi-Civita Connection: Uniqueness.}\;
+  The Levi-Civita connection is the unique connection that is metric-compatible and torsion-free.
+  \begin{enumerate}[label=(\alph*)]
+    \item State both conditions precisely.
+    \item Derive the Koszul formula:
+    $2\langle\nabla_X Y, Z\rangle = X\langle Y,Z\rangle + Y\langle X,Z\rangle - Z\langle X,Y\rangle + \langle[X,Y],Z\rangle - \langle[Y,Z],X\rangle + \langle[X,Z],Y\rangle$.
+    \item Show that the Christoffel symbols are the components of $\nabla_{\mathbf{x}_i}\mathbf{x}_j$ and use the Koszul formula to recover the formula $\Gamma_{ij}^k=\tfrac{1}{2}g^{kl}(\partial_i g_{jl}+\partial_j g_{il}-\partial_l g_{ij})$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Creative: Intrinsic Geometry of the Flat Torus.}\;
+  The flat torus $T^2=\R^2/\mathbb{Z}^2$ has $E=G=1$, $F=0$ everywhere.
+  \begin{enumerate}[label=(\alph*)]
+    \item Show $K=0$ on the flat torus, hence it is locally isometric to a plane.
+    \item Is the flat torus globally isometric to any open subset of $\R^2$? Justify topologically.
+    \item The standard torus in $\R^3$ has $K$ varying (sometimes positive, sometimes negative). Explain why the standard torus in $\R^3$ is NOT isometric to the flat torus, even though both are tori. What is the obstruction?
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Creative: GPS and Curvature.}\;
+  A GPS satellite measures distances along the curved Earth surface.
+  \begin{enumerate}[label=(\alph*)]
+    \item Model the Earth as a sphere of radius $R$. Compute the geodesic distance between two points $(0,0)$ and $(0,\Delta\varphi)$ in spherical coordinates.
+    \item By Theorema Egregium, the GPS must account for the curvature of space. Estimate the error in flat-Earth distance (straight-line) vs.\ the true geodesic distance for $\Delta\varphi = 0.01$ radians.
+    \item How does the answer change if the Earth were a prolate spheroid (football shape)? Which has larger $K$?
+  \end{enumerate}
+\end{newq}
+
+%===========================================================
+\section{Geodesics and Parallel Transport}
+%===========================================================
+
+\begin{question}
+Derive the geodesic equations $\ddot{u}^k + \Gamma_{ij}^k\dot{u}^i\dot{u}^j=0$ using the calculus of variations.
+\end{question}
+
+\begin{question}
+\textbf{Geodesics on the Cylinder.}\;
+Show geodesics on $x^2+y^2=r^2$ are helices.
+\end{question}
+
+\begin{question}
+Show great circles are geodesics on $S^2$ via the geodesic equations in spherical coordinates.
+\end{question}
+
+\begin{question}
+\textbf{Clairaut's Relation.}\;
+Prove $r\sin\psi=\text{const}$ for a geodesic on a surface of revolution.
+\end{question}
+
+\begin{question}
+Define geodesic curvature $\kp_g$. Show $\gamma$ is geodesic iff $\kp_g\equiv 0$. Relate to $\kp^2=\kp_n^2+\kp_g^2$.
+\end{question}
+
+\begin{question}
+Compute all geodesics on the Poincar\'e half-plane. Show they are semicircles centred on the $x$-axis and vertical lines.
+\end{question}
+
+\begin{question}
+Define parallel transport. Show transporting a vector around a spherical triangle of area $\Omega$ rotates it by $\Omega$.
+\end{question}
+
+\begin{question}
+\textbf{Gauss--Bonnet Theorem.}\;
+State the global theorem and use it to find the angle sum in a geodesic triangle on $S^2$ with area $A$.
+\end{question}
+
+\begin{question}
+Show $DV/dt$ is the projection of $V'$ onto $T_{\gamma(t)}S$.
+\end{question}
+
+\begin{hardq}
+  \textbf{Exponential Map.} \hard\;
+  Define $\exp_p$ and show it is a local diffeomorphism. Define normal coordinates and show $g_{ij}(p)=\delta_{ij}$, $\Gamma_{ij}^k(p)=0$.
+\end{hardq}
+
+\begin{question}
+\textbf{Geodesics on the Flat Torus.}\;
+Show geodesics on $\R^2/\mathbb{Z}^2$ are images of straight lines. Classify closed geodesics.
+\end{question}
+
+\begin{question}
+\textbf{Geodesic Completeness.}\;
+Define it. State Hopf--Rinow and deduce that every compact regular surface is geodesically complete.
+\end{question}
+
+\begin{question}
+\textbf{Cut Locus.}\;
+Define the cut locus $\mathrm{Cut}(p)$. Describe $\mathrm{Cut}(\text{north pole})$ on $S^2$.
+\end{question}
+
+\begin{question}
+\textbf{Local Gauss--Bonnet.}\;
+State the local formula and apply it to find the angle sum for a geodesic triangle with constant curvature $k$.
+\end{question}
+
+\begin{question}
+\textbf{Jacobi Fields.}\;
+Define a Jacobi field and show it arises as a variation through geodesics.
+\end{question}
+
+\begin{question}
+\textbf{Conjugate Points.}\;
+Define them. Show on $S^2_R$ every geodesic has conjugate points at distance $\pi R$.
+\end{question}
+
+\begin{hardq}
+  \textbf{Bonnet's Diameter Theorem.} \hard\;
+  State: $K\geq\delta>0$ complete $\Rightarrow$ $\mathrm{diam}(S)\leq\pi/\sqrt{\delta}$. Sketch the Jacobi field argument.
+\end{hardq}
+
+\begin{question}
+\textbf{Index Form.}\;
+Define $I(V,W)=\int_a^b(\langle V',W'\rangle - K\langle V,W\rangle)dt$. State when $\gamma$ minimises length locally.
+\end{question}
+
+\begin{question}
+\textbf{Sphere Theorem.}\;
+State: compact orientable surface with $K>0$ is homeomorphic to $S^2$. Explain why $K>0$ without compactness is insufficient.
+\end{question}
+
+\begin{hardq}
+  \textbf{Euler Characteristic and Topology.} \hard\;
+  Using Gauss--Bonnet, prove no metric on $T^2$ can have $K>0$ everywhere, and no metric on $S^2$ can have $K\leq 0$. Generalise to genus $g$.
+\end{hardq}
+
+%---------- NEW QUESTIONS 21-40 ----------
+
+\begin{newq}
+  \NEW\; \textbf{Geodesic Equations from Energy Minimisation.}\;
+  A geodesic minimises the energy functional $E[\gamma]=\tfrac{1}{2}\int_a^b g(\gamma',\gamma')\,dt$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Set up the Euler--Lagrange equations for $E[\gamma]$ and derive the geodesic equations $\ddot u^k+\Gamma_{ij}^k\dot u^i\dot u^j=0$.
+    \item Explain why minimising energy (rather than arc length) produces the same geodesics but with constant speed automatically.
+    \item Verify: the geodesic equations on the plane ($E=G=1$, $F=0$, all $\Gamma=0$) give straight lines $\ddot u^k=0$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Geodesics Have Constant Speed.}\;
+  \begin{enumerate}[label=(\alph*)]
+    \item Show $\dfrac{d}{dt}|\gamma'|^2 = 0$ along any geodesic, so speed is constant.
+    \item Use this to show that arc-length parametrised geodesics ($|\gamma'|=1$) satisfy the standard geodesic equations.
+    \item For the sphere, great circles traversed at constant angular speed have $|\gamma'|=R$; verify this is consistent with the geodesic equations.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Great Circles on the Sphere.}\;
+  In spherical coordinates $\mathbf{x}(\theta,\varphi)=(\sin\theta\cos\varphi,\sin\theta\sin\varphi,\cos\theta)$:
+  \begin{enumerate}[label=(\alph*)]
+    \item Write out the geodesic equations using the Christoffel symbols from Section~4.
+    \item Verify that the equator $\theta(t)=\pi/2$, $\varphi(t)=t$ satisfies the geodesic equations.
+    \item Show that any great circle can be obtained from the equator by a rigid rotation, hence every great circle is a geodesic.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Clairaut's Relation on the Torus.}\;
+  Apply Clairaut's relation $r\sin\psi=c$ to the torus with $r=R+r_0\cos u$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Identify which latitude circles $u=u_0$ are geodesics. (\emph{Hint:} For a latitude circle, $\psi=\pi/2$.)
+    \item For $c=R$ (outermost equator), describe the geodesic qualitatively. Does it wrap around the torus or stay near the equator?
+    \item Show that geodesics starting from the innermost circle $r=R-r_0$ cannot penetrate into the inner region where $r<c$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Geodesic Curvature Formula.}\;
+  For a unit-speed curve $\alpha(s)$ on a surface $S$ with unit normal $N$:
+  \begin{enumerate}[label=(\alph*)]
+    \item Show $\kp_g = \langle\alpha''\!, N\wedge\alpha'\rangle$.
+    \item Verify $\kp^2=\kp_n^2+\kp_g^2$ using $\alpha''=\kp_g(N\wedge\alpha')+\kp_n N$.
+    \item Compute $\kp_g$ for a latitude circle $\theta=\theta_0$ on the unit sphere and verify the formula gives $\kp_g=\cot\theta_0$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Parallel Transport Preserves Inner Products.}\;
+  Let $V(t)$ and $W(t)$ be parallel vector fields along a curve $\gamma(t)$ on $S$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Show $\dfrac{d}{dt}\langle V,W\rangle = 0$.
+    \item Conclude that parallel transport is an orthogonal transformation $T_{\gamma(a)}S\to T_{\gamma(b)}S$.
+    \item For the sphere, show that parallel transporting a vector along a latitude circle $\theta=\theta_0$ from $\varphi=0$ to $\varphi=2\pi$ rotates it by angle $2\pi\cos\theta_0$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Gauss--Bonnet for a Geodesic Triangle.}\;
+  Let $T$ be a geodesic triangle on a surface $S$ with interior angles $\alpha_1,\alpha_2,\alpha_3$.
+  \begin{enumerate}[label=(\alph*)]
+    \item State the local Gauss--Bonnet formula for $T$: $\sum_{i=1}^3\alpha_i = \pi + \iint_T K\,dA$.
+    \item For the unit sphere ($K=1$), a triangle with area $A$ has angle sum $\pi+A$. Verify for the octant triangle $(\alpha_1=\alpha_2=\alpha_3=\pi/2$, $A=\pi/2$).
+    \item For a flat surface ($K=0$), confirm the angle sum is $\pi$ (Euclidean geometry).
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Covariant Derivative and Projection.}\;
+  \begin{enumerate}[label=(\alph*)]
+    \item Show that for a vector field $V$ along $\gamma$ on $S$, the covariant derivative is $DV/dt = V' - \langle V', N\rangle N$.
+    \item A vector field is \emph{parallel} if $DV/dt=0$. Show this means $V'$ is always normal to $S$.
+    \item For the sphere, show that the tangent vector $\gamma'$ of a great circle is parallel along itself ($D\gamma'/dt=0$), confirming great circles are geodesics.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Exponential Map and Normal Coordinates.}\;
+  \begin{enumerate}[label=(\alph*)]
+    \item Define $\exp_p: T_pS\to S$ by $\exp_p(\mathbf{v})=\gamma(1)$ where $\gamma$ is the geodesic with $\gamma(0)=p$, $\gamma'(0)=\mathbf{v}$.
+    \item Show $d(\exp_p)_{\mathbf{0}}=\mathrm{id}$, hence $\exp_p$ is a local diffeomorphism near $\mathbf{0}\in T_pS$.
+    \item In normal coordinates $(u^1,u^2)$ defined by $\exp_p(u^i\mathbf{e}_i)$, verify $g_{ij}(p)=\delta_{ij}$ and $\Gamma_{ij}^k(p)=0$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Jacobi Equation.}\;
+  Let $\gamma_s(t)$ be a one-parameter family of geodesics. The \emph{Jacobi field} is $J(t)=\partial\gamma_s/\partial s|_{s=0}$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Derive the Jacobi equation $J''+KJ=0$ (for surfaces).
+    \item For $S^2$ (K=1), solve to get $J(t)=A\sin t + B\cos t$.  If $J(0)=0$ and $J'(0)\neq 0$, show the Jacobi field vanishes again at $t=\pi$.
+    \item Conclude that geodesics on $S^2$ have conjugate points at distance $\pi$ and explain why this means geodesics longer than $\pi R$ are not minimising.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Geodesics on the Flat Torus.}\;
+  The flat torus is $\R^2/\mathbb{Z}^2$ with the Euclidean metric.
+  \begin{enumerate}[label=(\alph*)]
+    \item Show the Christoffel symbols vanish everywhere, so the geodesic equations become $\ddot u^k=0$.
+    \item Conclude all geodesics are images of straight lines $u^k(t)=a^k t+b^k$.
+    \item A geodesic is \emph{closed} iff $a^1/a^2\in\mathbb{Q}$. Verify this and count the closed geodesics up to homotopy.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Global Gauss--Bonnet.}\;
+  \begin{enumerate}[label=(\alph*)]
+    \item State the global Gauss--Bonnet theorem: $\iint_S K\,dA = 2\pi\chi(S)$.
+    \item Compute $\iint_S K\,dA$ for the sphere ($\chi=2$), torus ($\chi=0$), and genus-$g$ surface ($\chi=2-2g$).
+    \item Deduce: if $K>0$ everywhere on a compact surface, then $\chi(S)>0$, so $S$ is homeomorphic to $S^2$.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Hopf--Rinow and Geodesic Completeness.}\;
+  \begin{enumerate}[label=(\alph*)]
+    \item Define geodesic completeness (every geodesic can be extended indefinitely).
+    \item State the Hopf--Rinow theorem and list its equivalent formulations.
+    \item Prove: every compact regular surface $S\subset\R^3$ is geodesically complete. (\emph{Hint:} A geodesic that cannot be extended must leave every compact set, but $S$ is closed and bounded in $\R^3$.)
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Local vs.\ Global Minimisation.}\;
+  A geodesic is \emph{locally minimising} but not necessarily globally minimising.
+  \begin{enumerate}[label=(\alph*)]
+    \item Show that every geodesic is locally minimising (has no conjugate points on short segments).
+    \item For $S^2$, show that a geodesic arc of length $>\pi R$ is not the shortest path between its endpoints.
+    \item Relate the cut locus $\mathrm{Cut}(p)$ to the set of points beyond which a geodesic from $p$ fails to minimise.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Geodesics on the Cylinder via Unrolling.}\;
+  \begin{enumerate}[label=(\alph*)]
+    \item Show that ``unrolling'' the cylinder to a flat strip is an isometry.
+    \item Since geodesics are preserved by isometries and the plane's geodesics are straight lines, conclude the cylinder's geodesics are helices (when re-rolled).
+    \item Parametrise all geodesics on the cylinder explicitly and identify the special cases: vertical lines, horizontal circles, and general helices.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Creative: Ant on a Sphere.}\;
+  An ant walks along a geodesic on the unit sphere, starting at the north pole.
+  \begin{enumerate}[label=(\alph*)]
+    \item Show that any path starting from the north pole in a fixed direction traces a meridian (longitude circle).
+    \item After walking a distance $\pi/2$ (quarter circle), the ant arrives at the equator. How far has it walked (in terms of arc length)?
+    \item If two ants start from the north pole along meridians $\varphi=0$ and $\varphi=\pi/2$, at what point do their paths intersect again? What is the area of the geodesic triangle they bound?
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Creative: Foucault Pendulum and Parallel Transport.}\;
+  A Foucault pendulum at colatitude $\theta_0$ swings in a vertical plane that slowly rotates.
+  \begin{enumerate}[label=(\alph*)]
+    \item Model the Earth as a sphere. The pendulum's swing direction is a vector being parallel-transported along the latitude circle $\theta=\theta_0$ as the Earth rotates.
+    \item Using the holonomy formula for a latitude circle, show the pendulum's plane rotates by $2\pi\cos\theta_0$ per day.
+    \item At the North Pole ($\theta_0=0$), at the equator ($\theta_0=\pi/2$), and at Singapore ($\theta_0\approx 96°$): predict the daily rotation angle and discuss whether a Foucault pendulum would work in each location.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Creative: Geodesics and Shortest Paths on Everyday Surfaces.}\;
+  \begin{enumerate}[label=(\alph*)]
+    \item A rubber band stretched around a cylinder follows a geodesic (helix). Compute its path explicitly and show the angle it makes with the axis is constant.
+    \item A fly walks in a straight line on a cone (not through the apex). When the cone is unrolled, the path becomes a straight line. Is this path a geodesic? Justify using the isometry between the cone and a flat sector.
+    \item A ship sailing from Singapore ($1.3^\circ$N, $103.8^\circ$E) to New York ($40.7^\circ$N, $74.0^\circ$W) follows a great-circle route. Describe qualitatively how the route looks on a Mercator map and why it appears curved.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Creative: Turning Number and Geodesic Curvature.}\;
+  The \emph{total geodesic curvature} of a closed curve $\gamma$ on $S$ is $\int_\gamma\kp_g\,ds$.
+  \begin{enumerate}[label=(\alph*)]
+    \item For a closed curve bounding a region $R$ on $S$, state the local Gauss--Bonnet formula: $\int_\gamma\kp_g\,ds + \iint_R K\,dA = 2\pi$.
+    \item Apply it to a small circle of radius $\varepsilon$ on the unit sphere. Show $\int\kp_g\,ds\to 2\pi$ as $\varepsilon\to 0$ and $\int\kp_g\,ds < 2\pi$ for finite $\varepsilon$ (because $K=1>0$).
+    \item Interpret: if $K>0$, closed curves ``turn less than in the plane''; if $K<0$, they ``turn more''. Relate this to the intuition that positively curved surfaces are ``bowl-shaped'' and negatively curved ones are ``saddle-shaped''.
+  \end{enumerate}
+\end{newq}
+
+\begin{newq}
+  \NEW\; \textbf{Creative: Index Theorem for Vector Fields.}\;
+  The Poincar\'e--Hopf theorem states: for a smooth vector field on a compact surface with isolated zeros, $\sum_i\mathrm{ind}(p_i)=\chi(S)$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Define the index of an isolated zero of a vector field.
+    \item For $S^2$: the ``comb'' vector field (tangent to longitudes) has zeros only at the north and south poles, each with index $+1$. Verify $1+1=\chi(S^2)=2$.
+    \item Explain why every smooth vector field on $S^2$ must have at least one zero (``you can't comb a hairy ball'') by using $\chi(S^2)=2\neq 0$.
+  \end{enumerate}
+\end{newq}
+
+%----------------------------------------------------------
+% Quick Reference Table
+%----------------------------------------------------------
+\newpage
+\section*{Quick Reference: Key Formulas}
+\addcontentsline{toc}{section}{Quick Reference: Key Formulas}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{>{\bfseries}p{4.5cm} p{9cm}}
+\toprule
+Formula & Expression \\
+\midrule
+Curvature (non-unit speed) & $\kp = |\alpha'\times\alpha''|/|\alpha'|^3$ \\
+Torsion (non-unit speed)   & $\tp = (\alpha'\times\alpha'')\cdot\alpha'''/|\alpha'\times\alpha''|^2$ \\
+Arc length                 & $s(t) = \int_0^t |\alpha'(u)|\,du$, \quad $s'(t)=|\alpha'(t)|>0$ \\
+Frenet matrix              & $(\mathbf{t}',\mathbf{n}',\mathbf{b}')^T = \begin{pmatrix}0&\kp&0\\-\kp&0&\tp\\0&-\tp&0\end{pmatrix}(\mathbf{t},\mathbf{n},\mathbf{b})^T$ \\
+First fundamental form      & $\mathrm{I} = E\,du^2 + 2F\,du\,dv + G\,dv^2$ \\
+Area element               & $dA = \sqrt{EG-F^2}\,du\,dv = |\mathbf{x}_u\wedge\mathbf{x}_v|\,du\,dv$ \\
+Gaussian curvature          & $K = (eg-f^2)/(EG-F^2)$ \\
+Mean curvature              & $H = (eG-2fF+gE)/\bigl(2(EG-F^2)\bigr)$ \\
+Gauss map (graph)          & $N = (-f_x,-f_y,1)/\sqrt{1+f_x^2+f_y^2}$ \\
+Normal curvature (Euler)   & $\kp_n = \kp_1\cos^2\theta + \kp_2\sin^2\theta$ \\
+Gauss--Bonnet (global)      & $\iint_S K\,dA = 2\pi\chi(S)$ \\
+Local Gauss--Bonnet         & $\int_{\partial R}\kp_g\,ds + \iint_R K\,dA + \sum_i\theta_i = 2\pi$ \\
+Clairaut's relation         & $r\sin\psi = c$ (surface of revolution) \\
+Sphere constraint           & $R^2 = 1/\kp^2 + (1/\tp)^2(1/\kp)'^2$ \\
+Geodesic equations          & $\ddot{u}^k + \Gamma_{ij}^k\dot{u}^i\dot{u}^j = 0$ \\
+Christoffel symbols        & $\Gamma_{ij}^k = \tfrac{1}{2}g^{kl}(\partial_i g_{jl}+\partial_j g_{il}-\partial_l g_{ij})$ \\
+Jacobi equation            & $J''+K(\gamma)J=0$ along a geodesic \\
+Covariant derivative        & $DV/dt = V' - \langle V',N\rangle N$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\end{document}
