@@ -425,32 +425,168 @@ Now, we want to find easy-to-check conditions for regularity of surfaces. The fo
   \end{proof}
 \end{proposition}
 
-\subsection{Inverse Function Theorem and Level Sets}
 
-\begin{theorem}[Inverse Function Theorem]
-  Let $F:U\to\mathbb{R}^n$ be smooth ($U \subset \mathbb{R}^n$ open). If $p \in U$ is a regular point (i.e., $\det(dF_p) \neq 0$), there exists an open neighbourhood $V$ of $p$ and $W$ of $F(p)$ such that $F:V\to W$ is a diffeomorphism.
-\end{theorem}
+\pagebreak
+\subsection{Inverse Function Theorem and Its Applications}
 
-\begin{proposition}[Level sets]
-  Let $f:V\to\mathbb{R}$ be smooth on open $V\subset\mathbb{R}^3$. If $a\in\mathbb{R}$ is a regular value (i.e., the gradient $df_p \neq (0,0,0)$ for all $p \in f^{-1}(a)$), then $f^{-1}(a)$ is a regular surface.
-\end{proposition}
+Now, we introduce the inverse function theorem (multivariate version) to apply to regular surfaces.
 
-\subsection{Tangent Spaces}
 
-\begin{theorem}
-  The tangent plane $T_p(S)$ of $S$ at $p$ is the union of tangent vectors to all smooth curves on $S$ passing through $p$. It is spanned by $\{\mathbf{x}_u, \mathbf{x}_v\}$ and is independent of the choice of coordinate function.
-\end{theorem}
+First, we define what a regular point is.
 
-\subsection{Change of Parameters}
+\begin{definition}[Critical point, Reguar point]
+Let $$dF=\begin{pmatrix}
+    \frac{\partial F_1}{\partial u_1} &\dots & \frac{\partial F_1}{\partial u_n}\\
+     \vdots & \ddots & \vdots \\
+     \frac{\partial F_m}{\partial u_1} & \dots & \frac{\partial F_m}{\partial u_n}
+    
+\end{pmatrix}$$
+
+A point $\textbf{p} \in \R^n$ is called a critical point if $\det(dF_\textbf{p}) =0$, and a \textit{regular} point otherwise.
+\end{definition}
+
 
 \begin{proposition}
-  Let $x:U\to S$ and $y:V\to S$ be two coordinate functions with non-empty overlap $W = x(U) \cap y(V)$. The transition map $h = x^{-1}\circ y : y^{-1}(W) \to x^{-1}(W)$ is a smooth diffeomorphism.
+    The following are equivalent.
+    \begin{enumerate}
+        \item The point $\textbf{p} \in \R^n$ is a regular point.
+        \item $\det(dF_\textbf{p}) \neq 0$
+        \item The $n \times n$ real matrix $dF_\textbf{p}$ is invertible.
+    \end{enumerate}
 \end{proposition}
 
-\begin{remark}
-  This property allows us to define abstract 2-dimensional \textbf{smooth manifolds} by gluing open subsets of $\mathbb{R}^2$ via smooth transition functions. A regular surface in $\mathbb{R}^3$ is always a smooth 2-manifold, but abstract manifolds (like the Klein bottle) need not embed globally in $\mathbb{R}^3$.
-\end{remark}
+Then, we have the inverse function theorem.
 
+\begin{theorem}[(Multivariate) Inverse Function Theorem]\label{thm: inverse-fn-thm-multi}
+    Let $U \subset \R^n$ be an open subset and let $F: U \to \R^n$ be smooth. Suppose $\textbf{p} \in U$ is a regular point (with respect to $dF$), then we have the following:
+    \begin{enumerate}
+        \item There exists an open neighbourhood $V$ of \textbf{p} in $U$, and an open subset $W $ of $F(\textbf{p})$ in $\R^n$ such that $F: V \to W$ is a bijection and 
+        
+        \item $F^{-1}$ exists and is smooth.
+     \end{enumerate}
+\end{theorem}
+
+
+Now, how do we apply this to regular surfaces? Well, sometimes, we can define surfaces as level sets, that is:
+
+$$S = \{ \textbf{p} \in \R^3:f(\textbf{p}) = c\}$$
+
+that is, $S$ consists of all points that fulfill some criterion $f(\textbf{p})=c.$. (Of course, $f$ is usually smooth).
+
+Then, we have the following proposition:
+
+
+\begin{proposition}[Level sets]
+  Let $f:V\to\mathbb{R}$ be smooth on open $V\subset\mathbb{R}^3$. If $a\in\mathbb{R}$ is a regular point (i.e., the gradient $df_p \neq (0,0,0)$ for all $p \in f^{-1}(a)$), then $f^{-1}(a)$ is a regular surface.
+
+  \begin{proof}
+      This uses the inverse function theorem (\ref{thm: inverse-fn-thm-multi}).
+  \end{proof}
+\end{proposition}
+
+And, lastly by the proof of the above proposition, we also have a corollary, that says that given the setup in the proposition, we can locally write the surface as a graph.
+
+\begin{corollary}
+    If $\frac{\partial f}{\partial z} \Big|_\textbf{p} \neq 0$, then we can parameterise the surface $f(x,y,z) =a$ locally at \textbf{p} as such:
+    $$\textbf{x}(u,v) = (u,v,h(u,v))$$for some smooth function $h$. So locally, the surface is the graph $z = h(x,y)$. 
+    \begin{sidenote}
+        Note that we can actually set either $\frac{\partial f}{\partial x} \neq 0 $ or $\frac{\partial f}{\partial y} \neq 0$ to get graphs as well.
+    \end{sidenote}
+\end{corollary}
+
+
+
+
+\pagebreak
+\subsection{Change of Parameters}
+
+In this section, we discuss different ways to change our $U$, that is, our coordinate system. We first start with the following proposition.
+
+\begin{proposition}
+Let $S \subset \mathbb{R}^3$ be a regular surface and $\mathbf{x}: U \subset \mathbb{R}^2 \to S$ be a coordinate parameterization. Let $V \subset \mathbb{R}^n$ be an open set and $\mathbf{y}: V \to \mathbb{R}^3$ be a smooth map such that $\mathbf{y}(V) \subset \mathbf{x}(U)$. Then the composition 
+\[ \mathbf{x}^{-1} \circ \mathbf{y}: V \to U \] 
+is a smooth map.
+
+\begin{proof}
+Let $q_0 = (u_0, v_0) \in U$ and $p_0 = \mathbf{x}(q_0) \in S$. Since $\mathbf{x}$ is a regular parameterization, the partial derivatives $\mathbf{x}_u(q_0)$ and $\mathbf{x}_v(q_0)$ are linearly independent. We define the unit normal vector field in a neighborhood of $q_0$ by:
+\[ \mathbf{n}(u, v) = \frac{\mathbf{x}_u \times \mathbf{x}_v}{|\mathbf{x}_u \times \mathbf{x}_v|} \]
+Because $\mathbf{x}$ is smooth and regular, $\mathbf{n}(u, v)$ is also a smooth map. We now extend $\mathbf{x}$ to a map $\mathbf{F}: U \times \mathbb{R} \to \mathbb{R}^3$ defined by:
+\[ \mathbf{F}(u, v, w) = \mathbf{x}(u, v) + w\mathbf{n}(u, v) \]
+The map $\mathbf{F}$ is smooth because it is the sum and product of smooth maps. We compute the Jacobian of $\mathbf{F}$ at the point $(u_0, v_0, 0)$:
+\[ d\mathbf{F}_{(u_0, v_0, 0)} = \begin{pmatrix} | & | & | \\ \mathbf{x}_u & \mathbf{x}_v & \mathbf{n} \\ | & | & | \end{pmatrix} \]
+Since $\{\mathbf{x}_u, \mathbf{x}_v\}$ are linearly independent and $\mathbf{n}$ is a non-zero vector orthogonal to both, the columns of $d\mathbf{F}$ form a basis for $\mathbb{R}^3$. Thus, $\det(d\mathbf{F}) \neq 0$.
+
+By the \textbf{Inverse Function Theorem}, there exists an open neighborhood $W \subset U \times \mathbb{R}$ of $(u_0, v_0, 0)$ and an open set $Z \subset \mathbb{R}^3$ of $p_0$ such that $\mathbf{F}: W \to Z$ is a diffeomorphism. Its inverse $\mathbf{F}^{-1}: Z \to W$ is therefore smooth.
+
+Note that for any point $p \in S \cap Z$, we have $p = \mathbf{x}(u, v) = \mathbf{F}(u, v, 0)$, which implies:
+\[ \mathbf{F}^{-1}(p) = (u, v, 0) \]
+Let $\pi: \mathbb{R}^3 \to \mathbb{R}^2$ be the smooth projection onto the first two coordinates, $\pi(u, v, w) = (u, v)$. Then, on the set $S \cap Z$, we can express the inverse of the parameterization as:
+\[ \mathbf{x}^{-1} = \pi \circ \mathbf{F}^{-1} \]
+Substituting this into our original composition, we have:
+\[ (\mathbf{x}^{-1} \circ \mathbf{y})(v) = (\pi \circ \mathbf{F}^{-1} \circ \mathbf{y})(v) \]
+Since $\mathbf{y}$ is smooth, $\mathbf{F}^{-1}$ is smooth (by IFT), and $\pi$ is smooth, the composition $(\mathbf{x}^{-1} \circ \mathbf{y})$ is a composition of smooth maps and is therefore smooth.
+\end{proof}
+\end{proposition}
+
+
+\begin{proposition}
+    Let $S$ be a regular surface. Let $\textbf{x}: U \to S$ and $\textbf{y}:V \to S$ be two coordinate functions. Suppose $$W = \textbf{x}(U) \cap \textbf{y}(V) \neq \emptyset$$. Then consider  $$U' = \textbf{x}^{-1}(W) \quad V' = \textbf{y}^{-1}(W)$$
+
+    We claim that $$h:= \textbf{x}^{-1}\circ \textbf{y}: V' \to U'$$ is a \textbf{diffeomorphism}.
+
+    \begin{proof}
+        Smoothness follows from the previous proposition. And by interchanging the roles of \textbf{x} and \textbf{y}, we get smoothness for $h^{-1}$.
+    \end{proof}
+\end{proposition}
+
+
+\begin{sidenote}
+    This section shows that if we have two coordinate charts such that the image intersects on $S$, we can actually have a smooth map that switches coordinate functions.
+\end{sidenote}
+
+\pagebreak
+
+
+\pagebreak
+\subsection{Tangent Spaces}
+
+In this section, we attempt to provide a definition forthe tangent plane that is independent of coordinate functions.
+
+The setup is as follows. Consider a curve $\alpha(t)$ for $t \in [-\epsilon, \epsilon]$, and consider a regular surface $S$ with $\textbf{x}:U \to S$ such that $\alpha(t) \in \textbf{x}(U)$. Then, we can define a map:
+
+$$h(t) = (h_1(t),h_2(t)) := (\textbf{x}^{-1} \circ \alpha)(t)$$
+
+Now, this function is smooth by the previous section, and we can then define $\alpha(t) = \textbf{x}(h_1(t), h_2(t))$.
+
+By chain rule, we have
+
+$$\alpha'(t) = \textbf{x}_u h_1'(t) + \textbf{x}_v h_2'(t)$$
+
+So, $\alpha(t)$ lies in the tangent plane.
+
+\begin{proposition}
+    Every nonzero vector on the tangent plane is a tangent vector of some curve
+
+    \begin{proof}
+        Let this nonzero vector be $$\textbf{v} = a_1 \textbf{x}_u + a_2 \textbf{x}_v$$
+
+        Then, we can define $\alpha(t) = \textbf{x}(a_1t,a_2t)$ and then it follows that $\alpha'(t) \in T_\textbf{p}(S)$.
+    \end{proof}
+\end{proposition}
+
+
+
+
+\begin{definition}
+  The tangent plane $T_p(S)$ of $S$ at $p$ is the union of tangent vectors to all smooth curves on $S$ passing through $p$. It is spanned by $\{\mathbf{x}_u, \mathbf{x}_v\}$ and is independent of the choice of coordinate function.
+\end{definition}
+
+
+
+
+
+
+\pagebreak
 \subsection{Smooth Functions and Maps}
 
 \begin{definition}
@@ -465,36 +601,245 @@ Now, we want to find easy-to-check conditions for regularity of surfaces. The fo
   Any smooth map $\phi:S_1\to S_2$ induces a linear map between tangent spaces, the \textbf{differential} $d\phi_p : T_p(S_1) \to T_{\phi(p)}(S_2)$, defined by $d\phi_p(\alpha'(0)) = (\phi\circ\alpha)'(0)$ for any curve $\alpha$ with $\alpha(0)=p$. In local coordinates, its matrix is exactly the Jacobian of $x_2^{-1}\circ\phi\circ x_1$.
 \end{proposition}
 
+
+\pagebreak
+\pagebreak
 \subsection{The First Fundamental Form and Area}
 
+The \textbf{first fundamental form} is a way of measuring lengths and angles of
+tangent vectors on a surface. Since a regular surface $S \subset \mathbb{R}^3$
+inherits the standard inner product of $\mathbb{R}^3$, we can restrict it to
+each tangent plane $T_p(S)$.
+
+
+
 \begin{definition}[First fundamental form]
-  The first fundamental form $I_p$ at $p \in S$ is the restriction of the Euclidean inner product to $T_p(S)$:
+  Let $S$ be a regular surface with coordinate function $\mathbf{x}: U \to S$,
+  and let $p = \mathbf{x}(u_0, v_0) \in S$. For $\mathbf{v} \in T_p(S)$, the
+  \textbf{first fundamental form} of $S$ at $p$ is
   \[
-    I_p(\mathbf{v}) = \langle \mathbf{v}, \mathbf{v} \rangle.
+    I_p(\mathbf{v}) := \langle \mathbf{v}, \mathbf{v} \rangle.
   \]
-  For $\mathbf{v} = a\mathbf{x}_u + b\mathbf{x}_v$, $I_p(\mathbf{v}) = a^2E + 2abF + b^2G$, where $E=\langle\mathbf{x}_u,\mathbf{x}_u\rangle$, $F=\langle\mathbf{x}_u,\mathbf{x}_v\rangle$, and $G=\langle\mathbf{x}_v,\mathbf{x}_v\rangle$.
 \end{definition}
 
-\begin{remark}[Arc Length and Angles]
-  The arc length of a curve $\alpha(t) = \mathbf{x}(u(t),v(t))$ on $S$ is $\int \sqrt{E(u')^2 + 2Fu'v' + G(v')^2} \,dt$. 
-  The angle $\theta$ between coordinate curves is given by $\cos\theta = \frac{F}{\sqrt{EG}}$. A parametrization is \textbf{orthogonal} if $F=0$.
+Since every tangent vector $\mathbf{v} \in T_p(S)$ can be written as
+$\mathbf{v} = a\mathbf{x}_u(p) + b\mathbf{x}_v(p)$ for some $a, b \in \mathbb{R}$,
+we expand:
+\begin{align*}
+  I_p(\mathbf{v})
+  &= \langle a\mathbf{x}_u + b\mathbf{x}_v,\; a\mathbf{x}_u + b\mathbf{x}_v \rangle \\
+  &= a^2\langle \mathbf{x}_u, \mathbf{x}_u \rangle
+   + 2ab\langle \mathbf{x}_u, \mathbf{x}_v \rangle
+   + b^2\langle \mathbf{x}_v, \mathbf{x}_v \rangle.
+\end{align*}
+
+This motivates the following notation for the \textbf{coefficients} of the first
+fundamental form.
+
+\begin{definition}[Coefficients $E$, $F$, $G$]
+  We define
+  \[
+    E(u_0, v_0) := \langle \mathbf{x}_u, \mathbf{x}_u \rangle, \qquad
+    F(u_0, v_0) := \langle \mathbf{x}_u, \mathbf{x}_v \rangle, \qquad
+    G(u_0, v_0) := \langle \mathbf{x}_v, \mathbf{x}_v \rangle.
+  \]
+  Hence,
+  \[
+    \boxed{I_p(a\mathbf{x}_u + b\mathbf{x}_v) = a^2 E + 2ab F + b^2 G.}
+  \]
+\end{definition}
+
+\begin{remark}
+  Note that $E, F, G$ are smooth functions on $U$, since $\mathbf{x}$ is smooth.
+  Moreover, $E > 0$ and $G > 0$ always (since $\mathbf{x}_u, \mathbf{x}_v \neq \mathbf{0}$
+  by regularity), and $EG - F^2 > 0$ (since $\mathbf{x}_u, \mathbf{x}_v$ are linearly
+  independent by regularity).
 \end{remark}
 
-\begin{definition}[Area]
-  The area of a region $\mathbf{x}(U)$ is defined as:
-  \[
-    \text{Area}(\mathbf{x}(U)) = \iint_U |\mathbf{x}_u \wedge \mathbf{x}_v| \,du\,dv = \iint_U \sqrt{EG-F^2} \,du\,dv.
-  \]
-\end{definition}
 
-\begin{example}
-  For a torus $x(u,v) = ((a+r\cos u)\cos v, (a+r\cos u)\sin v, r\sin u)$, $E=r^2$, $F=0$, and $G=(a+r\cos u)^2$. The area is $\int_0^{2\pi}\int_0^{2\pi} r(a+r\cos u) \,du\,dv = 4\pi^2ra$.
+
+\begin{example}[Plane]
+  Let $S = \{p_0 + a\mathbf{w}_1 + b\mathbf{w}_2 : a, b \in \mathbb{R}\}$ be a plane
+  with $\mathbf{w}_1, \mathbf{w}_2$ orthonormal. The coordinate function is
+  $\mathbf{x}(u, v) = p_0 + u\mathbf{w}_1 + v\mathbf{w}_2$, so
+  $\mathbf{x}_u = \mathbf{w}_1$ and $\mathbf{x}_v = \mathbf{w}_2$. Then:
+  \[
+    E = \langle \mathbf{w}_1, \mathbf{w}_1 \rangle = 1, \quad
+    F = \langle \mathbf{w}_1, \mathbf{w}_2 \rangle = 0, \quad
+    G = \langle \mathbf{w}_2, \mathbf{w}_2 \rangle = 1,
+  \]
+  and so $I_p(a\mathbf{x}_u + b\mathbf{x}_v) = a^2 + b^2$. This is just the Euclidean
+  norm squared, as expected.
+\end{example}
+
+\begin{example}[Cylinder]
+  Let $S$ be the cylinder $\mathbf{x}(u, v) = (\cos u, \sin u, v)$ for $u \in (0, 2\pi)$,
+  $v \in \mathbb{R}$. Then:
+  \[
+    \mathbf{x}_u = (-\sin u, \cos u, 0), \qquad
+    \mathbf{x}_v = (0, 0, 1).
+  \]
+  Hence:
+  \[
+    E = \sin^2 u + \cos^2 u = 1, \quad
+    F = 0, \quad
+    G = 1,
+  \]
+  and $I_p(a\mathbf{x}_u + b\mathbf{x}_v) = a^2 + b^2$. Interestingly, this is the same
+  as the plane! This observation is the key to showing the plane and cylinder are locally
+  isometric, which we revisit in Section 4.
+\end{example}
+
+\begin{example}[Torus]
+  Let the torus be parametrized by
+  $\mathbf{x}(u, v) = ((a + r\cos u)\cos v, (a + r\cos u)\sin v, r\sin u)$
+  for $a > r > 0$, $u, v \in (0, 2\pi)$. Computing:
+  \begin{align*}
+    \mathbf{x}_u &= (-r\sin u \cos v,\; -r\sin u \sin v,\; r\cos u), \\
+    \mathbf{x}_v &= (-(a + r\cos u)\sin v,\; (a + r\cos u)\cos v,\; 0).
+  \end{align*}
+  Then:
+  \[
+    E = r^2, \quad F = 0, \quad G = (a + r\cos u)^2,
+  \]
+  so $ds^2 = r^2\,du^2 + (a + r\cos u)^2\,dv^2$.
 \end{example}
 
 
-\pagebreak
+
+The first fundamental form is our main tool for computing \textbf{arc lengths} and
+\textbf{angles} on a surface. We derive both below.
+
+\begin{proposition}[Arc length on a surface]
+  Let $\alpha(t) = \mathbf{x}(u(t), v(t))$ be a curve on $S$ for $t \in [0, T]$.
+  Then the arc length of $\alpha$ is
+  \[
+    s = \int_0^T |\alpha'(t)|\, dt
+    = \int_0^T \sqrt{E(u')^2 + 2Fu'v' + G(v')^2}\; dt.
+  \]
+
+  \begin{proof}
+    By the chain rule,
+    \[
+      \alpha'(t) = \mathbf{x}_u u'(t) + \mathbf{x}_v v'(t).
+    \]
+    Therefore,
+    \begin{align*}
+      |\alpha'(t)|^2
+      &= I_{\alpha(t)}(\alpha'(t)) \\
+      &= \langle \mathbf{x}_u u' + \mathbf{x}_v v',\; \mathbf{x}_u u' + \mathbf{x}_v v' \rangle \\
+      &= E(u')^2 + 2Fu'v' + G(v')^2.
+    \end{align*}
+    Taking the square root and integrating gives the result.
+  \end{proof}
+\end{proposition}
+
+\begin{remark}[The line element $ds^2$]
+  The above is often written in the compact \textbf{line element} notation:
+  \[
+    ds^2 = E\, du^2 + 2F\, du\, dv + G\, dv^2.
+  \]
+  Here, $ds$, $du$, $dv$ are treated formally as infinitesimal symbols satisfying
+  $\left(\frac{ds}{dt}\right)^2 = E\left(\frac{du}{dt}\right)^2
+  + 2F\frac{du}{dt}\frac{dv}{dt} + G\left(\frac{dv}{dt}\right)^2$.
+\end{remark}
+
+\begin{proposition}[Angle between coordinate curves]
+  Let $\theta$ be the angle between the coordinate curves $u \mapsto \mathbf{x}(u, v_0)$
+  and $v \mapsto \mathbf{x}(u_0, v)$ at $p = \mathbf{x}(u_0, v_0)$, i.e., the angle
+  between $\mathbf{x}_u$ and $\mathbf{x}_v$. Then
+  \[
+    \cos\theta = \frac{\langle \mathbf{x}_u, \mathbf{x}_v \rangle}{|\mathbf{x}_u||\mathbf{x}_v|}
+    = \frac{F}{\sqrt{EG}}.
+  \]
+\end{proposition}
+
+\begin{definition}[Orthogonal parametrization]
+  A coordinate function $\mathbf{x}$ is an \textbf{orthogonal parametrization} if
+  $F = 0$ everywhere on $U$, i.e., the coordinate curves meet at right angles at
+  every point.
+\end{definition}
+
+\begin{remark}
+  The examples of the plane and cylinder above both have $F = 0$, so they are
+  orthogonal parametrizations. The torus example also has $F = 0$.
+\end{remark}
+
+
+
+We now use the first fundamental form to compute \textbf{areas} on a surface.
+The idea is to approximate the surface by small parallelograms and sum up
+their areas.
+
+\medskip \noindent \textbf{Motivation.} Consider a small rectangle $[u, u+\Delta u]
+\times [v, v+\Delta v]$ in $U$. Under $\mathbf{x}$, the four corners map to points
+on $S$. The two sides of the corresponding (approximate) parallelogram in $S$ are:
+\[
+  \Delta a \approx \|\mathbf{x}_u\|\Delta u, \qquad
+  \Delta b \approx \|\mathbf{x}_v\|\Delta v.
+\]
+The area of a parallelogram with sides $\Delta a$, $\Delta b$ and angle $\theta$
+between them is $\Delta a \cdot \Delta b \cdot |\sin\theta|$, so
+\[
+  \Delta A
+  = \|\mathbf{x}_u\|\Delta u \cdot \|\mathbf{x}_v\|\Delta v \cdot |\sin\theta|
+  = \|\mathbf{x}_u \wedge \mathbf{x}_v\|\, \Delta u\, \Delta v.
+\]
+Taking the limit as $\Delta u, \Delta v \to 0$ and summing over $U$ gives the
+following definition.
+
+\begin{definition}[Area]
+  The \textbf{area} of $\mathbf{x}(U)$ is
+  \[
+    \mathrm{Area}(\mathbf{x}(U))
+    := \iint_U \|\mathbf{x}_u \wedge \mathbf{x}_v\|\, du\, dv.
+  \]
+\end{definition}
+
+\begin{proposition}[Area in terms of $E$, $F$, $G$]
+  \[
+    \mathrm{Area}(\mathbf{x}(U))
+    = \iint_U \|\mathbf{x}_u \wedge \mathbf{x}_v\|\, du\, dv
+    = \iint_U \sqrt{EG - F^2}\, du\, dv.
+  \]
+
+  \begin{proof}
+    We show $\|\mathbf{x}_u \wedge \mathbf{x}_v\| = \sqrt{EG - F^2}$. Recall the
+    identity $|\mathbf{a} \wedge \mathbf{b}|^2 = |\mathbf{a}|^2|\mathbf{b}|^2
+    - \langle \mathbf{a}, \mathbf{b}\rangle^2$. Therefore,
+    \begin{align*}
+      \|\mathbf{x}_u \wedge \mathbf{x}_v\|^2
+      &= \|\mathbf{x}_u\|^2\|\mathbf{x}_v\|^2 - \langle \mathbf{x}_u, \mathbf{x}_v\rangle^2 \\
+      &= EG - F^2.
+    \end{align*}
+    Taking the square root gives the result.
+  \end{proof}
+\end{proposition}
+
+\begin{remark}
+  The significance of the formula $\iint_U \sqrt{EG-F^2}\,du\,dv$ is that area
+  is determined entirely by $E, F, G$, which are the coefficients of the first
+  fundamental form. In other words, area is an \textbf{intrinsic} quantity: two
+  surfaces with the same first fundamental form have the same area. This is the
+  starting point of Riemannian geometry.
+\end{remark}
+
+\begin{example}[Area of the torus]
+  For the torus parametrized above, we have $E = r^2$, $F = 0$,
+  $G = (a + r\cos u)^2$, so $\sqrt{EG - F^2} = r(a + r\cos u)$. The area is:
+  \begin{align*}
+    A
+    &= \int_0^{2\pi}\int_0^{2\pi} r(a + r\cos u)\, du\, dv \\
+    &= 2\pi \int_0^{2\pi} r(a + r\cos u)\, du \\
+    &= 2\pi \Big[rau + r^2\sin u\Big]_0^{2\pi} \\
+    &= 2\pi \cdot 2\pi ra \\
+    &= 4\pi^2 ra.
+  \end{align*}
+\end{example}
 \section{Gauss' Curvature and Second Fundamental Form}
 
+
+\pagebreak
 \subsection{Curvature of Surfaces}
 
 In Chapter 1, we defined curvature as $\kappa = |\alpha''(s)|$ --- curvature \textbf{at a point.}
