@@ -1,0 +1,443 @@
+\documentclass[9pt, a4paper, landscape]{extarticle}
+\usepackage{amsmath, amssymb, mathtools}
+\usepackage[margin=0.45in, top=0.4in, bottom=0.4in, landscape]{geometry}
+\usepackage{xcolor, multicol, enumitem, titlesec, booktabs, array}
+\usepackage[most]{tcolorbox}
+
+% ---- Greyscale palette ----
+\definecolor{hdark}{RGB}{30,30,30}
+\definecolor{hmed}{RGB}{90,90,90}
+\definecolor{hlight}{RGB}{245,245,245}
+\definecolor{ruleclr}{RGB}{150,150,150}
+
+\titlespacing*{\section}{0pt}{4pt}{2pt}
+\titlespacing*{\subsection}{0pt}{3pt}{1pt}
+
+\setlength{\columnsep}{10pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+
+\tcbset{
+  sheet/.style={
+    enhanced, breakable, sharp corners,
+    boxrule=0.6pt,
+    left=4pt, right=4pt, top=2pt, bottom=3pt,
+    before skip=5pt, after skip=5pt,
+    fontupper=\small,
+    colframe=hdark,
+    colback=hlight,
+    colbacktitle=hdark,
+    coltitle=white,
+    attach boxed title to top left={yshift=-1pt},
+    boxed title style={sharp corners, boxrule=0pt, left=3pt, right=3pt}
+  }
+}
+
+\newcommand{\chbox}[2]{%
+  \begin{tcolorbox}[sheet, title={\bfseries\small #1}]
+  #2
+  \end{tcolorbox}%
+}
+
+\newcommand{\boxrule}{\vspace{3pt}\textcolor{ruleclr}{\hrule height 0.4pt}\vspace{3pt}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\op}[1]{\operatorname{#1}}
+
+\setlist[itemize]{noitemsep, topsep=1pt, leftmargin=*, label=\textcolor{hmed}{$\cdot$}}
+\setlist[enumerate]{noitemsep, topsep=1pt, leftmargin=*}
+\setlength{\tabcolsep}{5pt}
+
+\begin{document}
+
+\begin{center}
+  {\large\bfseries QF1100 --- Formula Cheatsheet}\\[2pt]
+  {\small\color{hmed}All options European $\;\cdot\;$
+   $r$ = continuously compounded risk-free rate $\;\cdot\;$
+   compound interest unless stated}
+\end{center}
+\vspace{2pt}
+
+\begin{multicols}{3}
+
+%% ============================================================
+%%  CHAPTER 1
+%% ============================================================
+\chbox{Chapter 1 --- Theory of Interest}{
+
+\textbf{Accumulation function} $a(t)$: value at $t$ of \$1 at $t=0$;\; $a(0)=1$.
+
+\smallskip
+\begin{tabular}{@{}ll@{}}
+  Simple interest    & $a(t)=1+rt$ \\[2pt]
+  Compound interest  & $a(t)=(1+r)^{t}$ \\[2pt]
+  Nominal ($p$-thly) & $a(1)=\!\left(1+\dfrac{r^{(p)}}{p}\right)^{\!p}$ \\[6pt]
+  Effective annual   & $1+r_e=\!\left(1+\dfrac{r^{(p)}}{p}\right)^{\!p}$,\; $r_e\ge r^{(p)}$ \\[6pt]
+  Continuous         & $a(t)=e^{r^{(\infty)}t}$,\; $r^{(\infty)}=\ln(1+r_e)$ \\
+\end{tabular}
+
+\smallskip
+\textbf{Equivalent rates:}
+$\displaystyle\left(1+\frac{r^{(p)}}{p}\right)^{p}=\left(1+\frac{R^{(q)}}{q}\right)^{q}$
+
+\boxrule
+
+\textbf{Force of interest:}
+\[
+\delta(t)=\frac{a'(t)}{a(t)}=\frac{d}{dt}\ln a(t)
+\]
+\[
+a(t)=\exp\!\int_0^t\!\delta(u)\,du,\quad
+a(s,t)=\exp\!\int_s^t\!\delta(u)\,du
+\]
+Constant $\delta$: $a(t)=e^{\delta t}$ (so $\delta=r^{(\infty)}$).
+
+\boxrule
+
+\textbf{Present \& Time Value:}
+\[
+\mathrm{PV}(\mathcal{C})=\sum_i\frac{c_i}{(1+r)^{t_i}},\quad
+\mathrm{TV}_t=\mathrm{PV}\cdot(1+r)^t
+\]
+\[\mathrm{TV}_t=\mathrm{TV}_s\cdot(1+r)^{t-s}\]
+
+\boxrule
+
+\textbf{IRR / Equation of Value:}\;
+$\displaystyle\sum_{i=0}^n\frac{c_i}{(1+r)^i}=0$
+
+Unique IRR is guaranteed when:
+\begin{itemize}
+  \item $c_0 < 0$
+  \item $c_k \ge 0$ for all $k \ge 1$
+  \item $\sum c_i > 0$
+\end{itemize}
+
+Newton--Raphson: $\alpha_{k+1}=\alpha_k-\dfrac{f(\alpha_k)}{f'(\alpha_k)}$
+
+\boxrule
+
+\textbf{Annuities} (rate $r$/period, payment $A$, $n$ periods):
+
+\begin{tabular}{@{}ll@{}}
+  Ordinary (payment at end of each period) & $\dfrac{A}{r}\!\left[1-\dfrac{1}{(1+r)^n}\right]$ \\[7pt]
+  Due (" beginning of each period) & $$(1+r)\times\text{ordinary PV}$$ \\[4pt]
+  Perpetuity (end) & $\dfrac{A}{r}$ \\[5pt]
+  Perpetuity (beg.) & $\dfrac{A(1+r)}{r}$ \\
+\end{tabular}
+
+\boxrule
+
+\textbf{Loans} ($L$=loan, $A$=instalment, $r$=rate/period):
+\[L=\frac{A}{r}\!\left[1-\frac{1}{(1+r)^n}\right]\]
+
+Prospective balance after $m$th payment:
+\[L_m^{\text{Bal}}=\frac{A}{r}\!\left[1-\frac{1}{(1+r)^{n-m}}\right]\]
+
+Retrospective balance:
+\[L_m^{\text{Bal}}=L(1+r)^m-\frac{A}{r}\!\left[(1+r)^m-1\right]\]
+}
+
+%% ============================================================
+%%  CHAPTER 2
+%% ============================================================
+\chbox{Chapter 2 --- Bonds \& Term Structure}{
+
+\textbf{Notation:}
+\begin{itemize}
+  \item $F$ = face value;\; $R$ = redemption ($F=R$ unless stated)
+  \item $c$ = nominal coupon rate;\; $m$ = coupons per year
+  \item $n$ = total coupons;\; $\lambda$ = yield
+\end{itemize}
+
+\textbf{Coupon bond price:}
+\[
+P=\frac{R}{(1+\lambda/m)^n}+\sum_{i=1}^n\frac{cF/m}{(1+\lambda/m)^i}
+\]
+
+When $F=R$:
+\[
+P=F+F\cdot\frac{c-\lambda}{\lambda}\!\left[1-\frac{1}{(1+\lambda/m)^n}\right]
+\]
+
+Premium/par/discount relationship:
+\begin{itemize}
+  \item $c > \lambda \;\Rightarrow\; P > F$ \quad (premium)
+  \item $c = \lambda \;\Rightarrow\; P = F$ \quad (par)
+  \item $c < \lambda \;\Rightarrow\; P < F$ \quad (discount)
+\end{itemize}
+
+\textbf{Makeham:}\; $K=\dfrac{F}{(1+\lambda/m)^n}$
+\[P=K+\frac{c}{\lambda}(F-K)\]
+
+\textbf{Recursive:}\; $P_{k+1}=P_k(1+\lambda/m)-cF/m$
+
+\begin{tabular}{@{}ll@{}}
+  Zero-coupon: & $P=\dfrac{R}{(1+\lambda)^N}$ \\[5pt]
+  Perpetual:   & $P=\dfrac{cF}{\lambda}$ \\
+\end{tabular}
+
+\smallskip
+$P$ is a \emph{decreasing, convex} function of $\lambda$.
+
+\boxrule
+
+\textbf{Macaulay Duration:}
+\[
+D=\sum_i w_i t_i,\qquad w_i=\frac{\mathrm{PV}(c_i,t_i)}{\mathrm{PV}(\mathcal{C})}
+\]
+
+General ($\mu=\lambda/m$, $\gamma=c/m$):
+\[
+D=\frac{1+\mu}{m\mu}-\frac{1+\mu+n(\gamma-\mu)}{m\gamma[(1+\mu)^n-1]+m\mu}
+\]
+
+Special cases:
+\begin{itemize}
+  \item At par ($\gamma=\mu$):\; $D=\dfrac{1+\mu}{m\mu}\!\left(1-\dfrac{1}{(1+\mu)^n}\right)$
+  \item Perpetual:\; $D=\dfrac{1+\lambda/m}{\lambda}$
+  \item Zero-coupon:\; $D=T$
+\end{itemize}
+
+\boxrule
+
+\textbf{Term Structure}
+
+\begin{itemize}
+  \item \textit{Spot rate} $s_t$: growth $(1+s_t)^t$ over $t$ years
+  \item \textit{Forward rate} $f_{j,k}$: agreed rate, year $j$ to $k$;\; $f_{0,t}=s_t$
+\end{itemize}
+
+\textit{Spot-forward relation:}
+\[(1+s_k)^k=(1+s_j)^j(1+f_{j,k})^{k-j}\]
+
+Zero-coupon bond: $\;s_n=\!\left(\dfrac{R}{P}\right)^{1/n}\!-1$
+
+\textit{Bootstrap}: solve sequentially for $s_n$:
+\[
+P_n=\sum_{i=1}^{n-1}\!\frac{cF/m}{(1+s_i)^i}+\frac{cF/m+R}{(1+s_n)^n}
+\]
+}
+
+%% ============================================================
+%%  CHAPTER 3
+%% ============================================================
+\chbox{Chapter 3 --- Asset Returns \& Portfolio Theory}{
+
+\textbf{Returns:}
+\begin{itemize}
+  \item Total return:\; $R = P_1/P_0$
+  \item Rate of return:\; $r = (P_1-P_0)/P_0$
+  \item Relation:\; $R = 1 + r$
+\end{itemize}
+
+\textbf{Key statistics:}
+\begin{itemize}
+  \item Expected return:\; $\mu_k = \E(r_k)$
+  \item Variance:\; $\sigma_k^2 = \op{Var}(r_k)$
+  \item Covariance:\; $\sigma_{ij} = \op{Cov}(r_i,r_j)$
+  \item Correlation:\; $\rho_{ij} = \sigma_{ij}/(\sigma_i\sigma_j)$
+\end{itemize}
+
+\textbf{Identities:}
+\[
+\op{Cov}(X,Y)=\E(XY)-\E X\,\E Y
+\]
+\[
+\op{Var}(X+Y)=\op{Var}X+2\op{Cov}(X,Y)+\op{Var}Y
+\]
+
+\boxrule
+
+\textbf{Portfolio of $n$ assets} ($\sum w_i=1$):
+\[
+r_p=\sum w_ir_i,\quad
+\mu_p=\sum w_i\mu_i,\quad
+\sigma_p^2=\sum_i\sum_j w_iw_j\sigma_{ij}
+\]
+
+\textbf{2-asset portfolio} ($w_1=\alpha$, $w_2=1-\alpha$):
+\[
+\sigma_p^2=\alpha^2\sigma_1^2+(1-\alpha)^2\sigma_2^2+2\alpha(1-\alpha)\rho_{12}\sigma_1\sigma_2
+\]
+
+\textbf{GMVP} (Global Min-Variance Portfolio):
+\[
+\alpha^*=\frac{\sigma_2(\sigma_2-\rho_{12}\sigma_1)}{\sigma_1^2+\sigma_2^2-2\rho_{12}\sigma_1\sigma_2}
+\]
+\[
+(\sigma_p^2)^*=\frac{\sigma_1^2\sigma_2^2(1-\rho_{12}^2)}{\sigma_1^2+\sigma_2^2-2\rho_{12}\sigma_1\sigma_2}
+\]
+
+\textbf{Feasible set} (locus of $(\sigma_p,\mu_p)$ as $\alpha$ varies):
+\begin{itemize}
+  \item $\rho=+1$:\; straight line
+  \item $\rho=-1$:\; $V$-shape (zero variance achievable)
+  \item $|\rho|<1$:\; curved, bullet-shaped
+\end{itemize}
+
+\textbf{Efficient frontier} = upper half of feasible set ($\mu_p\ge(\mu_p)^*_{\text{GMVP}}$).
+}
+
+%% ============================================================
+%%  CHAPTER 4
+%% ============================================================
+\chbox{Chapter 4 --- Forwards \& Futures}{
+
+\textbf{Forward contract:} obligation to buy/sell at $F(t,T)$ at time $T$; no upfront cost.
+
+\begin{tabular}{@{}ll@{}}
+  Long payoff  & $S_T - F(t,T)$ \\[2pt]
+  Short payoff & $F(t,T) - S_T$ \\
+\end{tabular}
+
+\smallskip
+\textbf{No-arbitrage forward price:}
+\[\boxed{F(t,T)=S_t\,e^{r(T-t)}}\]
+Arbitrage exists if $F\ne S_t e^{r(T-t)}$: short/buy stock and borrow/invest.
+
+\boxrule
+
+\textbf{Forwards vs.\ Futures:}
+
+\begin{tabular}{@{}lll@{}}
+  \toprule
+  Feature & Forward & Futures \\
+  \midrule
+  Venue & OTC & Exchange \\
+  Terms & Custom & Standardised \\
+  Counterparty risk & High & Low (CCP) \\
+  Settlement & At $T$ & Daily MtM \\
+  Margin & None & Initial + maint. \\
+  \bottomrule
+\end{tabular}
+
+\smallskip
+\textbf{Marking to market (MtM):}
+\begin{itemize}
+  \item Daily cash flow (long) $= F(i) - F(i-1)$
+  \item Total profit telescopes to $S_T - F(0)$ when $r=0$
+\end{itemize}
+
+\textbf{Accrued profit} (long futures, $R_d=e^{r/365}$):
+\[
+\sum_{i=1}^T[F(i)-F(i-1)]\,R_d^{\,T-i}
+\]
+
+\textbf{Forward-Futures equivalence} holds when:
+\begin{itemize}
+  \item No arbitrage and no transaction costs
+  \item Deterministic interest rates
+  \item No correlation between $r$ and asset price
+\end{itemize}
+
+\boxrule
+
+\textbf{Minimum-Variance Hedge}
+
+Buy $W$ units of asset A; short $h$ futures on asset B.
+
+Cash flow: $y = -WS_T + (F_T - F_0)h$
+\[
+h^* = W\cdot\frac{\op{Cov}(S_T,F_T)}{\op{Var}(F_T)}
+     = W\cdot\frac{\rho_{S,F}\,\sigma_S}{\sigma_F}
+     = W\beta
+\]
+\[
+\op{Var}(y)^* = W^2\op{Var}(S_T)(1-\rho_{S,F}^2)
+\]
+\[
+\sigma_y^* = \sqrt{1-\rho^2}\cdot W\sigma_S
+\]
+
+\begin{itemize}
+  \item Effectiveness $= \sqrt{1-\rho^2}$ \; (0 = perfect hedge)
+  \item Selling position: $h = -\beta W$
+\end{itemize}
+
+\textbf{Basis} $=$ spot price of hedged asset $-$ futures price used.
+}
+
+%% ============================================================
+%%  CHAPTER 5
+%% ============================================================
+\chbox{Chapter 5 --- Options}{
+
+\textbf{Payoffs at expiry} ($K$=strike, $S_T$=spot at $T$):
+
+\begin{tabular}{@{}lll@{}}
+  \toprule
+  Position & Payoff & Profit \\
+  \midrule
+  Long call  & $(S_T-K)^+$ & payoff $- Ce^{rT}$ \\[2pt]
+  Long put   & $(K-S_T)^+$ & payoff $- Pe^{rT}$ \\[2pt]
+  Short call & $-(S_T-K)^+$ & $Ce^{rT} -$ payoff \\[2pt]
+  Short put  & $-(K-S_T)^+$ & $Pe^{rT} -$ payoff \\
+  \bottomrule
+\end{tabular}
+
+\boxrule
+
+\textbf{No-arbitrage bounds} (no dividends):
+\begin{itemize}
+  \item Upper: $C\le S_0$;\quad $P\le Ke^{-rT}$
+  \item Lower (call): $C\ge\max(0,\;S_0-Ke^{-rT})$
+  \item Lower (put):\; $P\ge\max(0,\;Ke^{-rT}-S_0)$
+\end{itemize}
+
+\boxrule
+
+\textbf{Put-Call Parity:}
+\[C + Ke^{-rT} = P + S_0\]
+
+Two portfolios with identical payoffs:
+\begin{itemize}
+  \item Portfolio A: call $+$ ZCB paying $K$
+  \item Portfolio B: put $+$ share
+\end{itemize}
+
+\boxrule
+
+\textbf{Trading strategies:}
+
+\begin{tabular}{@{}ll@{}}
+  \toprule
+  Strategy & Construction \\
+  \midrule
+  Covered call   & Long asset $+$ short call \\[2pt]
+  Protective put & Long asset $+$ long put \\[2pt]
+  Bull spread    & Long $C(K_1)$, short $C(K_2)$;\; $K_1<K_2$ \\[2pt]
+  Butterfly      & Long $C(K_1)$, $C(K_3)$; short $2C(K_2)$ \\
+                 & \quad where $K_2=\tfrac{K_1+K_3}{2}$ \\[2pt]
+  Straddle       & Long call $+$ long put (same $K$, $T$) \\
+  \bottomrule
+\end{tabular}
+
+\smallskip
+Butterfly: payoff $=0$ outside $[K_1,K_3]$; peaks at $K_2-K_1$ when $S_T=K_2$.
+
+Butterfly cost $= C(K_1)+C(K_3)-2C(K_2)$.
+
+\boxrule
+
+\textbf{Binomial model} ($u > R > d$,\; $R = 1+r$):
+\[
+C=\frac{1}{R}[qC_u+(1-q)C_d],\quad q=\frac{R-d}{u-d}\in(0,1)
+\]
+
+\textit{Replication:} solve $ux+Rb=C_u$,\; $dx+Rb=C_d$:
+\[
+x=\frac{C_u-C_d}{u-d},\quad b=\frac{uC_d-dC_u}{R(u-d)},\quad C=x+b
+\]
+
+\textit{Multi-period:} work backwards, e.g.\
+$C_u=\dfrac{1}{R}(qC_{uu}+(1-q)C_{ud})$.
+
+\textbf{CRR:}\; $u=e^{\sigma\sqrt{\Delta t}}$,\; $d=1/u$.
+As $\Delta t\to 0$ $\Rightarrow$ \textbf{Black-Scholes}.
+}
+
+\end{multicols}
+
+\end{document}

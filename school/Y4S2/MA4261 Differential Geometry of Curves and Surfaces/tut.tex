@@ -1,0 +1,833 @@
+\documentclass[12pt, a4paper]{article}
+
+% --- Essential Packages ---
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+
+% --- Page Setup ---
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{MA4271 Differential Geometry}
+\fancyhead[R]{Tutorial Worksheet}
+\fancyfoot[C]{\thepage}
+
+% --- Custom Math Commands ---
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\inner}[1]{\langle #1 \rangle}
+\newcommand{\norm}[1]{|#1|}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace*{2in}
+    {\Huge \bfseries MA4271 Differential Geometry \par}
+    \vspace{0.5in}
+    {\Large \bfseries Tutorials 1 to 11 \par}
+    \vspace{0.5in}
+    {\large Worksheet Edition (One Question Per Page) \par}
+    \vfill
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ==========================================
+% TUTORIAL 1
+% ==========================================
+\section*{Tutorial 1}
+\addcontentsline{toc}{section}{Tutorial 1}
+
+\subsection*{Question 1}
+Let $\alpha(t)=(x(t),y(t),z(t))$ be a nonsingular smooth curve where $x(t)$, $y(t)$, $z(t)$ are smooth functions. Let
+\[ s(t)=\int_{0}^{t}|\alpha^{\prime}(\tau)|d\tau. \]
+\begin{enumerate}[label=(\roman*)]
+    \item Compute $s^{\prime}(t)$.
+    \item Compute $s^{\prime\prime}(t)$ in terms of $x(t)$, $y(t)$, $z(t)$ and their higher derivatives.
+    \item Show that $s(t)$ is a smooth function of $t$, that is, all its higher derivatives $s^{(n)}(t)$ exist.
+    \item Write $t=t(s)$ as a function of $s$. Denote $\alpha(s)=\alpha(t(s))$. Show that
+    \[ \left|\frac{d\alpha}{ds}\right|=1. \]
+    In other words $\alpha(s)$ has speed 1 and $\alpha(s)$ is a curve parametrized by arc length.
+\end{enumerate}
+\newpage
+
+\subsection*{Question 2}
+Consider the helix $\alpha:\R\rightarrow\R^{3}$ given by
+\[ \alpha(t)=(3\cos t, 3\sin t, 4t). \]
+\begin{enumerate}[label=(\roman*)]
+    \item Parametrize $\alpha$ by arc length so that when $s=0$ the curve $\alpha$ passes through the point $(3, 0, 0)$.
+    \item Compute the vectors $t(s)$, $n(s)$ and $b(s)$.
+    \item Compute $k(s)$, $b^{\prime}(s)$ and $\tau(s)$.
+    \item Compute $n^{\prime}(s)$ to verify that $n^{\prime}(s)=-k(s)t(s)-\tau(s)b(s)$.
+\end{enumerate}
+
+\vspace{1em}
+\noindent\textbf{Answer:}
+$\alpha(s)=(3\cos\frac{s}{5},3\sin\frac{s}{5},\frac{4s}{5})$, 
+$t(s)=\frac{1}{5}(-3\sin(\frac{s}{5}),3\cos(\frac{s}{5}),4)$, 
+$k(s)=\frac{3}{25}$, 
+$n(s)=(-\cos(\frac{s}{5}),-\sin(\frac{s}{5}),0)$, 
+$b(s)=\frac{1}{5}(4\sin\frac{s}{5},-4\cos\frac{s}{5},3)$, 
+$\tau(s)=-\frac{4}{25}$.
+\newpage
+
+\subsection*{Question 3}
+This is a continuation of the last problem.
+\begin{enumerate}[label=(\roman*)]
+    \setcounter{enumi}{4}
+    \item Let $\beta$ be the curve obtained by translating $\alpha$ by $(7, 8, 9)$, that is,
+    \[ \beta(t)=\alpha(t)+(7,8,9) \]
+    for all $t\in\R$. Show that $\beta(s)=\alpha(s)+(7,8,9)$.
+    \item Show that the curvature $k(s)$ and torsion $\tau(s)$ are the same for both $\alpha$ and $\beta$.
+\end{enumerate}
+
+\vspace{1em}
+\noindent\textit{Remark: This problem illustrates that translating a curve does not alter its curvature $k(s)$ and torsion $\tau(s)$.}
+\newpage
+
+\subsection*{Question 4}
+Let $\alpha(s)$ for $s\in\R$ be a curve in $\R^{3}$ parametrized by arc length which does not pass through the origin $(0,0,0)$. Suppose the straight line through $\alpha(s)$ parallel to $n(s)$ always passes through the origin $(0,0,0)$ for every $s\in\R$. Show that $\alpha(s)$ is a circle whose center is $(0,0,0)$.
+\newpage
+
+\subsection*{Question 5}
+Prove the following:
+\begin{enumerate}[label=(\roman*)]
+    \item $(u(t)\cdot v(t))^{\prime}=u^{\prime}(t)\cdot v(t)+u(t)\cdot v^{\prime}(t).$
+    \item $\frac{d}{dt}|v(t)|^{2}=(v(t)\cdot v(t))^{\prime}=2v(t)\cdot v^{\prime}(t).$
+    \item Suppose $\alpha(s)$ is a curve parametrized by arc length, i.e. $|\alpha^{\prime}(s)|=1$ for all $s\in\R.$ Show that $\alpha^{\prime}(s)$ is perpendicular to $\alpha^{\prime\prime}(s)$ for all $s\in\R.$
+    \item Show that $(u(t)\wedge v(t))^{\prime}=u^{\prime}(t)\wedge v(t)+u(t)\wedge v^{\prime}(t).$
+\end{enumerate}
+
+\vspace{1em}
+\noindent\textit{Remark: If $u(t)$ and $v(t)$ are functions instead of vectors in (i), then this is just the usual product rule.}
+\newpage
+
+\subsection*{Question 6}
+Let $\alpha(s)$ and $\beta(s)$ be two smooth curves in $\R^{3}$ parametrized by arc length. Let $t_{1}(s),n_{1}(s),b_{1}(s),k_{1}(s),\tau_{1}(s)$ denote the Frenet trihedron, curvature and torsion of $\alpha(s).$ Similarly let $t_{2}(s),n_{2}(s),b_{2}(s),k_{2}(s),\tau_{2}(s)$ denote those of $\beta(s)$.
+
+If $k_{1}(s)=k_{2}(s)$ and $\tau_{1}(s)=\tau_{2}(s)$, show that
+\[ \frac{d}{ds}(|t_{1}(s)-t_{2}(s)|^{2}+|n_{1}(s)-n_{2}(s)|^{2}+|b_{1}(s)-b_{2}(s)|^{2})=0. \]
+\newpage
+
+\subsection*{Question 7}
+This is a continuation of the last question.
+\begin{enumerate}[label=(\roman*)]
+    \item Suppose $t_{1}(0)=t_{2}(0),$ $n_{1}(0)=n_{2}(0)$ and $b_{1}(0)=b_{2}(0).$ Show that
+    \[ t_{1}(s)=t_{2}(s),\quad n_{1}(s)=n_{2}(s),\quad b_{1}(s)=b_{2}(s) \]
+    for all $s\in\R.$
+    \item Suppose $\alpha(s)$ and $\beta(s)$ are two smooth curves with the same curvature $k(s)$ and torsion $\tau(s)$ for all $s\in\R$. Show that these two curves differ by a rigid motion.
+\end{enumerate}
+\newpage
+
+\subsection*{Question 8}
+Show that a rigid motion is equivalent to a rotation about an axis through the origin followed by a translation.
+\newpage
+
+% ==========================================
+% TUTORIAL 2
+% ==========================================
+\section*{Tutorial 2}
+\addcontentsline{toc}{section}{Tutorial 2}
+
+\subsection*{Question 1}
+In this question, we will show that an inverse function of a smooth bijective function is smooth. Let $f:(a,b)\rightarrow(c,d)$ and $g:(c,d)\rightarrow\R$ be two smooth functions.
+\begin{enumerate}[label=(\roman*)]
+    \item Let $n$ be a positive integer. Using induction on $n$ or otherwise, show that $\frac{d^{n}}{dx^{n}}(g(f(x)))$ exists and can be expressed as a polynomial in $\frac{d^{k}f}{dx^{k}}$ and $\frac{d^{l}g}{dx^{l}}(f(x))$ for $k,l\le n$ with real coefficients. Thus conclude that $g\circ f$ is a smooth function.
+    \item Suppose $f^{\prime}(x)=\frac{df}{dx}>0$ for all $x\in(a,b)$. Show that $(\frac{df}{dx})^{-1}$ is smooth.
+    \item Suppose $f$ in (ii) is a bijection. Let $h:(c,d)\rightarrow(a,b)$ be the inverse function of $f$. Using (ii) or otherwise, show that $\frac{dh}{dx}$ exists. Show by induction on $k$ that the $k$-th derivative of $h$ exists. In particular $h$ is smooth.
+\end{enumerate}
+\newpage
+
+\subsection*{Question 2}
+Let $p,q\in\R^{3}$. Let $\alpha:[a,b]\rightarrow\R^{3}$ be a smooth curve such that $\alpha(a)=p$ and $\alpha(b)=q$.
+\begin{enumerate}[label=(\roman*)]
+    \item Show that, for any constant vector $v$ in which $|v|=1,$ we have
+    \[ (q-p)\cdot v=\int_{a}^{b}\alpha^{\prime}(t)\cdot vdt\le\int_{a}^{b}|\alpha^{\prime}(t)|dt. \]
+    \item Set $v=\frac{q-p}{|q-p|}$ in (i) and show that
+    \[ |\alpha(b)-\alpha(a)|=\left|\int_{a}^{b}\alpha^{\prime}(t)dt\right|\le\int_{a}^{b}|\alpha^{\prime}(t)|dt. \]
+\end{enumerate}
+\vspace{1em}
+\noindent\textit{Remark: This shows that the curve of shortest length from $p$ to $q$ is the straight line joining these points.}
+\newpage
+
+\subsection*{Question 3}
+Compute $\alpha^{\prime}(t)$, $\alpha^{\prime\prime}(t)$ and $\alpha^{\prime\prime\prime}(t)$ of the following curve:
+\[ \alpha(t)=(e^{t}\cos t,e^{t}\sin t,e^{t}). \]
+Calculate its Frenet trihedron, its curvature $k(t)$ and its torsion $\tau(t)$. Note that the curve is NOT parametrized by arc length.
+
+\vspace{1em}
+\noindent\textbf{Answer:}\\
+$t=\frac{1}{\sqrt{3}}(\cos t-\sin t,\cos t+\sin t,1)$,\\
+$b=\frac{1}{\sqrt{6}}(-\cos t+\sin t,-\cos t-\sin t,2)$,\\
+$n=\frac{1}{\sqrt{2}}(-\cos t-\sin t,\cos t-\sin t,0)$,\\
+$k=\frac{\sqrt{2}}{3}e^{-t}, \quad \tau=-\frac{1}{3}e^{-t}$.
+\newpage
+
+\subsection*{Question 4}
+Let $\alpha(s)$ be a curve parametrized by arc length. Suppose $\alpha(0)=(0,0,0)$ it has constant curvature $k(s)=C>0$ for all $s$, and $\tau(s)=0$ for all $s$.
+\begin{enumerate}[label=(\roman*)]
+    \item If $b(0)=(0,0,1)$. Show that $b(s)=(0,0,1)$ for all $s$.
+    \item Show that $\alpha(s)$ lies on the $xy$-plane.
+    \item Show that $\alpha(s)$ is an arc on a circle of radius $1/C$.
+\end{enumerate}
+\newpage
+
+\subsection*{Question 5}
+Let $U=\{(u,v)\in\R^{2}|0<u,v<1\}$ be an open unit square in the $uv$-plane. Let $x:U\rightarrow\R^{3}$ be the roll up map. Let $S$ be the image surface. We assume that $x$ maps the line $u=\frac{1}{2}$ in $U$ to the dotted line on $S$. The edge of $S$ almost touches the dotted line on the $xy$-plane. The map $x: U\rightarrow S$ is a bijection so the inverse function $x^{-1}: S\rightarrow U$ exists. 
+
+Show that $x^{-1}: S\rightarrow U$ is NOT continuous.
+\newpage
+
+\subsection*{Question 6}
+Consider the plane
+\[ S:=\{(x,y,z)\in\R^{3}:(x,y,z)\cdot(3,2,0)=-1\}. \]
+Verify that this is a regular surface by checking the three conditions in the definition of a regular surface.
+\newpage
+
+\subsection*{Question 7}
+One way to define a system of coordinates for the sphere $S^{2}$, given by $x^{2}+y^{2}+(z-1)^{2}=1$ is to consider the stereographic projection
+\[ \pi:S^{2}\backslash\{N\}\rightarrow\R^{2} \]
+which carries a point $p=(x,y,z)$ of the sphere $S^{2}$ minus the north pole $N=(0,0,2)$ onto the intersection of the $xy$-plane with the straight line which connects $N$ to $p$.
+\begin{enumerate}[label=(\roman*)]
+    \item Let $(u,v)=\pi(x,y,z)$. Show that $\pi^{-1}:\R^{2}\rightarrow S^{2}\backslash\{N\}$ is given by
+    \[ \pi^{-1}(u,v)=\frac{1}{u^{2}+v^{2}+4}(4u,4v,2(u^{2}+v^{2})). \]
+    \item Let $U$ be the $uv$-plane. Using stereographic projection define a coordinate function $x:U\rightarrow S^{2}\backslash\{N\}$. There is no need to verify the 3 conditions on $x$.
+    \item Briefly explain with a picture on how you would find a coordinate function $y:U\rightarrow S^{2}\backslash\{S\}$ where $S$ is the south pole. There is no need to give exact formulas.
+\end{enumerate}
+\newpage
+
+% ==========================================
+% TUTORIAL 3
+% ==========================================
+\section*{Tutorial 3}
+\addcontentsline{toc}{section}{Tutorial 3}
+
+\subsection*{Question 1}
+Let $\alpha:\R\rightarrow\R^{3}$ be a smooth curve parametrized by arc length. Let $t(s), n(s), b(s)$ denote its Frenet trihedron and let $k(s)$ and $\tau(s)$ denote its curvature and torsion. Suppose
+\[ \alpha(0)=(0,0,0), \quad t(0)=(1,0,0), \quad n(0)=(0,1,0) \quad \text{and} \quad b(0)=(0,0,1). \]
+We write $\alpha(s)=(x(s),y(s),z(s))$. Show that the Taylor expansions are:
+\begin{align*}
+    x(s) &= s-\frac{1}{6}(k(0))^{2}s^{3}+\text{(Terms in $s^{4}$ and above)}, \\
+    y(s) &= \frac{1}{2}(k(0))s^{2}+\frac{1}{6}k^{\prime}(0)s^{3}+\text{(Terms in $s^{4}$ and above)}, \\
+    z(s) &= -\frac{1}{6}k(0)\tau(0)s^{3}+\text{(Terms in $s^{4}$ and above)}.
+\end{align*}
+
+\vspace{1em}
+\noindent\textit{Remark: The above is known as the local canonical form.}
+\newpage
+
+\subsection*{Question 2}
+Let $S$ be the surface obtained by rotating the curve $x=z^{2}+1$ on the $xz$-plane along the $z$-axis.
+\begin{enumerate}[label=(\roman*)]
+    \item Find a coordinate function $y: U\rightarrow S\cap V$ which covers the curve $x=z^2+1$. You need to define $U$ and $V$ as well.
+    \item Prove that the function $y(u,v)$ satisfies the three conditions of a coordinate function.
+\end{enumerate}
+\newpage
+
+\subsection*{Question 3}
+Let $S$ be the torus (more commonly known as a doughnut):
+\[ z^{2}+(\sqrt{x^{2}+y^{2}}-2)^{2}=1. \]
+\begin{enumerate}[label=(\roman*)]
+    \item Sketch the surface.
+    \item Find an open subset $V$ of $\R^{3}$ such that $x:U\rightarrow S\cap V$ is a bijection and
+    \[ x(u,v)=((2+\cos u)\cos v,(2+\cos u)\sin v,\sin u) \]
+    where $U=\{(u,v)\in\R^{2}:0<u<2\pi,0<v<2\pi\}$ is a coordinate function for the surface. Show that $x(u,v)\in S$.
+    \item Label the part of $S$ in (i) which is not covered by the coordinate function.
+    \item Verify the three conditions that $x$ is a coordinate function. (You may assume that $x$ is surjective onto $S\cap V$).
+\end{enumerate}
+\newpage
+
+\subsection*{Question 4}
+Prove that
+\[ S=\{(x,y,z)\in\R^{3}:x^{5}+\sin y+z^{3}=2\} \]
+is a regular surface.
+\newpage
+
+\subsection*{Question 5}
+Let $S$ be a regular surface and let $p$ be a point on $S$. We recall that the tangent space at $p$ is the span of $x_{u}=\frac{\partial x}{\partial u}$ and $x_{v}=\frac{\partial x}{\partial v}$ at $p$ of a coordinate function $x: U\rightarrow S$ such that $p\in x(U)$. 
+
+True or False: The tangent space has dimension 2 at every point on $S$. If it is true, give a proof. If it is false, give a counterexample.
+\newpage
+
+\subsection*{Question 6}
+Let 
+\[ A=\begin{pmatrix}a_{11}&a_{12}\\ a_{21}&a_{22}\\ a_{31}&a_{32}\end{pmatrix} \]
+Let $c_{1}$ and $c_{2}$ denote the two columns of $A$. Show that the following statements are equivalent:
+\begin{enumerate}[label=(\roman*)]
+    \item The matrix $A$ has rank 2, i.e. the dimension of the column space is 2.
+    \item The two columns $c_{1}$ and $c_{2}$ of $A$ are linearly independent.
+    \item $c_{1}\wedge c_{2}\ne(0,0,0)$.
+    \item At least one of the three 2 by 2 minors is nonzero.
+    \item The dimension of the row space is 2.
+\end{enumerate}
+\newpage
+
+\subsection*{Question 7}
+Consider the cone
+\[ S=\{(x,y,z)\in\R^{3}:x^{2}+y^{2}=z^{2}, z\ge0\}. \]
+We will show that this is NOT a regular surface.
+\begin{enumerate}[label=(\roman*)]
+    \item Sketch the cone $S$.
+    \item Show that it is not possible to parametrize $S$ at the origin $(0,0,0)$ by using $(u,v)=(x,y)$.
+    \item Show that it is not possible to parametrize $S$ at the origin $(0, 0, 0)$ by using $(u,v)=(x,z)$ or $(u,v)=(y,z)$.
+    \item Conclude that $S$ is NOT a regular surface.
+\end{enumerate}
+\newpage
+
+% ==========================================
+% TUTORIAL 4
+% ==========================================
+\section*{Tutorial 4}
+\addcontentsline{toc}{section}{Tutorial 4}
+
+\subsection*{Question 1}
+Let $S$ denote the surface of revolution of rotating the curve $x=z^{2}+1$ about the $z$-axis. A coordinate function is $x: U\rightarrow S\cap V$ given by
+\[ x(u,v)=((v^{2}+1)\cos u,(v^{2}+1)\sin u,v) \]
+where $U=\{(u,v)\in\R^{2}:0<u<2\pi,v\in\R\}$ and $V=\R^{3}\backslash\{(x,0,z)\in\R^{3}:x\ge0\}$.
+Let $x_{u}$ and $x_{v}$ denote the first and second columns of $dx$.
+\begin{enumerate}[label=(\roman*)]
+    \item Calculate $x_{u}$ and $x_{v}$ at $p=x(\frac{\pi}{2},1)=(0,2,1)$ on $S$.
+    \item Show that the vector $(2, 4, 2)$ is a tangent vector at $p$.
+    \item Find a curve $\alpha(t)$ on the surface which passes through $p$ at $t=0$ and $\alpha^{\prime}(0)=(2,4,2)$.
+    \item Find a vector perpendicular to the tangent space at a point $q=x(u_{0},v_{0})$.
+    \item Find the equation of the tangent plane.
+\end{enumerate}
+
+\vspace{1em}
+\noindent\textbf{Answer:}\\
+(i) $(-2,0,0)$ and $(0, 2, 1)$. \\
+(iv) $(\cos u_{0},\sin u_{0},-2v_{0})$. \\
+(v) $x\cos u_{0}+y\sin u_{0}-2zv_{0}=0$.
+\newpage
+
+\subsection*{Question 2}
+This is a continuation of the last problem.
+\begin{enumerate}[label=(\roman*)]
+    \item Sketch the surface $S$.
+    \item Determine and sketch those points $x(u,v)$ on $S$ where $\frac{\partial(x,y)}{\partial(u,v)}\ne0$.
+    \item Let $p$ be a point as in (ii). The surface is locally at $p$ of the form $(x,y,f(x,y))$, i.e. a graph. Find $f(x,y)$.
+\end{enumerate}
+
+\vspace{1em}
+\noindent\textbf{Answer:}\\
+(ii) $v\ne0$. \\
+(iii) Above the $xy$-plane: $z=f(x,y)=\sqrt{\sqrt{x^{2}+y^{2}}-1}$. Below the $xy$-plane: $z=f(x,y)=-\sqrt{\sqrt{x^{2}+y^{2}}-1}$.
+\newpage
+
+\subsection*{Question 3}
+Let $f(x,y,z)=xz^{2}$ be a function on the unit sphere $S$ centered at the origin. Let $x:\R^{2}\rightarrow S\backslash\{N\}$ be the coordinate function coming from the stereographic projection:
+\[ x(u,v)=\frac{1}{u^{2}+v^{2}+4}(4u,4v,u^{2}+v^{2}-4). \]
+\begin{enumerate}[label=(\roman*)]
+    \item Compute $(f\circ x)(u,v)$. Does this function have higher derivatives with respect to $u$ and $v$?
+    \item Compute $\frac{\partial f}{\partial u}$ and $\frac{\partial f}{\partial v}$.
+    \item Using (i) or otherwise, show that $f$ is smooth at every point on $S\backslash\{N\}$.
+\end{enumerate}
+\newpage
+
+\subsection*{Question 4}
+Let $f:\R^{3}\rightarrow\R$. Suppose $f(x,y,z)=0$ defines a regular surface $S$. Let $x:U\rightarrow S\cap V$ be a parametrization. Let $p=x(u_{0},v_{0})$ be a point in the surface. Show that at $p$, $\text{grad } f$ is perpendicular to the tangent space.
+\newpage
+
+\subsection*{Question 5}
+Let $S$ be a regular surface. Let $x:U\rightarrow S$ be a coordinate function. Let $p=x(u_{0},v_{0})$ be a point on $S$. We suppose $\frac{\partial(x,y)}{\partial(u,v)}|_{(u_{0},v_{0})}\ne0.$ By replacing $U$ by $\{(u,v)\in U:\frac{\partial(x,y)}{\partial(u,v)}\ne0\}$ if necessary, we assume that $\frac{\partial(x,y)}{\partial(u,v)}\ne0$ for all $(u,v)\in U$.
+
+Let $q:x(U)\rightarrow\R^{2}$ be the projection map to the $xy$-plane. We suppose that it is an injection.
+\begin{enumerate}[label=(\roman*)]
+    \item Let $U^{\prime}=q(x(U))$ be the image of $q$. Show that $U^{\prime}$ is an open subset of the $xy$-plane and $x(U)$ is the graph of a smooth function $z=f(x,y)$ for $(x,y)\in U^{\prime}$.
+    \item By (i) $g:=q\circ x:U\rightarrow U^{\prime}$ is a bijection and $g^{-1}:U^{\prime}\rightarrow U$ exist. Show both $g$ and $g^{-1}$ are smooth.
+\end{enumerate}
+\newpage
+
+\subsection*{Question 6}
+Let $S$ be a regular surface. Let $x:U\rightarrow S$ be a coordinate function. Let $Y$ be an open subset of $\R^{n}$. Let $y:Y\rightarrow\R^{3}$ be a smooth map. Suppose that the image of $Y$ lies in the image of $x$, i.e. $y(Y)\subseteq x(U)$. In this way $h := (x^{-1} \circ y): Y \rightarrow U$ is well defined.
+\begin{enumerate}[label=(\roman*)]
+    \item Suppose $x(u,v)=(u,v,f(u,v))$ is a graph. Show that $h: Y\rightarrow U$ is a smooth map.
+    \item Show that in general, $h:Y\rightarrow U$ is a smooth map.
+\end{enumerate}
+\newpage
+
+\subsection*{Question 7}
+Let $V_{1}=V_{2}=V_{3}=\R^{2}$ and let $F:V_{1}\rightarrow V_{2}$ and $G:V_{2}\rightarrow V_{3}$ be two functions. Let $H=G\circ F:V_{1}\rightarrow V_{3}$.
+
+\begin{enumerate}[label=(\roman*)]
+    \item (Chain rule) Show that $dH=d(G\circ F)$ is equal to the product of the two matrices $dG\cdot dF$.
+    \item Show that
+    \[ \frac{\partial(H_{1},H_{2})}{\partial(x_{1},x_{2})}=\frac{\partial(G_{1},G_{2})}{\partial(y_{1},y_{2})}\frac{\partial(F_{1},F_{2})}{\partial(x_{1},x_{2})}. \]
+\end{enumerate}
+\newpage
+
+% ==========================================
+% TUTORIAL 5
+% ==========================================
+\section*{Tutorial 5}
+\addcontentsline{toc}{section}{Tutorial 5}
+
+\subsection*{Question 1}
+We recall the stereographic projection of a unit sphere $S^{2}$. We will shift everything downwards by a unit length so that the center of the ball is now at the origin. Let $N$ and $S$ denote the north pole and the south pole respectively. The map
+\[ x(u,v)=\pi^{-1}(u,v)=\frac{1}{u^{2}+v^{2}+4}(4u,4v,u^{2}+v^{2}-4) \]
+is a parametrization of $x:\R^{2}\rightarrow S^{2}\backslash\{N\}$. We also have a parametrization $y: \R^{2}\rightarrow S^{2}\backslash\{S\}$ given by
+\[ y(\xi,\eta)=\frac{1}{\xi^{2}+\eta^{2}+4}(4\xi,4\eta,4-\xi^{2}-\eta^{2}). \]
+Note that $x^{-1}(x,y,z)=\frac{2}{1-z}(x,y)$ and $y^{-1}(x,y,z)=\frac{2}{1+z}(x,y)$.
+\begin{enumerate}[label=(\roman*)]
+    \item Describe the overlap $W$ of the two parametrizations on the sphere $S^{2}$.
+    \item Describe $x^{-1}(W)$ and $y^{-1}(W)$.
+    \item Compute $h:y^{-1}(W)\rightarrow x^{-1}(W)$ where $(u,v)=h(\xi,\eta)=(x^{-1}\circ y)(\xi,\eta)$.
+    \item Explain using (iii) that $h(\xi,\eta)$ is a smooth function on $y^{-1}(W)$. Note that $(0,0)\notin y^{-1}(W)$.
+    \item Compute $dx$ and $dy$.
+    \item Let $p=(x,y,z)=x(1,1)=y(2,2)$ be a point on the overlap $W$. Show that the column spaces of $dx$ and $dy$ at this point are both equal to the span of $(1,0,2)^{\top}$ and $(0,1,2)^{\top}$.
+    \item Show that the tangent space at $p$ is independent of the coordinate functions $x$ and $y$ used.
+\end{enumerate}
+
+\vspace{1em}
+\noindent\textbf{Answer:}\\
+(iii) $h(\xi,\eta)=(\frac{4\xi}{\xi^{2}+\eta^{2}},\frac{4\eta}{\xi^{2}+\eta^{2}})$.
+\newpage
+
+\subsection*{Question 2}
+Let $S^{2}$ be the unit sphere and let $x$ and $y$ as in Question 1. Let $f(x,y,z)=xz^{2}$ be a function on $S^{2}$.
+\begin{enumerate}[label=(\roman*)]
+    \item Compute $(f\circ x)(u,v)$ and $(f\circ y)(\xi,\eta)$.
+    \item Give an alternative proof that $f$ is smooth using (i).
+\end{enumerate}
+\newpage
+
+\subsection*{Question 3}
+Let $S$ be the surface in $\R^{3}$ given by $z^{2}=1+x^{2}+y^{2}$.
+\begin{enumerate}[label=(\roman*)]
+    \item Show that $S$ does not intersect the $xy$-plane.
+    \item We define a function $f(x,y,z)=\frac{x^{2}+y^{2}+z^{2}}{z^{3}}$ for $(x,y,z)$ on the surface $S$. Show that $f$ is a smooth function on $S$.
+\end{enumerate}
+\newpage
+
+\subsection*{Question 4}
+Let $S^{2}$ be the unit sphere and let $x$ and $y$ as in Question 1. Let $\phi(x,y,z)=(-x,-y,-z)$ be the map $\phi:S^{2}\rightarrow S^{2}$. Give an alternative proof that $\phi$ is smooth in the following way:
+\begin{enumerate}[label=(\roman*)]
+    \item Show that $\phi$ maps $S^{2}\backslash\{N\}$ to $S^{2}\backslash\{S\}$. Conclude that $\Phi:=y^{-1}\circ\phi\circ x:\R^{2}\rightarrow\R^{2}$ is well defined.
+    \item Show that $\Phi(u,v)$ in (i) is smooth. Hence conclude that $\phi$ is smooth on $S^{2}\backslash\{N\}$.
+    \item By interchanging the role of $x$ and $y$, show that $\phi$ is smooth on $S^{2}\backslash\{S\}$.
+    \item Conclude that $\phi : S^{2}\rightarrow S^{2}$ is smooth.
+\end{enumerate}
+\newpage
+
+\subsection*{Question 5}
+Let $\phi : S_{1}\rightarrow S_{2}$ and $\psi : S_{2}\rightarrow S_{3}$ be two smooth maps between regular surfaces. Show that $\psi\circ\phi : S_{1}\rightarrow S_{3}$ is smooth.
+\newpage
+
+\subsection*{Question 6}
+Suppose $F:\R^{2}\rightarrow\R^{2}$ and $G:\R^{2}\rightarrow\R^{2}$ are inverse functions of each other, that is, $G=F^{-1}$.
+\begin{enumerate}[label=(\roman*)]
+    \item Show that $dG=d(F^{-1})=(dF)^{-1}$. In particular it is a 2 by 2 invertible matrix.
+    \item If $F=(F_{1}(x_{1},y_{1}),F_{2}(x_{1},y_{1}))$ and $G=(G_{1}(x_{2},y_{2}),G_{2}(x_{2},y_{2}))$ show that
+    \[ \frac{\partial(G_{1},G_{2})}{\partial(x_{2},y_{2})}=\left(\frac{\partial(F_{1},F_{2})}{\partial(x_{1},y_{1})}\right)^{-1}. \]
+\end{enumerate}
+\newpage
+
+\subsection*{Question 7}
+Let $f:S\rightarrow\R$ be a smooth function on a regular surface. Let $p\in S$. Show that there is an open subset $V$ of $\R^{3}$ containing $p$ and a smooth function $F:V\rightarrow\R$ in the sense of calculus such that $F=f$ on $S\cap V$.
+\newpage
+
+% ==========================================
+% TUTORIAL 6
+% ==========================================
+\section*{Tutorial 6}
+\addcontentsline{toc}{section}{Tutorial 6}
+
+\subsection*{Question 1}
+Let $S_{+}^{2}$ and $S_{-}^{2}$ denote the northern and southern hemispheres respectively. Let $\phi: S_{+}^{2}\rightarrow S_{-}^{2}$ be the (antipodal) map $\phi(x,y,z)=(-x,-y,-z)$.
+Let $x:U_{1}\rightarrow S_{+}^{2}$ be a parametrization by the $(x,y)$-coordinates:
+\[ x(u_{1},v_{1})=(u_{1},v_{1},\sqrt{1-u_{1}^{2}-v_{1}^{2}}). \]
+Let $y:U_{2}\rightarrow S_{-}^{2}$ be a parametrization by the $(x,y)$-coordinates.
+\begin{enumerate}[label=(\roman*)]
+    \item Compute $\Phi(u_{1},v_{1})=(y^{-1}\circ\phi\circ x)(u_{1},v_{1})$ and $d\Phi$.
+    \item Using (i) or otherwise, conclude that $\phi$ is a smooth map from $S_{+}^{2}$ to $S_{-}^{2}$.
+    \item Let $v=ax_{u_{1}}+bx_{v_{1}}$ be a tangent vector in $T_{p}(S_{+}^{2})$ where $p=x(u_{1},v_{1})$. Compute $d\phi(v)\in T_{\phi(p)}(S_{-}^{2})$ using the formula
+    \[ d\phi(v)=dy\cdot d\Phi(v_{1}) \]
+    where $v_{1}=(a,b)^{\top}$. Express your answer as a linear combination of the columns $\{y_{u_{2}},y_{v_{2}}\}$ of $dy$.
+\end{enumerate}
+
+\vspace{1em}
+\noindent\textbf{Answer:}\\
+(i) $\Phi(u_{1},v_{1})=(-u_{1},-v_{1})$ and $d\Phi=\begin{pmatrix}-1&0\\ 0&-1\end{pmatrix}$.\\
+(iii) $d\phi(v)=-ay_{u_{2}}-by_{v_{2}}.$
+\newpage
+
+\subsection*{Question 2}
+This is a continuation of the last problem. We will compute $d\phi(v)$ using the definition of $d\phi$.
+\begin{enumerate}[label=(\roman*)]
+    \item Find a curve $\alpha(t)$ on $S^{2}$ passing through $p$ at $t=0$ such that $\alpha^{\prime}(0)=v=ax_{u_{1}}+bx_{v_{1}}$.
+    \item Compute $\beta(t)=\phi(\alpha(t))$.
+    \item Compute $\beta^{\prime}(0)$. Show that this is equal $d\phi(v)$ in Question 1.
+\end{enumerate}
+\newpage
+
+\subsection*{Question 3}
+Let $x=f(z)>0$ be a curve on the $xz$-plane. Let $S$ be the surface obtained by rotating this curve along the $z$-axis. Let $U=(0,2\pi)\times\R$. Let $x:U\rightarrow S$ be the usual coordinate function where $x(u,v)=(f(v)\cos u,f(v)\sin u,v)$.
+\begin{enumerate}[label=(\roman*)]
+    \item Compute $E(u,v)$, $F(u,v)$, $G(u,v)$ and $ds^{2}$.
+    \item Find the cosine of the angle between $x_{u}$ and $x_{v}$.
+    \item Using the formula $\iint_{U}\sqrt{EG-F^{2}}dudv,$ find the area of the region:
+    \[ X=\{(x,y,z)\in\R^{3}:x^{2}+y^{2}+z^{2}=1,0\le z\le r\} \]
+    on the unit sphere $S^{2}$.
+\end{enumerate}
+\vspace{1em}
+\noindent\textbf{Answer:}\\
+(i) $E=f(v)^{2}$, $F=0$, $G=(f^{\prime}(v))^{2}+1$, $ds^{2}=f(v)^{2}du^{2}+((f^{\prime}(v))^{2}+1)dv^{2}$.\\
+(ii) 0.\\
+(iii) $2\pi r$.
+\newpage
+
+\subsection*{Question 4}
+Let $\phi:S_{1}\rightarrow S_{2}$ and $\psi: S_{2}\rightarrow S_{3}$ be smooth maps between regular surfaces. Let $\varphi=\psi\circ\phi:S_{1}\rightarrow S_{3}$. Let $p_{1}\in S_{1}$, $p_{2}=\phi(p_{1})\in S_{2}$ and $p_{3}=\psi(p_{2})=\varphi(p_{1})\in S_{3}.$ Show that
+\[ d\varphi=d(\psi\circ\phi)=d\psi\circ d\phi \]
+as linear transformations from $T_{p_{1}}(S_{1})$ to $T_{p_{3}}(S_{3})$.
+\newpage
+
+\subsection*{Question 5}
+Let $S$ be an orientable regular surface, i.e. there exists a Gauss map $N:S\rightarrow S^{2}$.
+\begin{enumerate}[label=(\roman*)]
+    \item Let $x:U\rightarrow S$ be a coordinate function. Show that $N\circ x:U\rightarrow\R^{3}$ is a smooth function in the sense of calculus.
+    \item Show that $N:x(U)\rightarrow S^{2}$ is a smooth map between two regular surfaces.
+    \item Show that the Gauss map $N: S\rightarrow S^{2}$ is smooth.
+\end{enumerate}
+\newpage
+
+\subsection*{Question 6}
+Let $V$ be a 2 dimensional inner product space with inner product $\inner{\cdot, \cdot}$. Let $\{x_{1},x_{2}\}$ be a basis of $V$. Let $A:V\rightarrow V$ be a linear transformation. Show that the following statements are equivalent:
+\begin{enumerate}[label=(\roman*)]
+    \item $A$ is a self adjoint linear transformation, i.e. $\inner{Av_{1},v_{2}}=\inner{v_{1},Av_{2}}$ for all $v_{1}, v_{2} \in V$.
+    \item $\inner{Ax_{1},x_{2}}=\inner{x_{1},Ax_{2}}.$
+\end{enumerate}
+\newpage
+
+% ==========================================
+% TUTORIAL 7
+% ==========================================
+\section*{Tutorial 7}
+\addcontentsline{toc}{section}{Tutorial 7}
+
+\subsection*{Question 1a}
+Let $S$ be the graph $z=1+x^{2}+y^{2}$. It is a regular surface with coordinate function $x(u,v)=(u,v,1+u^{2}+v^{2})$. The Gauss map $N: S\rightarrow S^{2}$ is given by
+\[ (N\circ x)(u,v)=\frac{1}{\sqrt{1+4(u^{2}+v^{2})}}(-2u,-2v,1). \]
+\begin{enumerate}[label=(\roman*)]
+    \item Compute the 3 by 2 matrix $d(N\circ x)$.
+    \item Show that $dN(ax_{u}+bx_{v})=ac_{1}+bc_{2}$ where $c_{1}$ and $c_{2}$ are the columns of $d(N\circ x)$.
+    \item Express $dN(ax_{u}+bx_{v})$ as a linear combination of $x_{u}$ and $x_{v}$.
+    \item Let $p=x(u,v)$. Express $dN:T_{p}(S)\rightarrow T_{p}(S)$ as a 2 by 2 matrix with respect to the basis $\mathcal{B}=\{x_{u},x_{v}\}$, i.e. find $[-dN]_{\mathcal{B},\mathcal{B}}$.
+\end{enumerate}
+
+\vspace{1em}
+\noindent\textbf{Answer:}\\
+(i) $\frac{2}{R^{3}}\begin{pmatrix}-(4v^{2}+1)&4uv\\ 4uv&-(4u^{2}+1)\\ -2u&-2v\end{pmatrix}$ where $R=\sqrt{1+4u^{2}+4v^{2}}$.\\
+(iv) $[-dN]_{\mathcal{B},\mathcal{B}} = \frac{2}{R^{3}}\begin{pmatrix}(4v^{2}+1)&-4uv\\ -4uv&(4u^{2}+1)\end{pmatrix}$.
+\newpage
+
+\subsection*{Question 1b}
+This is a continuation of the last problem.
+\begin{enumerate}[label=(\roman*)]
+    \setcounter{enumi}{4}
+    \item Compute $\inner{dN(x_{u}),x_{v}}$ and $\inner{x_{u},dN(x_{v})}$.
+    \item Show that $dN$ is a self adjoint linear transformation.
+    \item Calculate the second fundamental form $II(v)=-\inner{dN(v),v}$ in terms of $a$ and $b$ where $v=ax_{u}+bx_{v}$.
+\end{enumerate}
+\vspace{1em}
+\noindent\textbf{Answer:}\\
+(v) 0. \\
+(vii) $\frac{2}{R}(a^{2}+b^{2})$.
+\newpage
+
+\subsection*{Question 1c}
+This is a continuation of the last problem.
+\begin{enumerate}[label=(\roman*)]
+    \setcounter{enumi}{7}
+    \item Find the principal curvatures $k_1, k_2$ and principal directions when $u=0$ or $v=0$.
+    \item Suppose $u$ and $v$ are nonzero. Diagonalize the symmetric matrix $[-dN]_{\mathcal{B},\mathcal{B}}$. Find the principal curvatures $k_1, k_2$ and the principal directions.
+    \item Show that the two principal directions are perpendicular to each other.
+\end{enumerate}
+\vspace{1em}
+\noindent\textbf{Answer:}\\
+(viii) $k_{1}=2R^{-3}(4v^{2}+1)$ and $k_{2}=2R^{-3}(4u^{2}+1)$.\\
+(ix) Principal curvatures are $k_{1}=2R^{-3}$ and $k_{2}=2R^{-1}$. Eigenvectors in $T_p(S)$ are $ux_u+vx_v$ and $vx_u-ux_v$.
+\newpage
+
+\subsection*{Question 2}
+Let $S$ be the surface with a parametrization given by $x(u,v)=(u,v,u^{2}+v^{2})$ and let $\alpha(t)$ be a curve on $S$ defined by $\alpha(t)=x(t^{2},t)=(t^{2},t,t^{4}+t^{2})$.
+\begin{enumerate}[label=(\roman*)]
+    \item Compute the Frenet trihedron and the curvature $k(t)$ of $\alpha(t)$.
+    \item Compute $N(x(u,v))=\frac{x_{u}\wedge x_{v}}{|x_{u}\wedge x_{v}|}$.
+    \item Find the normal curvature $k_{n}(t)=k(t)\inner{n,N}$ of $\alpha(t)$.
+\end{enumerate}
+\vspace{1em}
+\noindent\textbf{Answer:}\\
+(ii) $\frac{(-2u,-2v,1)}{\sqrt{4u^{2}+4v^{2}+1}}$.\\
+(iii) $\frac{2(4t^{2}+1)}{(2t^{2}+1)(16t^{6}+16t^{4}+8t^{2}+1)}$.
+\newpage
+
+\subsection*{Question 3}
+Let $\phi:S_{1}\rightarrow S_{2}$ be a bijective smooth map between two regular surfaces $S_{1}$ and $S_{2}$. Let $\phi^{-1}:S_{2}\rightarrow S_{1}$ be the inverse map. Give an example where $\phi^{-1}:S_{2}\rightarrow S_{1}$ is not smooth. Explain why $\phi^{-1}$ is not smooth in your example.
+\newpage
+
+\subsection*{Question 4}
+This is a continuation of the last question. Suppose, in addition, the differential $d\phi:T_{p}(S_{1})\rightarrow T_{\phi(p)}(S_{2})$ is a bijection for all $p\in S_{1}$. Show that the inverse map $\phi^{-1}: S_{2}\rightarrow S_{1}$ is also a smooth map.
+\newpage
+
+\subsection*{Question 5}
+\begin{enumerate}[label=(\roman*)]
+    \item Compute the principal curvatures $k_{1}$, $k_{2}$ and the Gaussian curvature $K$ at a point $p$ on a sphere $S_{1}$ of radius 10.
+    \item Compute the principal curvatures $k_{1}$, $k_{2}$ and the Gaussian curvature $K$ at a point $p$ on a circular tube $S_{2}$ of radius 10. Briefly explain your answers.
+\end{enumerate}
+\newpage
+
+% ==========================================
+% TUTORIAL 8
+% ==========================================
+\section*{Tutorial 8}
+\addcontentsline{toc}{section}{Tutorial 8}
+
+\subsection*{Question 1}
+Let $S$ be a regular surface. If $F=f=0$ at a point $p$ on $S$, show that the principal curvatures are $k_{1}=\frac{e}{E}$ and $k_{2}=\frac{g}{G}$.
+\newpage
+
+\subsection*{Question 2}
+Let $S_{1}$ and $S_{2}$ be two regular surfaces intersecting along a regular curve $C$. We suppose the curve $C$ is given by a formula $\alpha(s)$ parametrized by arc length. Let $p=\alpha(0)$ be a point on the curve $C$ and let $k$ denote the curvature of $C$ at $p$. Let $N_{1}$ be a normal vector to the surface $S_{1}$ at $p$. Considering $C$ as a curve on $S_{1}$, let $k_{1}$ denote the normal curvature of $C$ at $p$ in the direction of $\alpha^{\prime}(0)$. Let $N_{2}$ be a normal vector to the surface $S_{2}$ at $p$. Considering $C$ as a curve on $S_{2}$, let $k_{2}$ denote the normal curvature of $C$ at $p$ in the direction of $\alpha^{\prime}(0)$.
+
+Let $\theta$ denote the angle between $N_{1}$ and $N_{2}$. Show that
+\[ k^{2}\sin^{2}\theta=k_{1}^{2}+k_{2}^{2}-2k_{1}k_{2}\cos\theta. \]
+\newpage
+
+\subsection*{Question 3}
+Suppose $\mathcal{B}=\{v,w\}$ is a basis of $T_{p}(S)$. Let
+\[ [-dN]_{\mathcal{B}}=\begin{pmatrix}a&b\\ c&d\end{pmatrix}. \]
+\begin{enumerate}[label=(\roman*)]
+    \item Write $-dN(v)$ and $-dN(w)$ as linear combinations of $v$ and $w$.
+    \item Using (i) or otherwise, conclude that $dN(v)\wedge dN(w)=K\cdot (v\wedge w)$.
+    \item Show that $(-dN(v))\wedge w+v\wedge(-dN(w))=2H\cdot (v\wedge w)$.
+\end{enumerate}
+\newpage
+
+\subsection*{Question 4}
+Let $N:S\rightarrow S^{2}$ be a Gauss map on a surface $S$. Let $U=(-1,1)\times(-1,1)$ be the square on the $uv$-plane. Let $x: U\rightarrow S$ be a coordinate function. Suppose $p=x(0,0)\in S$. Let $U(\epsilon)=[0,\epsilon]\times[0,\epsilon]$ be a small square of sides $\epsilon$ inside of $U$.
+\begin{enumerate}[label=(\roman*)]
+    \item Show that for small $\epsilon$, the area of $x(U(\epsilon))$ is approximately equal to $|x_{u}(0,0)\wedge x_{v}(0,0)|\epsilon^{2}$.
+    \item Show that the image area under the Gauss map, Area of $N(x(U(\epsilon)))$, is approximately equal to $|K| |x_{u}(0,0)\wedge x_{v}(0,0)|\epsilon^{2}$ where $K$ is the Gaussian curvature at $p$.
+\end{enumerate}
+\vspace{1em}
+\noindent\textit{Remark: Hence $|K|$ at $p$ can be interpreted as the ratio of a small area at $p$ and its image under the Gauss map.}
+\newpage
+
+\subsection*{Question 5}
+Let $\gamma(v)=(a(v),b(v))$ be a non-singular smooth curve on the $xz$-plane i.e. $\gamma^{\prime}(v)\ne(0,0)$. We assume that $a(v)>0$. Let $S$ denote the surface of revolution about the $z$-axis. Let $x(u,v)=(a(v)\cos u,a(v)\sin u,b(v))$ be a parametrization of $S$.
+Express the following in terms of $a,a^{\prime},a^{\prime\prime},b,b^{\prime},b^{\prime\prime},\sin u,\cos u$:
+\begin{enumerate}[label=(\roman*)]
+    \item $x_{u},x_{v},x_{uu},x_{uv},x_{vv},N=\frac{x_{u}\wedge x_{v}}{|x_{u}\wedge x_{v}|}$.
+    \item $E,F,G,e,f,g$.
+    \item $II(v)$ where $v=a_{1}x_{u}+a_{2}x_{v}$.
+    \item Compute the Gaussian curvature $K$ and the mean curvature $H$.
+    \item Suppose $\gamma(v)$ is parametrized by arc length, that is, $(a^{\prime})^{2}+(b^{\prime})^{2}=1$. Show that $a^{\prime}a^{\prime\prime}+b^{\prime}b^{\prime\prime}=0$ and express $K$ in terms of $a,a^{\prime},a^{\prime\prime}$.
+\end{enumerate}
+\newpage
+
+\subsection*{Question 6}
+Let $x(u,v)=(x(u,v),y(u,v),z(u,v))$ be a coordinate function of a regular surface $S$. Let $p=x(u,v)$ be a point on $S$. Let $\triangle x=x(u+\triangle u,v+\triangle v)-x(u,v)$.
+\begin{enumerate}[label=(\roman*)]
+    \item Show that up to order 2 approximation,
+    \[ \triangle x\approx x_{u}\triangle u+x_{v}\triangle v+\frac{1}{2}x_{uu}(\triangle u)^{2}+x_{uv}\triangle u\triangle v+\frac{1}{2}x_{vv}(\triangle v)^{2}. \]
+    \item Let $\delta$ be the distance from $x(u+\triangle u,v+\triangle v)$ to the tangent plane $T_{p}(S)$ at $p$. Show that $\delta=\inner{N(x(u,v)),\triangle x}$.
+    \item Using (i) or otherwise, show that $2\delta$ is approximately
+    \[ 2\delta\approx e(\triangle u)^{2}+2f\triangle u\triangle v+g(\triangle v)^{2}. \]
+\end{enumerate}
+\newpage
+
+% ==========================================
+% TUTORIAL 9
+% ==========================================
+\section*{Tutorial 9}
+\addcontentsline{toc}{section}{Tutorial 9}
+
+\subsection*{Question 1}
+Let $S_{1}$ and $S_{2}$ be two regular surfaces. We recall that $\phi:S_{1}\rightarrow S_{2}$ is a diffeomorphism if it is bijective so that $\phi^{-1}:S_{2}\rightarrow S_{1}$ exists, and both $\phi$ and $\phi^{-1}$ are smooth maps.
+\begin{enumerate}[label=(\roman*)]
+    \item Suppose $\phi:S_{1}\rightarrow S_{2}$ is a diffeomorphism. Let $x: U\rightarrow S_{1}$ be a coordinate function of $S_{1}$. Show that $y:=\phi\circ x:U\rightarrow S_{2}$ is a coordinate function of $S_{2}$.
+    \item Let $x:U\rightarrow S_{1}$ be a coordinate function of $S_{1}$. Suppose $y:U\rightarrow S_{2}$ is a coordinate function of $S_{2}$ (with the same $U$). Show that $\phi:=y\circ x^{-1}:x(U)\rightarrow y(U)$ is a diffeomorphism.
+\end{enumerate}
+\newpage
+
+\subsection*{Question 2a}
+Let $F:V\rightarrow W$ be a linear transformation between two inner product spaces $V$ and $W$ of dimension 2. Prove that the following are equivalent:
+\begin{enumerate}[label=(\roman*)]
+    \item $\|F(v)\|=\|v\|$ for all $v\in V$.
+    \item $\inner{F(v_{1}),F(v_{2})}=\inner{v_{1},v_{2}}$ for all $v_{1},v_{2}\in V$.
+    \item If $\{e_{1},e_{2}\}$ is an orthonormal basis of $V$, then $\{F(e_1), F(e_2)\}$ is an orthonormal basis of $W$.
+    \item There is an orthonormal basis $\{e_{1},e_{2}\}$ of $V$ such that $\{F(e_1), F(e_2)\}$ is an orthonormal basis of $W$.
+\end{enumerate}
+Show that if any of the above statements is satisfied, then $F$ is a bijection.
+\newpage
+
+\subsection*{Question 2b}
+Let $\phi:S\rightarrow\overline{S}$ be a diffeomorphism between two surfaces and let $p\in S$ and $\overline{p}=\phi(p)\in\overline{S}$. By setting $F=d\phi$, $V=T_{p}(S)$ and $W=T_{\overline{p}}(\overline{S})$ in the last problem, give four equivalent definitions of '$\phi$ is an isometry'.
+\newpage
+
+\subsection*{Question 3}
+Let $\phi:S_{1}\rightarrow S_{2}$ and $\psi:S_{2}\rightarrow S_{3}$ be two isometries.
+\begin{enumerate}[label=(\roman*)]
+    \item Show that $\phi^{-1}:S_{2}\rightarrow S_{1}$ is an isometry.
+    \item Show that $\psi\circ\phi:S_{1}\rightarrow S_{3}$ is an isometry.
+    \item Show that $\phi$ is area-preserving, that is, if $x: U\rightarrow S_{1}$ is a parametrization, then the area of $V=x(U)$ is the same as that of $\overline{V}=\phi\circ x(U)$.
+\end{enumerate}
+\newpage
+
+\subsection*{Question 4}
+Let $S_{1}$ be the $xy$-plane. Let $S_{-}=\{(x,y)\in S_{1}|x<0\}$ and $S_{+}=\{(x,y)\in S_{1}|x>0\}$.
+\begin{enumerate}[label=(\roman*)]
+    \item Give an example of a surface $S_{2}$ and a bijection $\phi:S_{1}\rightarrow S_{2}$ but not a diffeomorphism such that $\phi:S_{-}\rightarrow\phi(S_{-})$ and $\phi:S_{+}\rightarrow\phi(S_{+})$ are diffeomorphisms.
+    \item Give an example of a surface $S_{3}$ and a diffeomorphism $\psi:S_{1}\rightarrow S_{3}$ such that $\psi:S_{-}\rightarrow\psi(S_{-})$ is an isometry but $\psi:S_{+}\rightarrow\psi(S_{+})$ is not.
+\end{enumerate}
+Justify your answers.
+\newpage
+
+\subsection*{Question 5}
+Let $S$ be a regular surface. Suppose $S$ contains the origin $(0,0,0)$ and suppose the tangent plane $V$ at the origin is the $xy$-plane. We set $N=(0,0,1)$. Let $\alpha(s)=(x(s),y(s),z(s))$ for $s\in\R$ be a smooth curve parametrized by arc length such that $\alpha(0)=(0,0,0)$ and $\alpha^{\prime}(0)=(1,0,0)$. We will assume that $y^{\prime\prime}(0)>0$.
+
+Let $\beta(s)=(x(s),y(s),0)$ be the projection of $\alpha(s)$ onto $V$. Let $k$ and $k_{n}$ denote the curvature and normal curvature of $\alpha(s)$ at $s=0$ respectively. Let $k_{g}$ denote the curvature of $\beta(s)$ at $s=0$.
+\begin{enumerate}[label=(\roman*)]
+    \item Show that $\alpha^{\prime\prime}(0)=(0,k_{g},k_{n})$.
+    \item Show that $k^{2}=k_{n}^{2}+k_{g}^{2}$.
+\end{enumerate}
+\newpage
+
+% ==========================================
+% TUTORIAL 10
+% ==========================================
+\section*{Tutorial 10}
+\addcontentsline{toc}{section}{Tutorial 10}
+
+\subsection*{Question 1}
+Let $S$ be a sphere and let $w(x,y,z)=(-y,x,0)$ be a vector field on it. Use the stereographic projection
+\[ x(u,v)=\pi^{-1}(u,v)=R^{-1}(4u,4v,u^{2}+v^{2}-4) \]
+for $(u,v)\in\R^{2}$ and $R=u^{2}+v^{2}+4$.
+\begin{enumerate}[label=(\roman*)]
+    \item Show that it is a smooth vector field on the sphere less the north pole.
+    \item Compute $w_{u}=\frac{\partial w}{\partial u}$ and $w_{v}=\frac{\partial w}{\partial v}$.
+    \item Compute $\frac{Dw}{du}$ and $\frac{Dw}{dv}$.
+\end{enumerate}
+\newpage
+
+\subsection*{Question 2}
+Let $S$ be a regular surface and let $w$ be a (not necessarily smooth) vector field on it. Let $x: U\rightarrow S$ and $y:U^{\prime}\rightarrow S$ be coordinate functions. We suppose that $x(U)=y(U^{\prime})$. Let $p=x(u,v)=y(\xi,\eta)$ and we write
+\[ w(p)=a(u,v)x_{u}+b(u,v)x_{v}=c(\xi,\eta)y_{\xi}+d(\xi,\eta)y_{\eta}. \]
+Let $\Phi:=y^{-1}\circ x:U\rightarrow U^{\prime}$.
+\begin{enumerate}[label=(\roman*)]
+    \item Show that $\begin{pmatrix}c(\xi,\eta)\\ d(\xi,\eta)\end{pmatrix}=d\Phi\begin{pmatrix}a(u,v)\\ b(u,v)\end{pmatrix}$.
+    \item Suppose $a(u,v)$ and $b(u,v)$ in (i) are smooth functions in the sense of calculus at $(u_{0},v_{0})$. Prove that $c(\xi,\eta)$ and $d(\xi,\eta)$ are smooth functions in the sense of calculus at $(\xi_{0},\eta_{0})$.
+\end{enumerate}
+\newpage
+
+\subsection*{Question 3}
+Let $v(t)$ and $w(t)$ be vector fields along a curve $\alpha(t)$ on $S$. Let $\frac{Dv}{dt}$ denote the orthogonal projection of $v^{\prime}(t)$ to the tangent plane. Prove that
+\begin{enumerate}[label=(\roman*)]
+    \item $\inner{v^{\prime}(t),w(t)}=\inner{\frac{Dv}{dt},w(t)}$.
+    \item $\frac{d}{dt}\inner{v(t),w(t)}=\inner{\frac{Dv}{dt},w(t)}+\inner{v(t),\frac{Dw}{dt}}$.
+\end{enumerate}
+\newpage
+
+\subsection*{Question 4}
+Let $\alpha(t)$ be a smooth curve on a regular surface $S$. A vector field $v(t)$ along $\alpha(t)$ is called parallel if $\frac{Dv}{dt}=(0,0,0)$.
+\begin{enumerate}[label=(\roman*)]
+    \item Suppose $\beta(s)$ is a geodesic parametrized by arc length. Show that $\beta^{\prime}(s)$ is a parallel vector field along $\beta(s)$.
+    \item Let $v(t)$ and $w(t)$ be parallel vector fields along a smooth curve $\alpha(t)$. Show that $\inner{v(t),w(t)}$ is a constant independent of $t$.
+    \item Let $v(t)$ be a parallel vector field as in (ii). Show that $|v(t)|$ is a constant independent of $t$.
+    \item Suppose $v(t):=\alpha^{\prime}(t)$ is a parallel vector field $\alpha(t)$ as in (iii). In addition we assume that $\alpha(t)$ is non-singular. Show that $|\alpha^{\prime}(t)|=c$ is a nonzero constant independent of $t$ and $\gamma(s):=\alpha(s/c)$ is a geodesic on the surface $S$.
+\end{enumerate}
+\newpage
+
+\subsection*{Question 5}
+Let $S$ be a regular surface and let $x:U\rightarrow S$ be a coordinate function. Let $N(u,v)=\frac{x_{u}\wedge x_{v}}{|x_{u}\wedge x_{v}|}$ for $(u,v)\in U$. Prove that:
+\begin{enumerate}[label=(\roman*)]
+    \item $\|x_{u}\wedge x_{v}\|^{2}=EG-F^{2}$.
+    \item $\frac{\partial N}{\partial u}\wedge\frac{\partial N}{\partial v}=K\sqrt{EG-F^{2}}N$, where $K$ is the Gaussian curvature at $x(u,v)\in S$.
+\end{enumerate}
+\newpage
+
+\subsection*{Question 6}
+Let $U=\{(u,v)\in\R^{2}:0<u<2\pi,0<v<2\pi\}$. Let
+\[ x(u,v)=((a+r\cos u)\cos v,(a+r\cos u)\sin v,r\sin u) \]
+for $(u,v)\in U$ be a parametrization of the torus $S$.
+\begin{enumerate}[label=(\roman*)]
+    \item Show that $\sqrt{EG-F^{2}}=r(a+r\cos u)$ and $K=\frac{\cos u}{r(a+r\cos u)}$.
+    \item Verify the Gauss-Bonnet theorem:
+    \[ \iint_{S}KdS=2\pi(2-2g)=0 \]
+    where the genus $g=1$.
+\end{enumerate}
+\newpage
+
+% ==========================================
+% TUTORIAL 11
+% ==========================================
+\section*{Tutorial 11}
+\addcontentsline{toc}{section}{Tutorial 11}
+
+\subsection*{Question 1}
+Let $\alpha(t)=(e^{t},-\cosh t,t)$ be a curve.
+\begin{enumerate}[label=(\roman*)]
+    \item Compute the velocity $\alpha^{\prime}(t)$ and speed $|\alpha^{\prime}(t)|$.
+    \item Compute the acceleration $\alpha^{\prime\prime}(t)$, $\alpha^{\prime\prime\prime}(t)$ and $\alpha^{\prime}(t)\wedge\alpha^{\prime\prime}(t)$.
+    \item Compute the curvature $\kappa(t)$ and torsion $\tau(t)$.
+\end{enumerate}
+\newpage
+
+\subsection*{Question 2}
+\begin{enumerate}[label=(\roman*)]
+    \item Let $\alpha(s)$ for $s\in\R$ be a smooth curve in $\R^{3}$ parametrized by arc length. Show that $\alpha^{\prime}(s)$ is perpendicular to $\alpha^{\prime\prime}(s)$ for all $s\in\R$.
+    \item Let $h:\R^{3}\rightarrow\R$ be a smooth function. Suppose $h(x,y,z)=0$ defines a regular surface $S$. Let $x:U\rightarrow S$ be a parametrization. Let $p=x(u_{0},v_{0})$ be a point in $S$. Show that at $p$, the gradient $\text{grad } h$ is perpendicular to the tangent space.
+\end{enumerate}
+\newpage
+
+\subsection*{Question 3}
+Let $r(\theta)$ be a smooth function for $0<\theta<2\pi$. Let $\alpha(\theta)$ for $0<\theta<2\pi$ be the smooth curve on the two dimensional plane $\R^{2}$ whose polar coordinate is $(r(\theta),\theta)$. Show that the arc length of $\alpha(\theta)$ for $a\le\theta\le b$ is given by
+\[ \int_{a}^{b}\sqrt{r(\theta)^{2}+\left(\frac{dr(\theta)}{d\theta}\right)^{2}}d\theta. \]
+\newpage
+
+\subsection*{Question 4}
+Show that
+\[ S=\{(x,y,z)\in\R^{3}:x^{9}+y^{3}+(z-2)^{2}+xy^{4}+y(z-2)^{6}=4\} \]
+is a regular surface.
+\newpage
+
+\subsection*{Question 5}
+Let $S_{1}$ and $S_{2}$ be two regular surfaces. Let $\phi:S_{1}\rightarrow S_{2}$ be a diffeomorphism. Let $x:U\rightarrow S_{1}$ be a coordinate function of $S_{1}$. Let $y:=\phi\circ x:U\rightarrow S_{2}$.
+\begin{enumerate}[label=(\roman*)]
+    \item Show that there is an open subset $V_{2}$ of $\R^{3}$ such that $y:U\rightarrow V_{2}\cap S_{2}$ is a bijection and $y^{-1}:V_{2}\cap S_{2}\rightarrow U$ is continuous.
+    \item Show that $y:U\rightarrow S_{2}$ is a coordinate function of $S_{2}$.
+\end{enumerate}
+\newpage
+
+\subsection*{Question 6}
+Let $S$ be a regular surface. Let $p\in S$ and let $T_{p}(S)$ be the tangent plane of $S$ at $p$. Let $e_{1}, e_2$ denote two unit tangent vectors in the principal directions of $S$ at $p$. Let $\kappa_{1}$ and $\kappa_{2}$ denote the corresponding principal curvatures at $p$. Let $\alpha(s)$ for $s\in\R$ be a smooth curve on $S$ parametrized by arc length such that $\alpha(0)=p$. Let $\kappa_{n}$ denote the normal curvature of $\alpha(s)$ at $p$.
+\begin{enumerate}[label=(\roman*)]
+    \item Suppose $S$ is the unit sphere, compute the normal curvature $\kappa_{n}$.
+    \item From now on, $S$ is a general regular surface. Let $v=\alpha^{\prime}(0)\in T_{p}(S)$ and let $\phi$ denote the angle $v$ makes with $e_1$. Show that normal curvature of $\alpha(s)$ at $p$ is
+    \[ \kappa_{n}=\kappa_{1}\cos^{2}\phi+\kappa_{2}\sin^{2}\phi. \]
+    \item We denote the normal curvature $\kappa_{n}$ in (ii) as $\kappa_{n}(\phi)$. Show that the mean curvature of $S$ at $p$ is
+    \[ H=\frac{1}{2\pi}\int_{0}^{2\pi}\kappa_{n}(\phi)d\phi. \]
+\end{enumerate}
+\newpage
+
+\subsection*{Question 7}
+Let $S_{1}$ and $S_{2}$ be spheres of radii 3 and 1 respectively centered at the origin. Is there a local isometry $\phi:S_{1}\rightarrow S_{2}$? If exists, define a map $\phi$. If $\phi$ does not exist, give a reason.
+\newpage
+
+\subsection*{Question 8}
+Let $S$ be a regular surface and let $w$ be a smooth vector field on $S$. Let $p\in S$. For a smooth function $h:S\rightarrow\R$, we define
+\[ w_{p}(h)=\frac{d}{dt}h(\alpha(t))|_{t=0} \]
+where $\alpha(t)$ is a smooth curve on $S$ such that $\alpha(0)=p$ and $\alpha^{\prime}(0)=w(p)$.
+\begin{enumerate}[label=(\roman*)]
+    \item Show that $w_{p}(h)$ depends on the vector $w(p)$ but is independent of the choice of the curve $\alpha(t)$.
+    \item Let $h:S\rightarrow\R$ and $g:S\rightarrow\R$ be smooth functions. Let $hg:S\rightarrow\R$ denote the product of these two functions. Show that
+    \[ w_{p}(hg)=g(p)w_{p}(h)+h(p)w_{p}(g). \]
+    \item Let $h:S\rightarrow\R$ be a smooth function. Show that the function $\phi:S\rightarrow\R$ given by $\phi(p)=w_{p}(h)$ is a smooth function on $S$.
+\end{enumerate}
+\newpage
+
+\end{document}

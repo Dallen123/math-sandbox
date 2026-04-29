@@ -1,0 +1,280 @@
+\pagebreak
+\section{Forwards \& Futures}
+
+% ==========================================
+\subsection{Financial Derivatives}
+% ==========================================
+
+\begin{definition}[Financial Derivative]
+  A \textbf{financial derivative} is a financial instrument that has a value depending on (or is \emph{derived from}) the values of other more basic underlying assets (such as bonds, stocks, or others). Forward contracts, futures, options, and swaps are some examples of derivatives.
+\end{definition}
+
+\subsubsection*{Underlying Assets}
+
+There are five main groups of underlying assets: stocks, indices (e.g.\ the S\&P 500), commodities (e.g.\ coffee, sugar, gold, crude oil), interest rates, and currencies.
+
+% ==========================================
+\subsection{Forward Contracts}
+% ==========================================
+
+\begin{definition}[Forward Contract]
+  A \textbf{forward contract} is an \emph{obligation} to buy or sell an (underlying) asset at a specific price and at a specific time in the future.
+  \begin{itemize}
+    \item $t$ is the time where the contract was agreed.
+    \item $T$ is the \textbf{expiration/maturity/delivery} date of the forward contract. This is when the underlying asset is to be delivered.
+    \item The buyer is said to be \textbf{long}; the seller is said to be \textbf{short}. Both parties are obligated to carry out the transaction.
+    \item The \textbf{forward price} $F(t,T)$ is the price that applies at delivery.
+    \item The open market for immediate delivery is the \textbf{spot market}. The spot price at time $t$ is denoted $S(t)$ or $S_t$.
+  \end{itemize}
+\end{definition}
+
+\begin{sidenote}
+  Unless otherwise stated, we always assume no money changes hand up till the maturity date $T$, i.e.\ it costs nothing to enter a forward contract. In this case, the delivery price $F(t,T)$ is known as the \textbf{forward price} of the contract.
+\end{sidenote}
+
+\subsubsection{Forward Payoffs and Profits}
+
+\begin{definition}[Payoff and Profit]
+  The \textbf{payoff} to a position at time $T$ is the value of the position at maturity $T$. The \textbf{profit} is the payoff minus the value of the investment cost at time $T$.
+
+  Since it costs nothing to enter a forward contract, payoff and profit coincide:
+  \begin{itemize}
+    \item \textbf{Long forward:} $S_T - F(t,T)$
+    \item \textbf{Short forward:} $F(t,T) - S_T$
+  \end{itemize}
+\end{definition}
+
+\begin{example}[Forward Payoff]
+  You enter a long forward to purchase 5{,}000 bushels of wheat at $F(0,\tfrac{3}{12}) = \$8$ per bushel in 3 months ($T = 0.25$).
+  \begin{itemize}
+    \item If $S_T = \$9$: payoff $= 5000 \times (9-8) = \$5{,}000$ (gain).
+    \item If $S_T = \$7$: payoff $= 5000 \times (7-8) = -\$5{,}000$ (loss).
+  \end{itemize}
+\end{example}
+
+% ==========================================
+\subsection{Forward Price and No-Arbitrage}
+% ==========================================
+
+\begin{definition}[Arbitrage]
+  \textbf{Arbitrage} is the practice of buying something in one place and selling it in another to make a riskless profit from the price difference.
+\end{definition}
+
+\begin{definition}[No-Arbitrage Principle]
+  There cannot be two portfolio strategies with the same initial cost such that one always has a strictly better final payoff than the other.
+
+  \medskip \noindent This implies the \textbf{Law of One Price}: if two portfolios $U$ and $V$ have the same payoff $U_T = V_T$, then they must have the same price $U_0 = V_0$.
+\end{definition}
+
+\begin{theorem}[Forward Price]
+  For a non-dividend-paying asset with spot price $S_t$ and continuously compounded risk-free rate $r$, the no-arbitrage forward price is
+  \[
+    F(t,T) = S_t \, e^{r(T-t)}.
+  \]
+  In particular, $F(0,T) = S_0 e^{rT}$.
+\end{theorem}
+
+\begin{example}[Arbitrage]
+  A forward contract to purchase a stock in 3 months has spot price $S_0 = \$40$, $r = 5\%$ p.a.\ continuously compounded. If $F(0, \tfrac{3}{12}) = \$43$:
+  \begin{enumerate}
+    \item \emph{At $t=0$}: Borrow \$40, buy 1 share, short 1 forward.
+    \item \emph{At $T=0.25$}: Receive \$43 from forward; repay $40 e^{0.05 \times 0.25} \approx \$40.50$.
+    \item Riskless profit $= 43 - 40.50 = \$2.50$.
+  \end{enumerate}
+  Any forward price $F(0,T) \neq 40\,e^{0.05 \times 0.25}$ admits an arbitrage.
+\end{example}
+
+% ==========================================
+\subsection{Futures Contracts}
+% ==========================================
+
+\subsubsection*{Forwards vs Futures}
+
+Forward contracts are private, customised agreements (OTC), making them illiquid and subject to \textbf{counterparty risk}. Futures contracts address these issues by being standardised and traded on organised exchanges.
+
+\begin{definition}[Futures Contract]
+  A \textbf{futures contract} is a standardised legal contract to buy or sell something at a predetermined price for delivery at a specified future time, between parties not yet known to each other.
+\end{definition}
+
+\begin{remark}
+  Key differences between forwards and futures:
+  \begin{center}
+  \begin{tabular}{lll}
+    \hline
+    & \textbf{Forward} & \textbf{Futures} \\
+    \hline
+    Venue & OTC (private) & Exchange-traded \\
+    Terms & Customised & Standardised \\
+    Liquidity & Low & High \\
+    Counterparty risk & High & Low (clearinghouse) \\
+    Settlement & At maturity & Marked to market daily \\
+    Margin & Typically none & Initial \& maintenance margin \\
+    \hline
+  \end{tabular}
+  \end{center}
+\end{remark}
+
+\subsubsection{Margin Accounts}
+
+\begin{definition}[Margin Account]
+  Participants must hold a \textbf{margin account}. The broker requires:
+  \begin{itemize}
+    \item \textbf{Initial margin}: a fraction (e.g.\ 50\%) of the total contract value deposited upfront.
+    \item \textbf{Maintenance margin}: a lower threshold (e.g.\ 25\%); if the account falls below this, a \textbf{margin call} is issued demanding additional funds, or the position is closed out.
+  \end{itemize}
+\end{definition}
+
+\subsubsection{Daily Settlement (Marking to Market)}
+
+Futures prices are revised daily. The daily cash flows for a \textbf{long} position are:
+
+\begin{center}
+\begin{tabular}{cccc}
+  \hline
+  Day & Futures Price & Spot Price & Cash Flow \\
+  \hline
+  $0$ & $F(0)$ & $S(0)$ & --- \\
+  $1$ & $F(1)$ & $S(1)$ & $F(1)-F(0)$ \\
+  $2$ & $F(2)$ & $S(2)$ & $F(2)-F(1)$ \\
+  $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ \\
+  $T$ & $F(T)$ & $S(T)$ & $F(T)-F(T-1)$ \\
+  \hline
+\end{tabular}
+\end{center}
+
+\begin{remark}
+  At maturity, $F_T = S_T$ (otherwise an arbitrage opportunity exists). The total cash flow telescopes to $S(T) - F(0)$, the same as the forward profit when the interest rate is zero.
+\end{remark}
+
+\subsubsection{Accrued Profit}
+
+With continuously compounded rate $r$ and $R = e^{r/365}$, the \textbf{total accrued profit} for a long futures position is
+\[
+  \sum_{i=1}^T \bigl[F(i) - F(i-1)\bigr] R^{T-i}.
+\]
+Unlike forwards, the total profit depends on the \emph{sequence} of price moves (early gains earn more interest than late gains).
+
+% ==========================================
+\subsection{Forward-Futures Equivalence}
+% ==========================================
+
+\begin{theorem}[Forward-Futures Equivalence]
+  Under the conditions of no arbitrage, no transaction costs, deterministic interest rates, and no correlation between interest rates and the underlying asset's price, the forward price and futures price of identical assets with the same maturity are equal.
+\end{theorem}
+
+\begin{sidenote}
+  In practice, they may differ due to liquidity differences, reinvestment of daily cash flows, and margin requirements. However, they are nearly identical for short-term contracts with low interest rate volatility.
+\end{sidenote}
+
+\begin{sidenote}
+  For this course, we assume forwards and futures have the same delivery price:
+  \[
+    F_{\text{forward}}(t,T) = F_{\text{future}}(t,T) = F(t,T) = S_t\,e^{r(T-t)}.
+  \]
+\end{sidenote}
+
+% ==========================================
+\subsection{Hedging with Forwards \& Futures}
+% ==========================================
+
+\subsubsection{Hedging with a Forward Contract}
+
+\begin{definition}[Hedging]
+  \textbf{Hedging} using forward contracts means entering into an agreement to buy or sell the required commodity at an agreed price, thereby eliminating the risks of price fluctuations in the spot market.
+\end{definition}
+
+\begin{example}[Gold Mining Firm]
+  A firm plans to sell 100{,}000 oz of gold in one year. Forward price $F(0,1) = \$420$/oz, mining cost $= \$380$/oz, $r=0$.
+
+  \begin{itemize}
+    \item \textbf{Unhedged}: Profit per oz $= S_1 - 380$ (random, depends on $S_1$).
+    \item \textbf{Hedged} (short forward): Revenue $= F(0,1) = \$420$/oz regardless of $S_1$.
+    Profit per oz $= 420 - 380 = \$40$ (riskless).
+  \end{itemize}
+
+  The hedge eliminates downside risk but also caps upside.
+\end{example}
+
+\subsubsection{Perfect Hedge with Futures}
+
+\begin{definition}[Perfect Hedge]
+  A \textbf{perfect hedge} completely eliminates the risk associated with a future commitment to deliver or receive an asset, by taking an opposite position in the futures market.
+\end{definition}
+
+\begin{remark}
+  A perfect hedge requires: (1) delivery dates match, (2) commodities match exactly, (3) amount is an integer multiple of contract size, (4) sufficient market liquidity. If any condition fails, a perfect hedge is impossible.
+\end{remark}
+
+\subsubsection{Minimum-Variance Hedge}
+
+When a perfect hedge is unavailable, one can use correlated futures of another asset to reduce (but not eliminate) risk.
+
+\begin{definition}[Setup]
+  Let:
+  \begin{itemize}
+    \item $W$ = number of units of Asset A to be purchased at time $T$
+    \item $S_T$ = spot price of Asset A at $T$ (random)
+    \item $F_0, F_T$ = futures price of Asset B at $t=0$ and $t=T$ (random)
+    \item $h$ = number of units of Asset B futures shorted (hedge position)
+  \end{itemize}
+  Assuming $r=0$, the total cash flow at $T$ is:
+  \[
+    y = -W S_T + (F_T - F_0)\,h.
+  \]
+\end{definition}
+
+\begin{theorem}[Minimum-Variance Hedge]\label{thm: min-var-hedge}
+  The hedge position $h$ that minimises $\operatorname{Var}(y)$ is
+  \[
+    h = W \cdot \frac{\operatorname{Cov}(S_T, F_T)}{\operatorname{Var}(F_T)} = W \cdot \frac{\rho_{S,F} \,\sigma_S}{\sigma_F},
+  \]
+  where $\beta = \dfrac{\operatorname{Cov}(S_T, F_T)}{\operatorname{Var}(F_T)}$ is the \textbf{optimal hedge ratio}. The resulting minimum variance and risk are
+  \[
+    \operatorname{Var}(y) = W^2 \operatorname{Var}(S_T)\bigl(1 - \rho_{F,S}^2\bigr), \qquad \sigma_y = \sqrt{1-\rho_{F,S}^2} \cdot W\sigma_S.
+  \]
+  The factor $\sqrt{1 - \rho_{F,S}^2}$ measures the \emph{effectiveness} of the hedge ($0$ = perfect hedge).
+\end{theorem}
+
+\begin{proof}
+  The variance of the cash flow is
+  \[
+    \operatorname{Var}(y) = W^2\operatorname{Var}(S_T) - 2W\operatorname{Cov}(S_T,F_T)\,h + \operatorname{Var}(F_T)\,h^2.
+  \]
+  Since $\operatorname{Var}(F_T) > 0$, differentiate w.r.t.\ $h$ and set to zero:
+  \[
+    -2W\operatorname{Cov}(S_T,F_T) + 2\operatorname{Var}(F_T)\,h = 0 \implies h = W\frac{\operatorname{Cov}(S_T,F_T)}{\operatorname{Var}(F_T)}.
+  \]
+  Substituting back gives the formula for $\operatorname{Var}(y)$.
+\end{proof}
+
+\begin{remark}
+  \begin{itemize}
+    \item If selling $W$ units instead of buying, the hedge is $h = -\beta W$.
+    \item When $\rho_{F,S} = \pm 1$, the hedge is perfect: $\sigma_y = 0$.
+    \item When $F_T = S_T$ (identical assets), $h = W$, $\operatorname{Var}(y) = 0$, and $y = F_0 W$ (riskless).
+  \end{itemize}
+\end{remark}
+
+\begin{definition}[Basis]
+  The \textbf{basis} measures the lack of hedging perfection:
+  \[
+    \text{basis} = \text{spot price of asset to be hedged} - \text{futures price of contract used}.
+  \]
+  For a perfect hedge (identical asset), the basis is zero at delivery.
+\end{definition}
+
+\subsubsection*{Hedging Strategies Summary}
+
+For $\rho > 0$:
+\begin{center}
+\begin{tabular}{lll}
+  \hline
+  Action & Futures Position & Total Payoff \\
+  \hline
+  Buy $W$ units & Long $h$ futures & $-WS_T + h(F_T - F_0)$ \\
+  Sell $W$ units & Short $h$ futures & $WS_T - h(F_T - F_0)$ \\
+  \hline
+\end{tabular}
+\end{center}
+
+For $\rho < 0$, reverse the futures positions.

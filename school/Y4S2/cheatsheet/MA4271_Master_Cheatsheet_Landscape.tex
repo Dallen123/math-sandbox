@@ -1,0 +1,373 @@
+\documentclass[9pt,a4paper]{extarticle}
+
+\usepackage[a4paper,landscape,top=0.4in,bottom=0.4in,left=0.5in,right=0.5in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage[T1]{fontenc}
+\usepackage{helvet}
+\usepackage{titlesec}
+\usepackage{parskip}
+
+% Tight spacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1pt}
+\setlength{\columnsep}{10pt}
+\setlength{\columnseprule}{0.4pt}
+\linespread{0.95}
+\setlist[itemize]{leftmargin=*,nosep,topsep=0pt,partopsep=0pt,parsep=0pt,itemsep=0.5pt,label=$\cdot$}
+\setlist[enumerate]{leftmargin=*,nosep,topsep=0pt,partopsep=0pt,parsep=0pt,itemsep=0.5pt}
+
+% Table tightening
+\renewcommand{\arraystretch}{0.95}
+\setlength{\tabcolsep}{4pt}
+
+% Compact section/subsection
+\titleformat{\section}{\sffamily\bfseries\normalsize}{}{0pt}{}
+\titleformat{\subsection}{\sffamily\bfseries\small}{}{0pt}{}
+\titlespacing*{\section}{0pt}{3pt}{1pt}
+\titlespacing*{\subsection}{0pt}{2pt}{0pt}
+
+% Custom box for key formulas/theorems
+\newcommand{\keybox}[1]{\par\noindent\fbox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{#1}}\par}
+\newcommand{\thm}[1]{\textbf{#1.}}
+
+% Math shortcuts
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\T}{\mathrm{T}}
+\newcommand{\N}{\mathbf{N}}
+\newcommand{\bs}{\mathbf{s}}
+\newcommand{\bt}{\mathbf{t}}
+\newcommand{\bn}{\mathbf{n}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bp}{\mathbf{p}}
+\newcommand{\bq}{\mathbf{q}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bw}{\mathbf{w}}
+\newcommand{\xu}{\bx_u}
+\newcommand{\xv}{\bx_v}
+\newcommand{\xuu}{\bx_{uu}}
+\newcommand{\xuv}{\bx_{uv}}
+\newcommand{\xvv}{\bx_{vv}}
+\newcommand{\inner}[2]{\langle #1, #2 \rangle}
+\newcommand{\Dt}{\tfrac{D}{dt}}
+\newcommand{\Ds}{\tfrac{D}{ds}}
+\newcommand{\half}{\tfrac{1}{2}}
+\newcommand{\Gam}{\Gamma}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+\sffamily\bfseries\large MA4271 Differential Geometry \textemdash{} Master Cheatsheet (Ch 1\textendash 5)
+\end{center}
+\vspace{-4pt}
+\hrule height 0.6pt
+\vspace{2pt}
+
+\begin{multicols*}{3}
+
+\section{Ch 1 \textemdash{} Curves}
+
+\subsection{Setup and arc length}
+Curve $\alpha:I\to\R^3$ \emph{regular} (non-singular) iff $\alpha'(t)\neq\mathbf{0}$. Arc length: $s(t)=\int_{t_0}^t |\alpha'(u)|\,du$, so $s'(t)=|\alpha'(t)|>0$.\\
+\thm{Reparametrization} every regular curve admits arc-length param.\ $\alpha(s)$ with $|\alpha'(s)|=1$ (uses Inverse Function Thm: $s'>0\Rightarrow t(s)$ smooth).
+
+\subsection{Frenet trihedron (arc length)}
+Assume $\alpha''(s)\ne\mathbf{0}$. Define
+\[
+\bt = \alpha'(s),\quad \bn=\frac{\alpha''(s)}{|\alpha''(s)|},\quad \bb=\bt\wedge\bn.
+\]
+$(\bt,\bn,\bb)$ is right-handed orthonormal. \emph{Osculating plane} = span$(\bt,\bn)$.\\
+\thm{Lemma} if $|\bv(t)|$ constant then $\bv\cdot\bv'=0$. Used everywhere.
+
+\subsection{Curvature \& torsion}
+\[
+k(s)=|\alpha''(s)|\ge 0,\qquad \bb'(s)=\tau(s)\bn(s).
+\]
+Radius of curvature $1/k$ = radius of \emph{osculating circle} (best-fitting circle at $\bp$).
+
+\keybox{\thm{Frenet\textendash Serret}\quad
+$\begin{pmatrix}\bt\\ \bn\\ \bb\end{pmatrix}'\!=\!\begin{pmatrix}0&k&0\\-k&0&-\tau\\0&\tau&0\end{pmatrix}\!\!\begin{pmatrix}\bt\\ \bn\\ \bb\end{pmatrix}$
+\\[2pt]i.e.\ $\bt'=k\bn$, $\bn'=-k\bt-\tau\bb$, $\bb'=\tau\bn$. Skew-symmetric.}
+
+\subsection{General parametrization}
+\[
+\bt=\frac{\alpha'}{|\alpha'|},\ \bb=\frac{\alpha'\wedge\alpha''}{|\alpha'\wedge\alpha''|},\ \bn=\bb\wedge\bt
+\]
+\[
+k=\frac{|\alpha'\wedge\alpha''|}{|\alpha'|^3},\quad
+\tau=-\frac{(\alpha'\wedge\alpha'')\cdot\alpha'''}{|\alpha'\wedge\alpha''|^2}.
+\]
+
+\subsection{Fundamental Theorem of Curves}
+$(k,\tau)$ determine $\alpha(s)$ up to rigid motion. Existence via Picard\textendash Lindel\"of on Frenet ODE (initial frame); uniqueness via $f(s)=|\bt_1\!-\!\bt_2|^2+|\bn_1\!-\!\bn_2|^2+|\bb_1\!-\!\bb_2|^2$ has $f'\equiv 0$.
+
+\thm{Rigid motion invariance} if $\beta=R\alpha+\bp$ with $R\in\mathrm{SO}(3)$, then $k_\beta=k_\alpha,\tau_\beta=\tau_\alpha$.
+
+\subsection{Standard examples}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Curve & $k$ & $\tau$\\
+\midrule
+Line & 0 & undef\\
+Circle radius $r$ & $1/r$ & 0\\
+Helix $(a\cos t,a\sin t,bt)$ & $\frac{a}{a^2+b^2}$ & $\frac{b}{a^2+b^2}$\\
+Catenary helix $(\cosh t,\sinh t,t)$ & \multicolumn{2}{l}{$k=\tau=\frac{1}{2\cosh^2 t}$}\\
+\bottomrule
+\end{tabular}
+
+\section{Ch 2 \textemdash{} Regular Surfaces}
+
+\subsection{Definition (3 conditions)}
+$S\subset\R^3$ regular iff $\forall \bp\in S$, $\exists$ chart $\bx:U\subset\R^2\to V\cap S$:
+\textbf{C1}: $\bx$ smooth.\quad
+\textbf{C2}: $\bx$ homeomorphism.\quad
+\textbf{C3}: $d\bx_q$ has rank 2 $\forall q\in U$ (equiv.\ $d\bx_q$ injective; equiv.\ $\xu\wedge\xv\ne\mathbf{0}$).\\
+\thm{Regularity equivalents} (i) rank 2; (ii) cols of $d\bx$ lin.\ indep.; (iii) $\xu\wedge\xv\ne\mathbf{0}$; (iv) some $2\!\times\!2$ minor $\frac{\partial(F_i,F_j)}{\partial(u,v)}\ne 0$.
+
+\subsection{Three classes of examples}
+\begin{itemize}
+\item \emph{Graphs.} $z=f(x,y)$ smooth $\Rightarrow$ regular surface, chart $\bx(u,v)=(u,v,f(u,v))$.
+\item \emph{Level sets.} $f^{-1}(a)$ regular if $a$ is a \emph{regular value}, i.e.\ $\nabla f\ne\mathbf{0}$ on $f^{-1}(a)$. (Inverse Function Thm.)
+\item \emph{Surfaces of revolution.} $\bx(u,v)=(f(v)\cos u,f(v)\sin u,g(v))$, $f>0$. Then $d\bx=\!\bigl(\!\begin{smallmatrix}-f\sin u & f'\cos u\\ f\cos u & f'\sin u\\ 0 & g'\end{smallmatrix}\!\bigr)$, rank 2 iff $(f',g')\ne(0,0)$.
+\end{itemize}
+\thm{Cone with apex} $\{x^2+y^2=z^2\}$ \emph{not} regular ($\nabla f=\mathbf{0}$ at apex).
+
+\subsection{Tangent plane (two equiv.\ defs)}
+(i) $\T_\bp S=\mathrm{span}(\xu,\xv)$ (column space of $d\bx_q$).\\
+(ii) $\T_\bp S=\{\alpha'(0):\alpha\!:(-\epsilon,\epsilon)\!\to\! S,\,\alpha(0)\!=\!\bp\}$.\\
+\emph{Equivalence (Sec 2.8):} every $\bv=a\xu+b\xv$ realized by $\alpha(t)=\bx(u_0+at,v_0+bt)$.\\
+Unit normal $\N=\dfrac{\xu\wedge\xv}{|\xu\wedge\xv|}$.\\
+For level set $\{f=0\}$: $\nabla f\perp\T_\bp S$ (T11 Q2).
+
+\subsection{Smoothness; differential}
+$f\!:\!S\!\to\!\R$ smooth at $\bp$ iff $f\!\circ\!\bx$ smooth.
+$\phi\!:\!S_1\!\to\!S_2$ smooth iff $\by^{-1}\!\circ\phi\circ\bx$ smooth on overlap.\\
+\thm{Differential} $d\phi_\bp(\bv)=(\phi\circ\alpha)'(0)$, $\alpha(0)=\bp,\alpha'(0)=\bv$. Linear, well-defined.\\
+\thm{Change of params} transition $\Phi=\by^{-1}\!\circ\bx$ is smooth diffeo.
+
+\subsection{First fundamental form}
+$\mathrm{I}_\bp(\bv)=\inner{\bv}{\bv}$. With $\bv=a\xu+b\xv$:
+\[
+\boxed{\,E=\inner{\xu}{\xu},\ F=\inner{\xu}{\xv},\ G=\inner{\xv}{\xv}\,}
+\]
+\[
+|\bv|^2=Ea^2+2Fab+Gb^2,\ \cos\theta=\tfrac{\inner{\bv}{\bw}}{|\bv||\bw|}.
+\]
+\textbf{Always:} $EG-F^2=|\xu\wedge\xv|^2>0$ (Lagrange identity).\\
+Arc length: $s=\int\sqrt{E u'^2+2F u'v'+G v'^2}\,dt$.\\
+Area: $A=\iint\sqrt{EG-F^2}\,du\,dv$.\\
+Polar in plane (T11 Q3): $\bigl|\frac{d\alpha}{d\theta}\bigr|^2=r^2+r'^2$.
+
+
+\section{Ch 3 \textemdash{} Curvatures of Surfaces}
+
+\subsection{3.2 Linear algebra review}
+$(V,\inner{\,}{\,})$ 2-dim inner product space, $T\!:\!V\!\to\!V$ linear.\\
+\thm{Self-adjoint} $\inner{T\bv}{\bw}=\inner{\bv}{T\bw}\ \forall\bv,\bw$.
+
+\thm{Matrix rep} $T(\bx_1)=a\bx_1+c\bx_2,\ T(\bx_2)=b\bx_1+d\bx_2$ gives $[T]_{\mathcal{B},\mathcal{B}}=\bigl(\!\begin{smallmatrix}a & b\\ c & d\end{smallmatrix}\!\bigr)$. For $V=\R^2$ with std inner product, $\inner{A\bv}{\bw}=\inner{\bv}{A\bw}\iff A^\top=A$ ($b=c$).
+
+\thm{Lemma 2} If $\mathcal{B}$ is \emph{orthonormal}, then $T$ self-adjoint $\iff [T]_{\mathcal{B},\mathcal{B}}$ symmetric.
+
+\thm{Char.\ poly} $p(\lambda)=\lambda^2-(a+d)\lambda+(ad-bc)$, eigenvalues
+\[
+\lambda_{1,2}=\frac{a+d}{2}\pm\sqrt{\left(\tfrac{a-d}{2}\right)^2+b^2}.
+\]
+Symmetric $A$: discriminant $\ge 0$, so $\lambda_1,\lambda_2\in\R$.
+
+\keybox{\thm{Spectral Thm (Thm 3)}\ Real symmetric $2\!\times\!2$ matrix $A=PDP^{-1}$ with $D=\mathrm{diag}(\lambda_1,\lambda_2)$ real, $P$ orthogonal ($P^\top=P^{-1}$). Eigenvectors of distinct eigenvalues are perpendicular.}
+
+\thm{Cor 4} Self-adjoint $T$ admits orthonormal eigenbasis $\{\bv_1,\bv_2\}$.
+
+\subsection{3.3 The Gauss map}
+$N\!:\!S\!\to\!S^2$, $\bp\mapsto\N(\bp)$ unit normal. Requires \emph{orientability} (Mobius strip non-orientable, no Gauss map).\\
+In a chart: $N(\bx(u,v))=\dfrac{\xu\wedge\xv}{|\xu\wedge\xv|}$, smooth in $(u,v)$.\\
+\emph{Examples:} Plane $ax+by+cz=0$: $N$ const, image = single pt. Sphere: $N(\bp)=\bp$, identity. Cylinder: image = equator of $S^2$.
+
+\subsection{3.4 The map $dN$ \& second fundamental form}
+Identification $\T_{N(\bp)}S^2=\T_\bp S$ (both $\perp\N$); hence $dN_\bp:\T_\bp S\to\T_\bp S$.\\
+\thm{Self-adjointness of $dN$} differentiate $\inner{\N}{\xu}=0$ in $v$ and $\inner{\N}{\xv}=0$ in $u$: $\inner{N_v}{\xu}=\inner{N_u}{\xv}$, hence $\inner{dN(\xv)}{\xu}=\inner{dN(\xu)}{\xv}$.\\
+\textbf{2nd fundamental form} $\mathrm{II}_\bp(\bv)=-\inner{dN(\bv)}{\bv}$. Two equivalent forms (via differentiating $\inner{\N}{\xu}=0$ etc.):
+\[
+e=-\inner{N_u}{\xu}=\inner{\N}{\xuu},
+\]
+\[
+f=-\inner{N_u}{\xv}=-\inner{N_v}{\xu}=\inner{\N}{\xuv},
+\]
+\[
+g=-\inner{N_v}{\xv}=\inner{\N}{\xvv}.
+\]
+The $\inner{\N}{\bx_{ij}}$ form is usually easier.
+
+\subsection{3.5 Normal curvature; 3.6 principal/Gauss/mean}
+$\kappa_n(\bv)=\mathrm{II}_\bp(\bv)$ for unit $\bv$. \emph{Geometric:} for unit-speed $\alpha$ on $S$ with $\alpha'(0)=\bv$, $\kappa_n=\inner{\alpha''(0)}{\N}=k\cos\theta$ where $\theta=\angle(\bn,\N)$.\\
+\thm{Meusnier} all unit-speed curves through $\bp$ with same tangent share same $\kappa_n$.
+
+By Cor 4 applied to $-dN$: orthonormal eigenbasis $\{\mathbf{e}_1,\mathbf{e}_2\}$, eigenvalues $\kappa_1\!\ge\!\kappa_2$ are the \emph{principal curvatures} (= max/min of $\kappa_n$). Eigenvectors are \emph{principal directions}. In this basis, $-[dN]_{\mathcal{B}}=\mathrm{diag}(\kappa_1,\kappa_2)$.
+
+\keybox{\textbf{Gauss \& mean curvatures}\\
+$K=\det(dN_\bp)=\kappa_1\kappa_2=\dfrac{eg-f^2}{EG-F^2}$\\[2pt]
+$H=-\half\mathrm{tr}(dN_\bp)=\dfrac{\kappa_1+\kappa_2}{2}=\dfrac{eG-2fF+gE}{2(EG-F^2)}$.}
+
+\thm{Euler} $\bv=\cos\theta\,\mathbf{e}_1+\sin\theta\,\mathbf{e}_2 \Rightarrow \kappa_n(\theta)=\kappa_1\cos^2\theta+\kappa_2\sin^2\theta$. (Proof: in eigenbasis $\mathrm{II}(\bv)=\kappa_1 a^2+\kappa_2 b^2$ with $a=\cos\theta,b=\sin\theta$.)
+
+\subsection{3.7 The map $dN$ in local coords}
+Set $M(u,v):=N(\bx(u,v))=(N\circ\bx)(u,v)$. Decomposing $dN$ in basis $\{\xu,\xv\}$:
+\[
+[dN]_{\mathcal{B}}=-\bigl(\!\begin{smallmatrix}E & F\\ F & G\end{smallmatrix}\!\bigr)^{-1}\bigl(\!\begin{smallmatrix}e & f\\ f & g\end{smallmatrix}\!\bigr).
+\]
+Recover $K=\det(dN)$, $H=-\half\mathrm{tr}(dN)$. \emph{Note:} $[dN]_{\mathcal{B}}$ \emph{not} symmetric in general (only when basis orthonormal).
+
+\subsection{3.8 worked example: $z=y^2-x^2$}
+At origin: $E=G=1, F=0, e=-2, f=0, g=2 \Rightarrow K=-4<0$ (hyperbolic), $H=0$, $\kappa_1=-2,\kappa_2=2$, principal directions $\xu,\xv$.
+
+\subsection{Sign of $K$ \textemdash{} local shape}
+\textbf{Elliptic} $K\!>\!0$ (sphere-ish), \textbf{parabolic} $K\!=\!0$ (cylinder-ish), \textbf{hyperbolic} $K\!<\!0$ (saddle-ish).
+
+\subsection{Special points/curves}
+\begin{itemize}
+\item \emph{Umbilic:} $\kappa_1=\kappa_2$ (so $dN=\lambda\mathrm{Id}$). Connected all-umbilic $\Rightarrow$ plane or sphere.
+\item \emph{Line of curvature:} $\alpha'$ always principal direction. \thm{Rodrigues} $N'(s)=-\kappa_i\alpha'(s)$.
+\item \emph{Asymptotic curve:} $\mathrm{II}(\alpha')=0$ (exists only at $K\!\le\!0$).
+\item \emph{Minimal surface:} $H\!\equiv\!0\!\iff\!\kappa_1\!=\!-\kappa_2$. Examples: plane, catenoid, helicoid.
+\end{itemize}
+
+\subsection{Standard examples}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Surface & $K$ & $H$ & note\\
+\midrule
+Plane & 0 & 0 & flat\\
+Cylinder $r$ & 0 & $1/(2r)$ & developable\\
+Sphere $R$ & $1/R^2$ & $1/R$ & all umbilic\\
+Catenoid & $-1/\cosh^4 v$ & 0 & minimal\\
+Helicoid & same as cat. & 0 & minimal\\
+Pseudosphere & $-1$ & \textemdash & const $K$\\
+\bottomrule
+\end{tabular}
+
+\section{Ch 4 \textemdash{} Isometries \& Theorema Egregium}
+
+\subsection{Isometry, local isometry}
+\thm{Isometry} diffeo $\phi:S_1\to S_2$ with $\inner{d\phi(\bv)}{d\phi(\bw)}=\inner{\bv}{\bw}\ \forall\bv,\bw$. Equiv.\ $|d\phi(\bv)|=|\bv|$ (lengths preserved); equiv.\ $\mathrm{I}_\bp(\bv)=\mathrm{I}_{\phi(\bp)}(d\phi(\bv))$.\\
+\thm{Local isometry at $\bp$} isometry on some open $V_1\!\ni\!\bp$. \emph{Local isometry} = at every point.\\
+\thm{Warning} local isom.\ need NOT be bijection (e.g.\ plane $\to$ cylinder wraps).\\
+\emph{Preserved by isometries:} arc length, angles, area, $K$, geodesics, $\kappa_g$, $\Gam^k_{ij}$, $\mathrm{I}$.
+
+\keybox{\thm{First fund.\ form criterion (Prop 1)}\ Charts $\bx\!:\!U\!\to\!S_1$, $\by\!:\!U\!\to\!S_2$ on the \emph{same} $U$. If $E_1\!=\!E_2,\,F_1\!=\!F_2,\,G_1\!=\!G_2$ as functions on $U$, then $\Phi=\by\circ\bx^{-1}\!:\!\bx(U)\!\to\!\by(U)$ is an isometry.}
+
+\subsection{Conformal maps}
+$\phi$ \emph{conformal} iff $\inner{d\phi\bv}{d\phi\bw}=\lambda^2\inner{\bv}{\bw}$ (preserves \emph{angles}, scales lengths by $\lambda$). Equiv.\ $E_1=\lambda^2 E_2, F_1=\lambda^2 F_2, G_1=\lambda^2 G_2$. Isometry $\Leftrightarrow$ conformal with $\lambda\equiv 1$. Stereographic proj.\ $S^2\setminus\{N\}\to\R^2$ is conformal but not isometry.
+
+\subsection{Christoffel symbols}
+Decompose $\xuu,\xuv,\xvv$ in basis $\{\xu,\xv,\N\}$:
+\[
+\xuu=\Gam^1_{11}\xu+\Gam^2_{11}\xv+e\N,\ \text{etc.}
+\]
+Tangential coefficients $\Gam^k_{ij}$ (symmetric in lower indices: $\Gam^k_{ij}=\Gam^k_{ji}$).\\
+\textbf{Closed form (intrinsic!):}
+\[
+\Gam^k_{ij}=\half g^{k\ell}\bigl(\partial_i g_{j\ell}+\partial_j g_{i\ell}-\partial_\ell g_{ij}\bigr),
+\]
+$(g_{ij})=\bigl(\!\begin{smallmatrix}E&F\\ F&G\end{smallmatrix}\!\bigr)$, $(g^{ij})$ inverse.
+
+\keybox{\thm{Theorema Egregium (Gauss 1827)}\ $K$ depends only on $E,F,G$ and their derivatives. Hence isometries preserve $K$.}
+
+\subsection{Brioschi formula (case $F=0$)}
+\[
+K=-\frac{1}{2\sqrt{EG}}\!\left(\partial_u\!\frac{G_u}{\sqrt{EG}}+\partial_v\!\frac{E_v}{\sqrt{EG}}\right)\!.
+\]
+\emph{Verify on sphere:} $E=1,G=\sin^2 u\Rightarrow K=1$.
+
+\section{Ch 5 \textemdash{} Vector Fields, Geodesics}
+
+\subsection{Vector fields}
+$\bw(\bp)\in\T_\bp S$ smooth assignment. In chart: $\bw=a(u,v)\xu+b(u,v)\xv$ with $a,b$ smooth (chart-independent).\\
+\emph{Hairy ball:} every smooth tangent field on $S^2$ vanishes somewhere.
+
+\subsection{Covariant derivative}
+For $\bw(t)$ along curve $\alpha(t)$ on $S$:
+\[
+\boxed{\,\Dt\bw = \tfrac{d\bw}{dt}-\bigl\langle\tfrac{d\bw}{dt},\N\bigr\rangle\N\,}
+\]
+i.e.\ orthogonal projection of $d\bw/dt$ onto $\T_\bp S$.\\
+Also $\frac{D\bw}{du}=\partial_u\bw-\inner{\partial_u\bw}{\N}\N$, similarly for $v$.\\
+\textbf{Properties:} (a) linearity (b) product rule $\Dt(f\bv)=f'\bv+f\Dt\bv$ (c) \textbf{metric compatibility} $\frac{d}{dt}\inner{\bv}{\bw}=\inner{\Dt\bv}{\bw}+\inner{\bv}{\Dt\bw}$.\\
+\textbf{In coords} ($\bw\!=\!A\xu\!+\!B\xv$, $\alpha\!=\!(u(t),v(t))$):
+\[
+\Dt\bw=(A'+\Gam^1_{ij}\dots)\xu+(B'+\Gam^2_{ij}\dots)\xv,
+\]
+intrinsic (only $\Gam$'s appear).\\
+\emph{Compatible with isometry:} $\frac{D}{dt}(d\phi(\bw))=d\phi(\Dt\bw)$.
+
+\subsection{Parallel transport}
+$\bw$ \emph{parallel} along $\alpha$ iff $\Dt\bw=\mathbf{0}$. Linear ODE $\Rightarrow$ unique parallel extension.\\
+Two parallel fields $\bv,\bw$: $\inner{\bv(t)}{\bw(t)}$ const. So $|\bv|$ const, angles preserved $\Rightarrow$ parallel transport is an orthogonal isomorphism between tangent planes (T9/10 Q4).
+
+\subsection{Geodesic curvature}
+Unit-speed $\alpha(s)$, $\bs:=\N\wedge\bt$. $\alpha''\perp\bt$, so:
+\[
+\boxed{\,\alpha''(s)=k_n\N+k_g\bs,\qquad k^2=k_n^2+k_g^2\,}
+\]
+$k_n=\inner{\N}{\alpha''}$ (extrinsic, $=\!\mathrm{II}(\bt)$), $k_g=\inner{\bs}{\alpha''}=\inner{\N\wedge\bt}{\alpha''}$ (intrinsic).\\
+$\Ds\alpha'$ = orthog.\ projection of $\alpha''$ onto $\T_\bp S$ has \emph{length} $|k_g|$.
+
+\subsection{Geodesics (4 equiv.\ defs)}
+\keybox{For arc-length-param $\alpha$: TFAE\\
+(i) $\Ds\alpha'=\mathbf{0}$\quad (ii) $\alpha''(s)\perp\T_{\alpha(s)}S$\\
+(iii) $\alpha''\parallel\N$\quad (iv) $k_g\equiv 0$.}
+
+\subsection{Geodesic ODE \& existence}
+$\alpha=(u(t),v(t))$:
+\[
+u''+\Gam^1_{11}u'^2+2\Gam^1_{12}u'v'+\Gam^1_{22}v'^2=0,
+\]
+\[
+v''+\Gam^2_{11}u'^2+2\Gam^2_{12}u'v'+\Gam^2_{22}v'^2=0.
+\]
+\thm{Existence/uniqueness} given $\bp\!\in\!S$, unit $\bv\!\in\!\T_\bp S$, $\exists !$ geodesic with $\alpha(0)\!=\!\bp,\alpha'(0)\!=\!\bv$.\\
+\thm{Constant speed} $\frac{d}{dt}|\alpha'|^2=2\inner{\alpha''}{\alpha'}=0$. If $|\alpha'|\!=\!c$ const, reparametrize $\gamma(s)\!:=\!\alpha(s/c)$ to unit speed.
+
+\subsection{Isometry-preservation}
+Local isom.\ sends geodesics to geodesics ($k_g$ intrinsic). Used to find geodesics on cylinder/cone via unrolling.
+
+\subsection{Standard geodesics}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Surface & geodesics\\
+\midrule
+Plane & straight lines\\
+Cylinder & vert.\ lines, horiz.\ circles, helices\\
+Cone (no apex) & images of straight lines on unrolled\\
+Sphere & great circles \emph{only}\\
+Flat torus & images of straight lines\\
+\bottomrule
+\end{tabular}
+
+\subsection{Local minimization (5.8)}
+For $\bp,\bq\in S$ sufficiently close: $\exists !$ geodesic $\alpha$ from $\bp$ to $\bq$, and any other curve $\beta$ has $L(\beta)\ge L(\alpha)$. \emph{Locally} shortest, not globally.
+
+\subsection{Exponential map; Gauss lemma (5.9)}
+$\exp_\bp\!:\!\T_\bp S\!\to\!S$, $\bv\!\mapsto\!\gamma_\bv(1)$ with $\gamma_\bv(0)\!=\!\bp,\gamma_\bv'(0)\!=\!\bv$. Local diffeo near $\mathbf{0}$ since $d(\exp_\bp)_{\mathbf{0}}\!=\!\mathrm{Id}$. \emph{Geodesic polar coords} $(\rho,\theta)$:
+\[
+\boxed{\,E=1,\ F=0,\ \mathrm{ds}^2=d\rho^2+G(\rho,\theta)\,d\theta^2\,}
+\]
+\thm{Gauss lemma} radial geodesics $\perp$ geodesic circles. Underlies length-minimization proof.
+
+\subsection{Variational viewpoint (5.10)}
+Geodesics = critical points of $L(\alpha)=\int|\alpha'|dt$ (or energy $E=\half\int|\alpha'|^2dt$). Euler\textendash Lagrange = geodesic ODE.
+
+
+
+
+\end{multicols*}
+
+\end{document}

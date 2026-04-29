@@ -213,9 +213,454 @@
 
 \section{Theory of Interest}
 
+% ==========================================
+\subsection{Accumulation Function}
+% ==========================================
 
+\subsubsection*{Principal and Interest}
+
+The \textbf{principal} is a sum of money placed for investment. \textbf{Interest} represents the time value of money — the reward for lending money over a period of time.
+
+\begin{example}
+  You invest \$1000 in a deposit that pays an effective interest rate of 1\% per year. At the end of one year, you would have $\$1000 + 0.01 \times \$1000 = \$1010$.
+\end{example}
+
+\begin{definition}[Accumulation Function]
+  When a principal of \$1 is deposited at time $t=0$, the \textbf{accumulation function} $a(t)$ gives the accumulated value of \$1 at time $t$. We have $a(0) = 1$. Any principal $P_0$ grows to $P_0 \cdot a(t)$ by time $t$.
+\end{definition}
+
+\begin{sidenote}
+  We can visualise $a(t)$ using a cash flow diagram: $1$ is deposited at time $0$ and $a(t)$ is received at time $t$.
+\end{sidenote}
+
+\subsubsection{Simple and Compound Interest}
+
+\begin{definition}[Simple Interest]
+  Under \textbf{simple interest}, interest is earned only on the principal. With annual rate $r$,
+  \[
+    a(t) = 1 + rt, \qquad t \geq 0.
+  \]
+  Simple interest leads to \emph{linear} growth over time.
+\end{definition}
+
+\begin{definition}[Compound Interest]
+  Under \textbf{compound interest}, interest earned after each period is reinvested to earn further interest. With annual rate $r$,
+  \[
+    a(t) = (1+r)^t, \qquad t \geq 0.
+  \]
+  Compound interest leads to \emph{exponential} growth. \textbf{Unless otherwise stated, we assume compound interest throughout this course.}
+\end{definition}
+
+% ==========================================
+\subsection{Frequency of Compounding}
+% ==========================================
+
+\subsubsection{Nominal and Effective Rates}
+
+\begin{definition}[Nominal Rate of Interest]
+  When interest is paid $p$ times a year at a stated rate $r^{(p)}$, we call $p$ the \textbf{frequency of compounding} and $r^{(p)}$ the \textbf{nominal rate of interest} (convertible $p$-thly). The interest paid over each sub-period of length $\tfrac{1}{p}$ is $\tfrac{r^{(p)}}{p}$, so the accumulation over one year is:
+  \[
+    a(1) = \left(1 + \frac{r^{(p)}}{p}\right)^p.
+  \]
+  Common cases: $p = 2$ (semi-annual), $p = 4$ (quarterly), $p = 12$ (monthly).
+\end{definition}
+
+\begin{definition}[Effective Annual Interest Rate]
+  The \textbf{effective annual interest rate} $r_e$ is the equivalent annually compounded rate:
+  \[
+    1 + r_e = \left(1 + \frac{r^{(p)}}{p}\right)^p \qquad \Longleftrightarrow \qquad a(t) = (1+r_e)^t = \left(1 + \frac{r^{(p)}}{p}\right)^{pt}.
+  \]
+  It can be shown that $r_e \geq r^{(p)}$ for all positive integers $p \geq 1$.
+\end{definition}
+
+\begin{definition}[Equivalent Nominal Rates]
+  Two nominal interest rates $r^{(p)}$ and $R^{(q)}$ are \textbf{equivalent} if and only if they yield the same accumulated amount over one year:
+  \[
+    \left(1 + \frac{r^{(p)}}{p}\right)^p = \left(1 + \frac{R^{(q)}}{q}\right)^q.
+  \]
+\end{definition}
+
+\begin{example}[Equivalent Rates]
+  Find the nominal rate convertible monthly equivalent to $r^{(4)} = 4\%$ (quarterly). Setting $\left(1 + \frac{R^{(12)}}{12}\right)^{12} = \left(1 + \frac{4\%}{4}\right)^4 = 1.01^4$, we get $R^{(12)} = 12(1.01^{4/12} - 1) \approx 3.99\%$.
+\end{example}
+
+\subsubsection{Continuous Compounding}
+
+\begin{proposition}
+  For any fixed $r > 0$,
+  \[
+    \lim_{x \to \infty} \left(1 + \frac{r}{x}\right)^x = e^r.
+  \]
+  \begin{proof}
+    Let $f(x) = \left(1 + \frac{1}{x}\right)^x$. Then $\ln f(x) = x \ln\!\left(1+\frac{1}{x}\right)$. Using L'Hôpital's rule:
+    \[
+      \lim_{x\to\infty} \ln f(x) = \lim_{t\to 0^+} \frac{\ln(1+t)}{t} = \lim_{t\to 0^+} \frac{1/(1+t)}{1} = 1,
+    \]
+    so $\lim_{x\to\infty}(1+1/x)^x = e$. Then $\lim_{x\to\infty}(1+r/x)^x = \left[\lim_{x\to\infty}(1+\frac{1}{x/r})^{x/r}\right]^r = e^r$.
+  \end{proof}
+\end{proposition}
+
+\begin{definition}[Continuous Compounding]
+  \textbf{Continuous compounding} refers to the limit $p \to \infty$. The continuously compounded nominal rate is denoted $r^{(\infty)}$, and the accumulation function is:
+  \[
+    a(t) = e^{r^{(\infty)} t}, \qquad t \geq 0.
+  \]
+  Two rates are equivalent when $\left(1 + \frac{r^{(p)}}{p}\right)^p = e^{r^{(\infty)}} = 1 + r_e$.
+\end{definition}
+
+% ==========================================
+\subsection{Force of Interest}
+% ==========================================
+
+\begin{definition}[Force of Interest]
+  Given accumulation function $a(t)$, the \textbf{force of interest} at time $t$ is
+  \[
+    \delta(t) = \frac{a'(t)}{a(t)} = \frac{d}{dt}\bigl[\ln a(t)\bigr].
+  \]
+  In words, $\delta(t)$ is the instantaneous relative rate of growth of the value of an investment per unit capital per unit time.
+\end{definition}
+
+\begin{remark}
+  When $\delta(t) = \delta$ (constant), $a(t) = e^{\delta t}$: that is, $\delta$ is the continuously compounded rate of interest.
+\end{remark}
+
+\begin{proposition}
+  It follows from the definition that
+  \[
+    a(t) = \exp\!\left(\int_0^t \delta(u)\,du\right).
+  \]
+  More generally, the accumulated value at time $t$ of \$1 invested at time $s \leq t$ is
+  \[
+    a(s, t) := \frac{a(t)}{a(s)} = \exp\!\left(\int_s^t \delta(u)\,du\right).
+  \]
+  This implies the \textbf{principle of consistency}: for $t_0 < t_1 < \cdots < t_n$,
+  \[
+    a(t_0, t_n) = a(t_0, t_1)\, a(t_1, t_2) \cdots a(t_{n-1}, t_n).
+  \]
+\end{proposition}
+
+\begin{example}
+  If a fund accumulates at $\delta(t) = 0.02t$ and \$1000 is deposited at $t=2$, the accumulated value at $t=5$ is:
+  \[
+    1000 \cdot a(2,5) = 1000 \cdot \exp\!\left(\int_2^5 0.02t\,dt\right) = 1000 \cdot \exp\!\bigl([0.01t^2]_2^5\bigr) = 1000\,e^{0.21} \approx \$1230.
+  \]
+\end{example}
+
+% ==========================================
+\subsection{Present Value and Equivalence}
+% ==========================================
+
+\subsubsection{Present Value and Time Value}
+
+\begin{definition}[Present Value]
+  The \textbf{present value} (PV) of a single payment $c$ due at time $t \geq 0$ is
+  \[
+    \mathrm{PV} = \frac{c}{a(t)}.
+  \]
+  The process of finding the present value of a future payment is called \textbf{discounting}.
+
+  For a cash flow stream $\mathcal{C} = \{(c_1, t_1), (c_2, t_2), \ldots, (c_n, t_n)\}$, the present value is
+  \[
+    \mathrm{PV}(\mathcal{C}) = \sum_{i=1}^n \frac{c_i}{a(t_i)} = \sum_{i=1}^n \frac{c_i}{(1+r)^{t_i}},
+  \]
+  where $r$ is the effective annual rate.
+\end{definition}
+
+\begin{definition}[Time Value]
+  The \textbf{time value} of cash flow $\mathcal{C}$ at time $t \geq 0$ is
+  \[
+    \mathrm{TV}_t(\mathcal{C}) = \mathrm{PV}(\mathcal{C}) \cdot a(t) = \sum_{i=1}^n \frac{c_i}{(1+r)^{t_i - t}}.
+  \]
+  For $0 < s < t$: $\mathrm{TV}_t(\mathcal{C}) = \mathrm{TV}_s(\mathcal{C}) \cdot (1+r)^{t-s}$.
+\end{definition}
+
+\begin{sidenote}
+  For notational convenience, a cash flow stream $\{(c_0, 0), (c_1, 1), \ldots, (c_n, n)\}$ with integer payment times is written simply as $(c_0, c_1, \ldots, c_n)$.
+\end{sidenote}
+
+\subsubsection{Principle of Equivalence}
+
+\begin{definition}[Principle of Equivalence]
+  Two cash flow streams are \textbf{equivalent} if and only if they have the same present value (under the same interest rate and accumulation method). Equivalent streams have the same time value at every time $t$.
+\end{definition}
+
+\begin{definition}[Net Present Value]
+  The \textbf{Net Present Value (NPV)} of an investment project with cash flows $\{(c_i, t_i)\}$ is $\mathrm{PV}(\mathcal{C})$ summing over all inflows and outflows. Decision rule: \emph{invest if NPV $> 0$}; Project A is preferred to B if $\mathrm{NPV}(A) > \mathrm{NPV}(B)$.
+\end{definition}
+
+\subsubsection{Internal Rate of Return}
+
+\begin{definition}[Equation of Value and IRR]
+  For a cash flow stream $(c_0, c_1, \ldots, c_n)$, the \textbf{equation of value} is
+  \[
+    \mathrm{PV} = \sum_{i=0}^n \frac{c_i}{(1+r)^i} = 0.
+  \]
+  Any non-negative root $r$ of this equation is the \textbf{yield} or \textbf{Internal Rate of Return (IRR)}, which is the break-even interest rate for the investment. The IRR is determined solely by the cash flows, without reference to a prevailing market rate.
+\end{definition}
+
+\begin{theorem}[Uniqueness of IRR]
+  If a cash flow stream $(c_0, c_1, \ldots, c_n)$ satisfies $c_0 < 0$, $c_k \geq 0$ for all $k \geq 1$, and $\sum_{i=0}^n c_i > 0$, then there is a unique IRR.
+\end{theorem}
+
+\begin{remark}
+  In general, the equation of value is a polynomial in $x = \frac{1}{1+r}$ of degree $n$, which may have up to $n$ distinct non-negative roots. When $n \geq 5$, there is no closed-form expression (Abel's impossibility theorem) and numerical methods are used.
+\end{remark}
+
+\begin{definition}[Newton-Raphson Method]
+  To numerically find a root $\alpha$ of $f(r) = 0$: starting from initial guess $\alpha_0$, iterate
+  \[
+    \alpha_{k+1} = \alpha_k - \frac{f(\alpha_k)}{f'(\alpha_k)}, \qquad k = 0, 1, 2, \ldots
+  \]
+  until the desired accuracy is reached. The Intermediate Value Theorem is used to locate a suitable starting interval.
+\end{definition}
+
+\begin{remark}
+  Both NPV and IRR serve as investment criteria. NPV measures value created today (requires a prevailing rate); IRR measures the return of the investment (may not be unique).
+\end{remark}
+
+% ==========================================
+\subsection{Annuities}
+% ==========================================
+
+\begin{definition}[Annuity]
+  An \textbf{annuity} is a series of payments of a constant amount $A$ made at regular intervals, with effective interest rate $r$ per period.
+\end{definition}
+
+\begin{proposition}[Ordinary Annuity (Annuity Immediate)]
+  Payments are made at the \emph{end} of each period (also called \textbf{annuity in arrears}). The present value of $n$ payments is:
+  \[
+    \mathrm{PV}(\text{ordinary}) = \sum_{t=1}^n \frac{A}{(1+r)^t} = \frac{A}{r}\left[1 - \frac{1}{(1+r)^n}\right].
+  \]
+  \begin{proof}
+    Sum the geometric series $\sum_{t=1}^n \frac{A}{(1+r)^t} = \frac{A}{1+r} \cdot \frac{1 - (1+r)^{-n}}{1 - (1+r)^{-1}}$.
+  \end{proof}
+\end{proposition}
+
+\begin{proposition}[Annuity Due]
+  Payments are made at the \emph{beginning} of each period. The present value is:
+  \[
+    \mathrm{PV}(\text{due}) = \sum_{t=0}^{n-1} \frac{A}{(1+r)^t} = \frac{A(1+r)}{r}\left[1 - \frac{1}{(1+r)^n}\right] = (1+r)\cdot\mathrm{PV}(\text{ordinary}).
+  \]
+\end{proposition}
+
+\begin{proposition}[Perpetuity]
+  A \textbf{perpetuity} pays $A$ forever. The present value is:
+  \[
+    \mathrm{PV}(\text{perpetuity immediate}) = \frac{A}{r}, \qquad \mathrm{PV}(\text{perpetuity due}) = \frac{A(1+r)}{r}.
+  \]
+  \begin{proof}
+    Take the limit $n \to \infty$ in the ordinary annuity formula, or sum the infinite geometric series directly.
+  \end{proof}
+\end{proposition}
+
+\begin{sidenote}
+  The ordinary annuity formula can be derived as the difference between two perpetuities: one starting at $t=1$ (PV $= A/r$) minus one deferred to $t=n+1$ (PV $= A/[r(1+r)^n]$).
+\end{sidenote}
+
+% ==========================================
+\subsection{Loans}
+% ==========================================
+
+\begin{definition}[Loan Repayment]
+  A loan of amount $L$ is repaid by $n$ equal installments of $A$ per period at interest rate $r$ per period, satisfying:
+  \[
+    L = \frac{A}{r}\left[1 - \frac{1}{(1+r)^n}\right].
+  \]
+\end{definition}
+
+\begin{definition}[Loan Balance]
+  The \textbf{loan balance} $L^{\text{Bal}}_m$ immediately after the $m$-th installment is computed by two equivalent methods:
+
+  \textbf{Prospective method} (looking forward at remaining $n-m$ payments):
+  \[
+    L^{\text{Bal}}_m = \frac{A}{r}\left[1 - \frac{1}{(1+r)^{n-m}}\right].
+  \]
+
+  \textbf{Retrospective method} (accumulating the original loan and subtracting payments to date):
+  \[
+    L^{\text{Bal}}_m = L(1+r)^m - \frac{A}{r}\left[(1+r)^m - 1\right].
+  \]
+  Both methods give the same result.
+\end{definition}
+
+\begin{remark}
+  When the number of payments $n$ is not an integer, the loan is repaid with $\lfloor n \rfloor$ full payments of $A$ plus a final partial payment $B < A$, which may occur at time $\lfloor n \rfloor$ or $\lfloor n \rfloor + 1$.
+\end{remark}
 \pagebreak
 \section{Bond \& Term Structure}
+
+% ==========================================
+\subsection{Introduction to Bonds}
+% ==========================================
+
+\begin{definition}[Bond]
+  A \textbf{bond} is a written contract between an issuer (borrower — typically a government or corporation) and an investor (lender/bondholder). The bond specifies:
+  \begin{itemize}
+    \item \textbf{Face value} (par value) $F$: the amount on which periodic interest payments are based.
+    \item \textbf{Redemption/maturity value} $R$: the amount repaid at maturity. Unless otherwise stated, $F = R$.
+    \item \textbf{Maturity date}: the date the loan is fully repaid.
+    \item \textbf{Coupon rate} $c$: the periodic interest payment as a percentage of par value, paid $m$ times per year.
+  \end{itemize}
+\end{definition}
+
+\begin{remark}
+  Types of bonds include coupon-paying bonds, zero-coupon bonds, callable bonds, and convertible bonds. Key risks for bond investors include: interest rate risk, credit/default risk, liquidity risk, and reinvestment risk. In this chapter we assume no default risk.
+\end{remark}
+
+% ==========================================
+\subsection{Bond Valuation}
+% ==========================================
+
+\subsubsection{Coupon Bond Pricing}
+
+\begin{definition}[Bond Pricing Notation]
+  We use the following notation:
+  $P$ = current bond price, $F$ = face value, $R$ = redemption value, $c$ = nominal coupon rate, $m$ = coupon payments per year, $n$ = total number of coupon payments, $\lambda$ = nominal bond yield.
+\end{definition}
+
+For a coupon-paying bond, the cash inflows consist of $n$ coupon payments of $cF/m$ at times $t = 1/m, 2/m, \ldots, n/m$, plus the redemption value $R$ at time $n/m$.
+
+\begin{theorem}[Coupon Bond Price]
+  By the Law of One Price, the bond price equals the present value of all future cash flows at yield $\lambda$:
+  \[
+    P = \frac{R}{(1+\lambda/m)^n} + \sum_{i=1}^n \frac{cF/m}{(1+\lambda/m)^i}.
+  \]
+  When $F = R$, this simplifies to:
+  \[
+    P = F\left[\frac{1}{(1+\lambda/m)^n} + \frac{c}{\lambda}\left(1 - \frac{1}{(1+\lambda/m)^n}\right)\right] = F + F\cdot\frac{c-\lambda}{\lambda}\left[1 - \frac{1}{(1+\lambda/m)^n}\right].
+  \]
+\end{theorem}
+
+\begin{sidenote}
+  From the expression $P = F + F\cdot\frac{c-\lambda}{\lambda}\!\left[1 - \frac{1}{(1+\lambda/m)^n}\right]$:
+  \begin{itemize}
+    \item $P > F$ (bought at a \textbf{premium}) $\iff c > \lambda$.
+    \item $P = F$ (bought \textbf{at par}) $\iff c = \lambda$.
+    \item $P < F$ (bought at a \textbf{discount}) $\iff c < \lambda$.
+  \end{itemize}
+\end{sidenote}
+
+\begin{proposition}[Makeham Formula]
+  Let $K = F/(1+\lambda/m)^n$ (present value of redemption). Then:
+  \[
+    P = K + \frac{c}{\lambda}(F - K).
+  \]
+  Also, the recursive pricing relation $P_{k+1} = P_k(1+\lambda/m) - cF/m$ links prices across consecutive periods.
+\end{proposition}
+
+\subsubsection{Zero-Coupon and Perpetual Bonds}
+
+\begin{definition}[Zero-Coupon Bond]
+  A \textbf{zero-coupon bond} pays no coupons; it pays only the maturity value $R$ at time $N$. At annual yield $\lambda$:
+  \[
+    P = \frac{R}{(1+\lambda)^N}.
+  \]
+\end{definition}
+
+\begin{definition}[Perpetual Bond (Consol)]
+  A \textbf{perpetual bond} never matures ($n \to \infty$). Taking the limit in the coupon bond formula:
+  \[
+    P = \frac{cF}{\lambda}.
+  \]
+\end{definition}
+
+\subsubsection{Price-Yield Relationship}
+
+\begin{proposition}
+  The bond price $P$ is a strictly \emph{decreasing}, \emph{convex} function of the yield $\lambda$. When $\lambda = 0$, the price reaches its maximum value equal to the sum of all undiscounted cash flows. As $\lambda \to \infty$, $P \to 0$.
+\end{proposition}
+
+\begin{remark}
+  In practice, the bond yield is not directly observed — the market price $P$ is observed. The yield $\lambda$ is then found by solving the pricing equation, which is equivalent to finding the IRR of the bond's cash flow. Numerical methods such as Newton-Raphson (or Excel's \texttt{IRR()} function) are typically used.
+\end{remark}
+
+% ==========================================
+\subsection{Bond Duration}
+% ==========================================
+
+\begin{definition}[Macaulay Duration]
+  For a cash flow stream $\mathcal{C} = \{(c_i, t_i)\}_{i=1}^n$, the \textbf{Macaulay duration} is the present-value-weighted average time of payment:
+  \[
+    D = \frac{\sum_{i=1}^n t_i \cdot \mathrm{PV}\{(c_i,t_i)\}}{\mathrm{PV}(\mathcal{C})} = \sum_{i=1}^n w_i t_i, \qquad w_i = \frac{\mathrm{PV}\{(c_i, t_i)\}}{\mathrm{PV}(\mathcal{C})}.
+  \]
+  When all $c_i \geq 0$, we have $t_1 \leq D \leq t_n$. For a zero-coupon bond maturing at $T$, $D = T$.
+\end{definition}
+
+\begin{proposition}[Macaulay Duration of a Coupon Bond]
+  For a coupon bond (F = R, $n$ coupons, frequency $m$, nominal yield $\lambda$, coupon rate $c$), setting $\mu = \lambda/m$ and $\gamma = c/m$:
+  \[
+    D = \frac{1+\mu}{m\mu} - \frac{1 + \mu + n(\gamma - \mu)}{m\gamma[(1+\mu)^n - 1] + m\mu}.
+  \]
+  When the bond is priced at par ($P = F$, so $\gamma = \mu$), this reduces to:
+  \[
+    D = \frac{1+\mu}{m\mu}\left(1 - \frac{1}{(1+\mu)^n}\right).
+  \]
+  For a perpetual bond ($n \to \infty$): $D = \dfrac{1+\lambda/m}{\lambda}$.
+\end{proposition}
+
+\begin{remark}
+  The Macaulay duration $D$ does \emph{not} depend on the face value $F$ (it cancels in numerator and denominator), and does not depend on the frequency of compounding of the yield (provided yields are equivalent). The duration is also a standard measure of a bond's price sensitivity to changes in yield.
+\end{remark}
+
+% ==========================================
+\subsection{Term Structure of Interest Rates}
+% ==========================================
+
+\subsubsection{Yield Curves}
+
+\begin{definition}[Yield Curve]
+  The \textbf{yield curve} is a graph of bond yield against time to maturity at a given point in time. Common shapes include:
+  \begin{itemize}
+    \item \textbf{Normal (upward-sloping)}: observed during economic expansions with low inflation.
+    \item \textbf{Inverted (downward-sloping)}: rare; associated with recessionary periods or high inflation.
+  \end{itemize}
+  Yield curves can be drawn for various bond classes (e.g.\ Treasury, corporate); non-Treasury curves typically lie above Treasury curves.
+\end{definition}
+
+\subsubsection{Spot Rates and Forward Rates}
+
+\begin{definition}[Spot Rate]
+  The \textbf{spot rate} $s_t$ (or \emph{zero rate}) is the annual interest rate for money held from today ($t=0$) until time $t$, defined so that $(1+s_t)^t$ is the growth factor over $t$ years. The collection $\{s_1, s_2, \ldots\}$ defines the \textbf{term structure of interest rates}. The \textbf{spot rate curve} is a plot of $s_t$ against $t$.
+\end{definition}
+
+\begin{definition}[Forward Rate]
+  The \textbf{forward rate} $f_{j,k}$ is the interest rate, agreed today, that applies from future time $j$ to future time $k > j$. Note that $f_{0,t} = s_t$.
+\end{definition}
+
+\begin{proposition}[Spot-Forward Relationship]
+  For any $k > j > 0$:
+  \[
+    (1 + s_k)^k = (1 + s_j)^j (1 + f_{j,k})^{k-j}.
+  \]
+  This determines all forward rates from a known term structure $\{s_1, s_2, \ldots, s_n\}$.
+\end{proposition}
+
+\subsubsection{Determining Spot Rates}
+
+\begin{proposition}[From Zero-Coupon Bonds]
+  The spot rate $s_n$ is the yield to maturity of an $n$-year zero-coupon bond. From the pricing formula $P = R/(1+s_n)^n$:
+  \[
+    s_n = \left(\frac{R}{P}\right)^{1/n} - 1.
+  \]
+\end{proposition}
+
+\begin{definition}[Bootstrap Method]
+  When zero-coupon bonds of the required maturity are unavailable, spot rates can be determined sequentially from coupon bond prices. Given $s_1, s_2, \ldots, s_{n-1}$ already determined, use an $n$-period coupon bond with price $P_n$ and cash flows $(-P_n,\, cF/m,\, \ldots,\, cF/m + R)$:
+  \[
+    P_n = \frac{cF/m}{1+s_1} + \frac{cF/m}{(1+s_2)^2} + \cdots + \frac{cF/m}{(1+s_{n-1})^{n-1}} + \frac{cF/m + R}{(1+s_n)^n},
+  \]
+  and solve for $s_n$.
+\end{definition}
+
+\begin{example}[Bootstrap]
+  A one-year bond (annual coupon \$6, par \$100) trades at \$102.91. A two-year bond (annual coupon \$6.50, par \$100) trades at \$101.10.
+
+  From the one-year bond: $102.91 = \dfrac{106}{1+s_1} \Rightarrow s_1 = 3.003\%$.
+
+  From the two-year bond: $101.10 = \dfrac{6.5}{1+s_1} + \dfrac{106.5}{(1+s_2)^2} \Rightarrow s_2 = 5.997\%$.
+\end{example}
+
+
 
 \pagebreak
 \section{Asset Returns and Probability}
@@ -431,16 +876,573 @@ And in \textit{mean-variance analysis}, we are interested to find the $\alpha$ t
 This is called the \textbf{global minimum-variance portfolio (GMVP)}.
 
 \subsubsection{Feasible Sets}
+Now, the idea of feasible sets is this: For any $\alpha$, the \textit{graph} plotted by $(\mu_p,\sigma_p)$ is known as the \textit{feasible set}.
 
+\begin{proposition}
+    For any 2 assets, the feasible set is a:
 
+    \begin{enumerate}
+        \item \textbf{a straight line} connecting $(\sigma_1, \mu_1)$ and $(\sigma_2, \mu_2)$ when $\rho=1$.
+        \item \textit{a $V$-shaped graph} compromising of two straight lines, each connecting $(\sigma_i, \mu_i)$ to a point with zero portfolio variance, when $\rho =-1$.
+        \item \textit{a curve} passing through $(\sigma_1, \mu_1)$ and $(\sigma_2, \mu_2)$ when $-1 < \rho <1.$
+    \end{enumerate}
+\end{proposition}
+
+\begin{definition}[Efficient Frontier]
+    For a desired return $\mu_p$, there is a \textit{single} corresponding $\sigma_p$. But, for a desired risk $\sigma_p> \sigma_p^*$,  there are \textbf{two} possible values of $\mu_p$ (because of the hyperbolic shape of the feasible set).
+
+    \medskip \noindent We call the upper-half of the feasible set the efficient frontier.   
+\end{definition}
 
 \pagebreak
 \section{Forwards \& Futures}
 
+% ==========================================
+\subsection{Financial Derivatives}
+% ==========================================
+
+\begin{definition}[Financial Derivative]
+  A \textbf{financial derivative} is a financial instrument that has a value depending on (or is \emph{derived from}) the values of other more basic underlying assets (such as bonds, stocks, or others). Forward contracts, futures, options, and swaps are some examples of derivatives.
+\end{definition}
+
+\subsubsection*{Underlying Assets}
+
+There are five main groups of underlying assets: stocks, indices (e.g.\ the S\&P 500), commodities (e.g.\ coffee, sugar, gold, crude oil), interest rates, and currencies.
+
+% ==========================================
+\subsection{Forward Contracts}
+% ==========================================
+
+\begin{definition}[Forward Contract]
+  A \textbf{forward contract} is an \emph{obligation} to buy or sell an (underlying) asset at a specific price and at a specific time in the future.
+  \begin{itemize}
+    \item $t$ is the time where the contract was agreed.
+    \item $T$ is the \textbf{expiration/maturity/delivery} date of the forward contract. This is when the underlying asset is to be delivered.
+    \item The buyer is said to be \textbf{long}; the seller is said to be \textbf{short}. Both parties are obligated to carry out the transaction.
+    \item The \textbf{forward price} $F(t,T)$ is the price that applies at delivery.
+    \item The open market for immediate delivery is the \textbf{spot market}. The spot price at time $t$ is denoted $S(t)$ or $S_t$.
+  \end{itemize}
+\end{definition}
+
+\begin{sidenote}
+  Unless otherwise stated, we always assume no money changes hand up till the maturity date $T$, i.e.\ it costs nothing to enter a forward contract. In this case, the delivery price $F(t,T)$ is known as the \textbf{forward price} of the contract.
+\end{sidenote}
+
+\subsubsection{Forward Payoffs and Profits}
+
+\begin{definition}[Payoff and Profit]
+  The \textbf{payoff} to a position at time $T$ is the value of the position at maturity $T$. The \textbf{profit} is the payoff minus the value of the investment cost at time $T$.
+
+  Since it costs nothing to enter a forward contract, payoff and profit coincide:
+  \begin{itemize}
+    \item \textbf{Long forward:} $S_T - F(t,T)$
+    \item \textbf{Short forward:} $F(t,T) - S_T$
+  \end{itemize}
+\end{definition}
+
+\begin{example}[Forward Payoff]
+  You enter a long forward to purchase 5{,}000 bushels of wheat at $F(0,\tfrac{3}{12}) = \$8$ per bushel in 3 months ($T = 0.25$).
+  \begin{itemize}
+    \item If $S_T = \$9$: payoff $= 5000 \times (9-8) = \$5{,}000$ (gain).
+    \item If $S_T = \$7$: payoff $= 5000 \times (7-8) = -\$5{,}000$ (loss).
+  \end{itemize}
+\end{example}
+
+% ==========================================
+\subsection{Forward Price and No-Arbitrage}
+% ==========================================
+
+\begin{definition}[Arbitrage]
+  \textbf{Arbitrage} is the practice of buying something in one place and selling it in another to make a riskless profit from the price difference.
+\end{definition}
+
+\begin{definition}[No-Arbitrage Principle]
+  There cannot be two portfolio strategies with the same initial cost such that one always has a strictly better final payoff than the other.
+
+  \medskip \noindent This implies the \textbf{Law of One Price}: if two portfolios $U$ and $V$ have the same payoff $U_T = V_T$, then they must have the same price $U_0 = V_0$.
+\end{definition}
+
+\begin{theorem}[Forward Price]
+  For a non-dividend-paying asset with spot price $S_t$ and continuously compounded risk-free rate $r$, the no-arbitrage forward price is
+  \[
+    F(t,T) = S_t \, e^{r(T-t)}.
+  \]
+  In particular, $F(0,T) = S_0 e^{rT}$.
+\end{theorem}
+
+\begin{example}[Arbitrage]
+  A forward contract to purchase a stock in 3 months has spot price $S_0 = \$40$, $r = 5\%$ p.a.\ continuously compounded. If $F(0, \tfrac{3}{12}) = \$43$:
+  \begin{enumerate}
+    \item \emph{At $t=0$}: Borrow \$40, buy 1 share, short 1 forward.
+    \item \emph{At $T=0.25$}: Receive \$43 from forward; repay $40 e^{0.05 \times 0.25} \approx \$40.50$.
+    \item Riskless profit $= 43 - 40.50 = \$2.50$.
+  \end{enumerate}
+  Any forward price $F(0,T) \neq 40\,e^{0.05 \times 0.25}$ admits an arbitrage.
+\end{example}
+
+% ==========================================
+\subsection{Futures Contracts}
+% ==========================================
+
+\subsubsection*{Forwards vs Futures}
+
+Forward contracts are private, customised agreements (OTC), making them illiquid and subject to \textbf{counterparty risk}. Futures contracts address these issues by being standardised and traded on organised exchanges.
+
+\begin{definition}[Futures Contract]
+  A \textbf{futures contract} is a standardised legal contract to buy or sell something at a predetermined price for delivery at a specified future time, between parties not yet known to each other.
+\end{definition}
+
+\begin{remark}
+  Key differences between forwards and futures:
+  \begin{center}
+  \begin{tabular}{lll}
+    \hline
+    & \textbf{Forward} & \textbf{Futures} \\
+    \hline
+    Venue & OTC (private) & Exchange-traded \\
+    Terms & Customised & Standardised \\
+    Liquidity & Low & High \\
+    Counterparty risk & High & Low (clearinghouse) \\
+    Settlement & At maturity & Marked to market daily \\
+    Margin & Typically none & Initial \& maintenance margin \\
+    \hline
+  \end{tabular}
+  \end{center}
+\end{remark}
+
+\subsubsection{Margin Accounts}
+
+\begin{definition}[Margin Account]
+  Participants must hold a \textbf{margin account}. The broker requires:
+  \begin{itemize}
+    \item \textbf{Initial margin}: a fraction (e.g.\ 50\%) of the total contract value deposited upfront.
+    \item \textbf{Maintenance margin}: a lower threshold (e.g.\ 25\%); if the account falls below this, a \textbf{margin call} is issued demanding additional funds, or the position is closed out.
+  \end{itemize}
+\end{definition}
+
+\subsubsection{Daily Settlement (Marking to Market)}
+
+Futures prices are revised daily. The daily cash flows for a \textbf{long} position are:
+
+\begin{center}
+\begin{tabular}{cccc}
+  \hline
+  Day & Futures Price & Spot Price & Cash Flow \\
+  \hline
+  $0$ & $F(0)$ & $S(0)$ & --- \\
+  $1$ & $F(1)$ & $S(1)$ & $F(1)-F(0)$ \\
+  $2$ & $F(2)$ & $S(2)$ & $F(2)-F(1)$ \\
+  $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ \\
+  $T$ & $F(T)$ & $S(T)$ & $F(T)-F(T-1)$ \\
+  \hline
+\end{tabular}
+\end{center}
+
+\begin{remark}
+  At maturity, $F_T = S_T$ (otherwise an arbitrage opportunity exists). The total cash flow telescopes to $S(T) - F(0)$, the same as the forward profit when the interest rate is zero.
+\end{remark}
+
+\subsubsection{Accrued Profit}
+
+With continuously compounded rate $r$ and $R = e^{r/365}$, the \textbf{total accrued profit} for a long futures position is
+\[
+  \sum_{i=1}^T \bigl[F(i) - F(i-1)\bigr] R^{T-i}.
+\]
+Unlike forwards, the total profit depends on the \emph{sequence} of price moves (early gains earn more interest than late gains).
+
+% ==========================================
+\subsection{Forward-Futures Equivalence}
+% ==========================================
+
+\begin{theorem}[Forward-Futures Equivalence]
+  Under the conditions of no arbitrage, no transaction costs, deterministic interest rates, and no correlation between interest rates and the underlying asset's price, the forward price and futures price of identical assets with the same maturity are equal.
+\end{theorem}
+
+\begin{sidenote}
+  In practice, they may differ due to liquidity differences, reinvestment of daily cash flows, and margin requirements. However, they are nearly identical for short-term contracts with low interest rate volatility.
+\end{sidenote}
+
+\begin{sidenote}
+  For this course, we assume forwards and futures have the same delivery price:
+  \[
+    F_{\text{forward}}(t,T) = F_{\text{future}}(t,T) = F(t,T) = S_t\,e^{r(T-t)}.
+  \]
+\end{sidenote}
+
+% ==========================================
+\subsection{Hedging with Forwards \& Futures}
+% ==========================================
+
+\subsubsection{Hedging with a Forward Contract}
+
+\begin{definition}[Hedging]
+  \textbf{Hedging} using forward contracts means entering into an agreement to buy or sell the required commodity at an agreed price, thereby eliminating the risks of price fluctuations in the spot market.
+\end{definition}
+
+\begin{example}[Gold Mining Firm]
+  A firm plans to sell 100{,}000 oz of gold in one year. Forward price $F(0,1) = \$420$/oz, mining cost $= \$380$/oz, $r=0$.
+
+  \begin{itemize}
+    \item \textbf{Unhedged}: Profit per oz $= S_1 - 380$ (random, depends on $S_1$).
+    \item \textbf{Hedged} (short forward): Revenue $= F(0,1) = \$420$/oz regardless of $S_1$.
+    Profit per oz $= 420 - 380 = \$40$ (riskless).
+  \end{itemize}
+
+  The hedge eliminates downside risk but also caps upside.
+\end{example}
+
+\subsubsection{Perfect Hedge with Futures}
+
+\begin{definition}[Perfect Hedge]
+  A \textbf{perfect hedge} completely eliminates the risk associated with a future commitment to deliver or receive an asset, by taking an opposite position in the futures market.
+\end{definition}
+
+\begin{remark}
+  A perfect hedge requires: (1) delivery dates match, (2) commodities match exactly, (3) amount is an integer multiple of contract size, (4) sufficient market liquidity. If any condition fails, a perfect hedge is impossible.
+\end{remark}
+
+\subsubsection{Minimum-Variance Hedge}
+
+When a perfect hedge is unavailable, one can use correlated futures of another asset to reduce (but not eliminate) risk.
+
+\begin{definition}[Setup]
+  Let:
+  \begin{itemize}
+    \item $W$ = number of units of Asset A to be purchased at time $T$
+    \item $S_T$ = spot price of Asset A at $T$ (random)
+    \item $F_0, F_T$ = futures price of Asset B at $t=0$ and $t=T$ (random)
+    \item $h$ = number of units of Asset B futures shorted (hedge position)
+  \end{itemize}
+  Assuming $r=0$, the total cash flow at $T$ is:
+  \[
+    y = -W S_T + (F_T - F_0)\,h.
+  \]
+\end{definition}
+
+\begin{theorem}[Minimum-Variance Hedge]\label{thm: min-var-hedge}
+  The hedge position $h$ that minimises $\operatorname{Var}(y)$ is
+  \[
+    h = W \cdot \frac{\operatorname{Cov}(S_T, F_T)}{\operatorname{Var}(F_T)} = W \cdot \frac{\rho_{S,F} \,\sigma_S}{\sigma_F},
+  \]
+  where $\beta = \dfrac{\operatorname{Cov}(S_T, F_T)}{\operatorname{Var}(F_T)}$ is the \textbf{optimal hedge ratio}. The resulting minimum variance and risk are
+  \[
+    \operatorname{Var}(y) = W^2 \operatorname{Var}(S_T)\bigl(1 - \rho_{F,S}^2\bigr), \qquad \sigma_y = \sqrt{1-\rho_{F,S}^2} \cdot W\sigma_S.
+  \]
+  The factor $\sqrt{1 - \rho_{F,S}^2}$ measures the \emph{effectiveness} of the hedge ($0$ = perfect hedge).
+\end{theorem}
+
+\begin{proof}
+  The variance of the cash flow is
+  \[
+    \operatorname{Var}(y) = W^2\operatorname{Var}(S_T) - 2W\operatorname{Cov}(S_T,F_T)\,h + \operatorname{Var}(F_T)\,h^2.
+  \]
+  Since $\operatorname{Var}(F_T) > 0$, differentiate w.r.t.\ $h$ and set to zero:
+  \[
+    -2W\operatorname{Cov}(S_T,F_T) + 2\operatorname{Var}(F_T)\,h = 0 \implies h = W\frac{\operatorname{Cov}(S_T,F_T)}{\operatorname{Var}(F_T)}.
+  \]
+  Substituting back gives the formula for $\operatorname{Var}(y)$.
+\end{proof}
+
+\begin{remark}
+  \begin{itemize}
+    \item If selling $W$ units instead of buying, the hedge is $h = -\beta W$.
+    \item When $\rho_{F,S} = \pm 1$, the hedge is perfect: $\sigma_y = 0$.
+    \item When $F_T = S_T$ (identical assets), $h = W$, $\operatorname{Var}(y) = 0$, and $y = F_0 W$ (riskless).
+  \end{itemize}
+\end{remark}
+
+\begin{definition}[Basis]
+  The \textbf{basis} measures the lack of hedging perfection:
+  \[
+    \text{basis} = \text{spot price of asset to be hedged} - \text{futures price of contract used}.
+  \]
+  For a perfect hedge (identical asset), the basis is zero at delivery.
+\end{definition}
+
+\subsubsection*{Hedging Strategies Summary}
+
+For $\rho > 0$:
+\begin{center}
+\begin{tabular}{lll}
+  \hline
+  Action & Futures Position & Total Payoff \\
+  \hline
+  Buy $W$ units & Long $h$ futures & $-WS_T + h(F_T - F_0)$ \\
+  Sell $W$ units & Short $h$ futures & $WS_T - h(F_T - F_0)$ \\
+  \hline
+\end{tabular}
+\end{center}
+
+For $\rho < 0$, reverse the futures positions.
+
+
 \pagebreak
 \section{Options}
 
+% ==========================================
+\subsection{Financial Options}
+% ==========================================
+
+\begin{definition}[Option]
+  An \textbf{option} is the right, but \emph{not} the obligation, to buy or sell an (underlying) asset under specified terms. Usually there is a specified price and a specified period of time over which the option is valid.
+  \begin{itemize}
+    \item A \textbf{call option} gives its holder the right to \emph{buy} a specific quantity of an asset at a specified \textbf{strike price} (or exercise price) on or before the \textbf{expiration date}.
+    \item A \textbf{put option} gives its holder the right to \emph{sell} a specific quantity of an asset at the strike price on or before the expiration date.
+    \item The holder (long position) is \emph{not} obligated to exercise; the writer (short position) \emph{is} obligated to fulfil the contract if the holder exercises.
+    \item The holder pays the writer an up-front fee called the \textbf{option premium} (or option price).
+    \item \textbf{European options} may only be exercised on the expiration date; \textbf{American options} may be exercised at any time before or on the expiration date. All options are assumed to be European unless otherwise stated.
+  \end{itemize}
+\end{definition}
+
+\begin{remark}
+  Underlying asset classes for options include: equity, foreign exchange, interest rates (fixed income), commodities, credit, real estate, and weather.
+\end{remark}
+
+\subsubsection*{Call vs Put Summary}
+
+\begin{center}
+\begin{tabular}{lll}
+  \hline
+  & \textbf{Call} & \textbf{Put} \\
+  \hline
+  \textbf{Long} & Right to buy at strike price; \emph{bullish} & Right to sell at strike price; \emph{bearish} \\
+  \textbf{Short} & Obligation to sell at strike price; \emph{bearish/neutral} & Obligation to buy at strike price; \emph{bullish/neutral} \\
+  \hline
+\end{tabular}
+\end{center}
+
+\pagebreak
+% ==========================================
+\subsection{Value of Options at Maturity}
+% ==========================================
+
+\begin{definition}[Payoff and Profit of Options]
+  Let $S_T$ denote the stock price at expiration and $K$ the strike price.
+  \begin{itemize}
+    \item \textbf{Call option payoff:} $\max(0,\, S_T - K) = (S_T - K)^+$
+    \item \textbf{Put option payoff:} $\max(0,\, K - S_T) = (K - S_T)^+$
+  \end{itemize}
+  The \textbf{profit} adjusts for the future value of the premium paid ($C$ for a call, $P$ for a put):
+  \begin{itemize}
+    \item \textbf{Long call profit:} $\max(0, S_T - K) - \mathrm{TV}_{t=T}(C)$
+    \item \textbf{Long put profit:} $\max(0, K - S_T) - \mathrm{TV}_{t=T}(P)$
+    \item \textbf{Short call profit:} $-\max(0, S_T - K) + \mathrm{TV}_{t=T}(C)$
+    \item \textbf{Short put profit:} $-\max(0, K - S_T) + \mathrm{TV}_{t=T}(P)$
+  \end{itemize}
+  where $\mathrm{TV}_{t=T}(C) = Ce^{rT}$ is the time value of the premium at maturity.
+\end{definition}
+
+\begin{remark}
+  There are four option positions: long call, long put, short call, and short put. The payoff diagrams show that a long call has unlimited upside (zero below $K$, rising above $K$), while a long put has bounded upside (rising below $K$, zero above $K$). The short positions are mirror images.
+\end{remark}
+
+\begin{definition}[Time Value of Options]
+  For a fixed strike price, an option with a longer time to expiration has a higher price. This reflects the greater opportunity for the stock price to move favourably — the \textbf{time value} of the option.
+\end{definition}
+
+\pagebreak
+% ==========================================
+\subsection{Upper and Lower Bounds for Option Prices}
+% ==========================================
+
+Throughout, we adopt the following notation: $S_0$ is the current stock price, $K$ is the strike price, $T$ is time to expiration, $r \geq 0$ is the continuously compounded risk-free rate, $C$ is the European call price, and $P$ is the European put price. We assume no dividends and no arbitrage.
+
+\subsubsection{Upper Bounds}
+
+\begin{proposition}[Upper Bounds]
+  \[
+    C \leq S_0 \qquad \text{and} \qquad P \leq Ke^{-rT}.
+  \]
+  \begin{proof}
+    If $C > S_0$, one could sell the call and buy the stock, obtaining a riskless profit. If $P > Ke^{-rT}$, one could write the put and invest the proceeds at the risk-free rate, guaranteeing a profit.
+  \end{proof}
+\end{proposition}
+
+\subsubsection{Lower Bounds}
+
+\begin{proposition}[Lower Bound for Calls]
+  \[
+    C \geq \max\!\bigl(0,\; S_0 - Ke^{-rT}\bigr).
+  \]
+  \begin{proof}
+    Suppose $C < S_0 - Ke^{-rT}$. Construct the arbitrage: at $t=0$, short the stock (receive $S_0$), buy the call (pay $C$), and invest $S_0 - C$ at rate $r$. At $t=T$, receive $(S_0 - C)e^{rT}$. If $S_T \geq K$, exercise the call (pay $K$) and close the short position; profit $= (S_0-C)e^{rT} - K > 0$ by assumption. If $S_T < K$, buy the stock at $S_T$ to close; profit $= (S_0-C)e^{rT} - S_T > (S_0-C)e^{rT} - K > 0$.
+  \end{proof}
+\end{proposition}
+
+\begin{proposition}[Lower Bound for Puts]
+  \[
+    P \geq \max\!\bigl(0,\; Ke^{-rT} - S_0\bigr).
+  \]
+  \begin{proof}
+    Suppose $P < Ke^{-rT} - S_0$. At $t=0$, borrow $S_0 + P$, buy the stock (pay $S_0$), and buy the put (pay $P$). At $t=T$, if $S_T < K$, exercise the put to sell the stock for $K$ and repay the loan $(S_0+P)e^{rT}$; profit $= K - (S_0+P)e^{rT} > 0$ by assumption. If $S_T \geq K$, sell the stock at $S_T \geq K$ and repay the loan; profit even greater.
+  \end{proof}
+\end{proposition}
+
+\pagebreak
+% ==========================================
+\subsection{Trading Strategies}
+% ==========================================
+
+\subsubsection{Single-Option Strategies}
+
+\begin{definition}[Covered Call]
+  A \textbf{covered call} combines a long position in an underlying asset with a short position in a call option on the same asset. The long asset ``covers'' the writer if the call is exercised.
+\end{definition}
+
+\begin{definition}[Protective Put]
+  A \textbf{protective put} combines a long position in an underlying asset with a long position in a put option on the same asset. It acts as insurance against downside risk.
+\end{definition}
+
+\subsubsection{Spread Strategies}
+
+\begin{definition}[Bull Spread]
+  A \textbf{bull spread} is created by buying a call with strike $K_1$ and selling a call with strike $K_2 > K_1$ (both same expiry). The payoff is:
+  \[
+    \text{Total payoff} = \begin{cases} 0 & S_T \leq K_1 \\ S_T - K_1 & K_1 < S_T < K_2 \\ K_2 - K_1 & S_T \geq K_2. \end{cases}
+  \]
+  This strategy profits when the stock price rises moderately, capping both upside and initial cost.
+\end{definition}
+
+\begin{definition}[Butterfly Spread (Calls)]
+  A \textbf{butterfly spread} uses three strikes $K_1 < K_2 < K_3$ with $K_2 = \tfrac{1}{2}(K_1+K_3)$:
+  \begin{itemize}
+    \item Long one call at $K_1$, long one call at $K_3$;
+    \item Short two calls at $K_2$.
+  \end{itemize}
+  The payoff table is:
+  \begin{center}
+  \begin{tabular}{lccc c}
+    \hline
+    Stock price range & Long $K_1$ & Long $K_3$ & Short $2K_2$ & Total \\
+    \hline
+    $S_T \leq K_1$ & $0$ & $0$ & $0$ & $0$ \\
+    $K_1 < S_T \leq K_2$ & $S_T-K_1$ & $0$ & $0$ & $S_T - K_1$ \\
+    $K_2 < S_T < K_3$ & $S_T-K_1$ & $0$ & $-2(S_T-K_2)$ & $K_3 - S_T$ \\
+    $S_T \geq K_3$ & $S_T-K_1$ & $S_T-K_3$ & $-2(S_T-K_2)$ & $0$ \\
+    \hline
+  \end{tabular}
+  \end{center}
+  This strategy profits if the stock price stays close to $K_2$, and incurs a small loss if there is a large move in either direction. It is appropriate when large price moves are considered unlikely.
+\end{definition}
+
+\begin{remark}
+  A butterfly spread can equivalently be constructed with put options: long puts at $K_1$ and $K_3$, short two puts at $K_2$. By put-call parity, the initial cost is the same.
+\end{remark}
+
+\begin{example}[Butterfly Spread]
+  A stock is currently worth \$61. Six-month European call prices are: $C(55) = \$10$, $C(60) = \$7$, $C(65) = \$5$. A butterfly spread costs $10 + 5 - 2\times 7 = \$1$. If $S_T \leq \$55$ or $S_T \geq \$65$, the payoff is $0$ and the net loss is $\$1$. If $\$55 < S_T < \$65$, the net profit is $S_T - \$56$ (for $S_T \leq 60$) or $\$64 - S_T$ (for $S_T > 60$). Maximum profit of $\$4$ occurs at $S_T = \$60$.
+\end{example}
+
+\subsubsection{Combination Strategies}
+
+\begin{definition}[Long Straddle]
+  A \textbf{long straddle} consists of long positions in a European call and a European put with the same maturity and strike price. It profits when the stock price moves significantly in either direction.
+\end{definition}
+
+% ==========================================
+\subsection{Put-Call Parity}
+% ==========================================
+
+\begin{theorem}[Put-Call Parity]
+  For European call and put options on a non-dividend-paying stock with the same strike price $K$ and maturity $T$, under no-arbitrage:
+  \[
+    C + Ke^{-rT} = P + S_0.
+  \]
+  \begin{proof}
+    Consider two portfolios:
+    \begin{itemize}
+      \item \textbf{Portfolio A}: One European call + a zero-coupon bond paying $K$ at $T$ (cost: $C + Ke^{-rT}$).
+      \item \textbf{Portfolio C}: One European put + one share (cost: $P + S_0$).
+    \end{itemize}
+    At maturity, if $S_T > K$: Portfolio A pays $(S_T - K) + K = S_T$; Portfolio C pays $0 + S_T = S_T$. If $S_T \leq K$: Portfolio A pays $0 + K = K$; Portfolio C pays $(K - S_T) + S_T = K$. Both portfolios have identical payoffs in all scenarios. By the no-arbitrage (Law of One Price), their present values must be equal: $C + Ke^{-rT} = P + S_0$.
+  \end{proof}
+\end{theorem}
+
+\begin{remark}
+  If put-call parity is violated, an arbitrage opportunity exists. For instance, if $C + Ke^{-rT} < P + S_0$, one longs Portfolio A and shorts Portfolio C to lock in a riskless profit.
+\end{remark}
+
+% ==========================================
+\subsection{Option Pricing: Binomial Model}
+% ==========================================
+
+\subsubsection{Single-Period Binomial Model}
+
+\begin{definition}[Binomial Lattice Setup]
+  Let $S$ be the current stock price. Over one period, the stock price moves to either $uS$ (``up'') with real-world probability $p$, or $dS$ (``down'') with probability $1-p$, where $u > d > 0$. Let $R = 1 + r$ be the gross risk-free return. To exclude arbitrage, we require $u > R > d$.
+\end{definition}
+
+\begin{theorem}[One-Period Option Pricing Formula]
+  Let $C_u = \max(uS - K, 0)$ and $C_d = \max(dS - K, 0)$ be the call option values at expiry. The no-arbitrage price of the call today is:
+  \[
+    C = \frac{1}{R}\bigl[q\,C_u + (1-q)\,C_d\bigr],
+  \]
+  where
+  \[
+    q = \frac{R - d}{u - d}
+  \]
+  is the \textbf{risk-neutral probability}. Note that $0 < q < 1$ (since $d < R < u$), and the price is independent of the real-world probability $p$.
+  \begin{proof}
+    We replicate the option with a portfolio $(x, b)$: $x$ dollars in stock and $b$ dollars in the risk-free asset. Requiring the portfolio to match the option payoff in both states:
+    \[
+      ux + Rb = C_u, \qquad dx + Rb = C_d.
+    \]
+    Subtracting: $(u-d)x = C_u - C_d$, so $x = \frac{C_u - C_d}{u-d}$. Then $b = \frac{uC_d - dC_u}{R(u-d)}$. The present value of this replicating portfolio is:
+    \[
+      x + b = \frac{1}{R}\!\left[\frac{R-d}{u-d}C_u + \frac{u-R}{u-d}C_d\right].
+    \]
+    By the no-arbitrage principle, $C = x + b$.
+  \end{proof}
+\end{theorem}
+
+\begin{remark}
+  If $C > x + b$, one can short the call and long the replicating portfolio to earn a riskless profit of $C - (x+b)$ initially. If $C < x+b$, reverse the positions. Either case contradicts no-arbitrage, so $C = x + b$.
+\end{remark}
+
+\subsubsection{Multi-Period Binomial Model}
+
+In a two-period model, the terminal option values are:
+\[
+  C_{uu} = \max(u^2 S - K,\, 0), \quad C_{ud} = \max(udS - K,\, 0), \quad C_{dd} = \max(d^2 S - K,\, 0).
+\]
+Working backwards:
+\[
+  C_u = \frac{1}{R}(q\,C_{uu} + (1-q)\,C_{ud}), \qquad
+  C_d = \frac{1}{R}(q\,C_{ud} + (1-q)\,C_{dd}), \qquad
+  C = \frac{1}{R}(q\,C_u + (1-q)\,C_d).
+\]
+This backward-induction procedure extends to any number of periods.
+
+\subsubsection{CRR Binomial Model}
+
+\begin{definition}[Cox-Ross-Rubinstein (CRR) Model]
+  Introduced by Cox, Ross, and Rubinstein (1979), the CRR model parameterises the binomial lattice by setting
+  \[
+    u = e^{\sigma\sqrt{\Delta t}}, \qquad d = \frac{1}{u} = e^{-\sigma\sqrt{\Delta t}},
+  \]
+  where $\sigma$ is the annualised volatility of the asset's return and $\Delta t$ is the length of one time period. As $\Delta t \to 0$, the CRR binomial option price converges to the celebrated \textbf{Black-Scholes} price.
+\end{definition}
+
+\begin{example}[Multi-Period CRR]
+  A stock has current price $S = \$62$, strike $K = \$60$, maturity $T = 5$ months, and monthly risk-free rate $r^{(12)} = 10.05\%$. With $\sigma^2/12 = 0.2/12$:
+  \[
+    u = e^{\sqrt{0.2/12}} = 1.05943, \quad d = e^{-\sqrt{0.2/12}} = 0.94390, \quad R = 1 + \tfrac{10\%}{12} = 1.00833.
+  \]
+  The risk-neutral probability is $q = \tfrac{R-d}{u-d} = 0.5577$. Applying backward induction over 5 periods gives the theoretical call price of approximately $C \approx \$5.85$.
+\end{example}
+
+
 \pagebreak
 \section{Cheatsheet}
+
+
+\pagebreak
+\section{Exam Preparation (Possible Qns)}
+
+\subsection{Chapter 1: Interest}
+\subsection{Chapter 2: Bonds}
+\subsection{Chapter 3: Asset Returns}
+\subsection{Chapter 4: Forwards and Futures}
+\subsection{Chapter 5: Options}
 
 \end{document}
